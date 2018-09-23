@@ -5,6 +5,11 @@ Wobbly is an app for workplace organizing. See [wobbly.app](https://wobbly.app) 
 * [Code of conduct](CODE-OF-CONDUCT.md)
 * [Contributing guide](CONTRIBUTING.md)
 
+Frameworks:
+* [React Native Web](https://github.com/necolas/react-native-web)
+* [TypeScript](https://www.typescriptlang.org/) and [TSLint](https://palantir.github.io/tslint/)
+* [Redux](https://redux.js.org/) for state management
+
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app). Below you'll find information about performing common tasks.
 

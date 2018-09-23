@@ -51,7 +51,10 @@
     ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
-    }
+    },
+    "transformIgnorePatterns": [
+      "node_modules/?!(react-router)"
+    ]
   },
   "dependencies": {
     "expo": "^27.0.1",

@@ -3,7 +3,6 @@
     "target": "es5",
     "module": "es2015",
     "sourceMap": true,
-    "experimentalDecorators": true,
     "jsx": "react-native",
     "allowJs": true,
     "checkJs": false,
@@ -13,7 +12,9 @@
     "noEmitHelpers": true,
     "importHelpers": true,
     "strict": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   },
   "include": ["src/**/*"],
   "exclude": [

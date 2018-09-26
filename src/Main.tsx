@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-import { AccountScreen, GroupScreen, NotificationScreen } from "./components/screens";
+import { AccountScreen, GroupsScreen, NotificationScreen } from "./components/screens";
 import { Redirect, Route } from "./router";
 import { colors } from "./style/common";
 
@@ -10,7 +10,7 @@ class Main extends React.Component {
     return (
       <View style={style.container}>
         <Route exact={true} path="/" render={this.chooseInitialScreen} />
-        <Route path="/groups" component={GroupScreen} />
+        <Route path="/groups" component={GroupsScreen} />
         <Route path="/notifications" component={NotificationScreen} />
         <Route path="/account" component={AccountScreen} />
       </View>

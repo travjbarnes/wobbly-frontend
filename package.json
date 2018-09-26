@@ -12,12 +12,13 @@
     "web": "webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --content-base public/ --history-api-fallback",
     "build": "NODE_ENV=production webpack -p --config ./webpack.config.js",
     "pretty": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "lint": "tslint src/**/*.{ts,tsx}"
+    "lint": "tslint -c tslint.json \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "tslint -c tslint.json --fix \"src/**/*.{ts,tsx}\""
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,json,css}": [
       "yarn pretty",
-      "yarn lint",
+      "yarn lint:fix",
       "git add"
     ]
   },

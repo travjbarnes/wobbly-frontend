@@ -1,4 +1,7 @@
 {
   "importSorter.generalConfiguration.sortOnBeforeSave": true,
-  "editor.formatOnSave": true
+  "importSorter.importStringConfiguration.quoteMark": "double",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.rulers": [120],
 }

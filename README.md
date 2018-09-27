@@ -10,6 +10,12 @@ Frameworks:
 * [TypeScript](https://www.typescriptlang.org/) and [TSLint](https://palantir.github.io/tslint/)
 * [Redux](https://redux.js.org/) for state management
 
+Useful tutorials
+* [TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+* [React Native tutorial](https://facebook.github.io/react-native/docs/tutorial)
+* [Redux basics](https://redux.js.org/basics)
+* [Async actions in Redux](https://redux.js.org/advanced/asyncactions#async-action-creators) (the entire async tutorial is useful)
+
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app). Below you'll find information about performing common tasks.
 

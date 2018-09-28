@@ -12,10 +12,14 @@ Frameworks:
 * [Formik](https://jaredpalmer.com/formik) for forms
 
 Useful tutorials
+* [Atomic design](http://bradfrost.com/blog/post/atomic-web-design/)
 * [TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 * [React Native tutorial](https://facebook.github.io/react-native/docs/tutorial)
 * [Redux basics](https://redux.js.org/basics)
 * [Async actions in Redux](https://redux.js.org/advanced/asyncactions#async-action-creators) (the entire async tutorial is useful)
+
+Gotchas
+* React-router and Redux don't play that well together -- you may have to wrap components in `withRouter()`. [Details here](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/redux.md).
 
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app). Below you'll find information about performing common tasks.

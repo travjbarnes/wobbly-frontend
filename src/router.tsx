@@ -12,6 +12,6 @@ const Router = Platform.select({
   web: () => RouterPackage.BrowserRouter
 })();
 // Using these components from the browser router causes problems with react-native-web
-const { Route, Link, Redirect } = NativeRouterPackage;
+const { Route, Link, Redirect, Switch } = NativeRouterPackage;
 
-export { Router, Route, Link, Redirect };
+export { Router, Route, Link, Redirect, Switch };

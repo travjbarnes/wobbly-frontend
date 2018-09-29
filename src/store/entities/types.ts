@@ -10,7 +10,7 @@ export const enum EntitiesActionType {
 
 export interface IUser {
   id: string;
-  displayName: string;
+  displayName?: string;
 }
 
 interface IUsers {

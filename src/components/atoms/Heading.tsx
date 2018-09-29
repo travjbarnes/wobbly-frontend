@@ -18,5 +18,8 @@ export default Heading;
 const headingStyles = StyleSheet.create({
   h1: {
     fontSize: fontSizes.h1
+  },
+  h2: {
+    fontSize: fontSizes.h2
   }
 }) as any;

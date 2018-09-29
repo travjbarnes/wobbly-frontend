@@ -1,0 +1,13 @@
+FROM node:10.11.0-stretch
+MAINTAINER Nathan Miller <nmiller217@gmail.com>
+
+RUN mkdir /code
+WORKDIR /code
+
+COPY package.json .
+RUN yarn
+
+COPY . /code/
+
+#RUN pwd
+#RUN ls -al ./node_modules/.bin/webpack-dev-server

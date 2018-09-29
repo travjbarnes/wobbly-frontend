@@ -1,0 +1,15 @@
+version: '3.4' 
+services:
+
+  wobbly-frontend-service:
+    build:
+      context: .
+      dockerfile: DOCKERFILE
+    image: $DOCKER_IMAGE
+    command: bash bin/docker-entrypoint.sh
+    volumes:
+      - .:/code
+    ports:
+      - "8080:8080"
+    environment:
+      - BACKEND_URL

@@ -83,7 +83,7 @@ class GroupScreen extends Component<IGroupsScreenProps, {}> {
               />
             ))}
           </ScrollView>
-          <WobblyButton text={"Add A New Group"} onPress={handlePress} />
+          <WobblyButton onPress={handlePress}>Create group</WobblyButton>
         </View>
       </Screen>
     );

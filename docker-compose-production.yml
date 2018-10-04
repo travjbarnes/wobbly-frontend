@@ -9,6 +9,7 @@ services:
     command: bash bin/docker-entrypoint.sh
     volumes:
       - .:/code
+      - /code/node_modules
     ports:
       - "8080:8080"
     environment:

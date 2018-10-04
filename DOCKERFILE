@@ -9,5 +9,4 @@ RUN yarn
 
 COPY . /code/
 
-#RUN pwd
-#RUN ls -al ./node_modules/.bin/webpack-dev-server
+RUN chmod +x bin/docker-entrypoint.sh

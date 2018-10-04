@@ -90,7 +90,6 @@ Temporary Items
 *.class
 
 # Generated files
-bin/
 gen/
 out/
 
@@ -312,3 +311,4 @@ buck-out/
 
 
 # End of https://www.gitignore.io/api/reactnative
+bin/environment.sh

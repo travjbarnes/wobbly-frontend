@@ -1,5 +1,5 @@
 sudo: required
-language: python
+language: node_js
 
 services:
   - docker
@@ -10,7 +10,7 @@ cache:
 
 script:
   - bin/build-docker.sh -p
-  - bin/test.sh -p
+  #- bin/test.sh -p
 
 after_success:
   - bin/deploy-gcloud.sh

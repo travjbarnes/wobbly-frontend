@@ -9,7 +9,7 @@
     "android": "react-native-scripts-ts android",
     "ios": "react-native-scripts-ts ios",
     "test": "jest",
-    "web": "./node_modules/.bin/webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --content-base public/ --history-api-fallback --host 0.0.0.0",
+    "web": "webpack-dev-server -d --config ./webpack.config.js  --inline --hot --colors --content-base public/ --history-api-fallback --host 0.0.0.0",
     "build": "NODE_ENV=production webpack -p --config ./webpack.config.js",
     "pretty": "prettier --write \"src/**/*.{ts,tsx}\"",
     "lint": "tslint -c tslint.json \"src/**/*.{ts,tsx}\"",

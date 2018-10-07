@@ -9,6 +9,7 @@ services:
     command: bash bin/docker-entrypoint.sh
     volumes:
       - .:/code
+      - /code/node_modules
     ports:
       - "19000:19000"
       - "19001:19001"

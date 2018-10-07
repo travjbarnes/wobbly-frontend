@@ -19,7 +19,7 @@
         mkdir -p lib
         gcloud auth activate-service-account --key-file client-secret.json
 
-        gcloud config set project wobbly-frontend
+        gcloud config set project wobbly-backend
         
         gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin $DOCKER_REPO
 

@@ -6,12 +6,13 @@ if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     # Push only if we're testing the master branch
     #if [ "$TRAVIS_BRANCH" == "master" ]; then
 
+        # https://cloud.google.com/solutions/continuous-delivery-with-travis-ci
         export GAE_PYTHONPATH=${HOME}/.cache/google_appengine 
         export PATH=$PATH:${HOME}/google-cloud-sdk/bin 
         export PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} 
         export CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
-        openssl aes-256-cbc -K $encrypted_b48b32dc2f5c_key -iv $encrypted_b48b32dc2f5c_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
+        openssl aes-256-cbc -K $encrypted_0e1011058c7f_key -iv $encrypted_0e1011058c7f_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
         if [ ! -d "${GAE_PYTHONPATH}" ]; then python scripts/fetch_gae_sdk.py $(dirname "${GAE_PYTHONPATH}"); fi
         if [ ! -d ${HOME}/google-cloud-sdk ]; then curl https://sdk.cloud.google.com | bash; fi
         tar -xzf credentials.tar.gz

@@ -312,3 +312,5 @@ buck-out/
 
 # End of https://www.gitignore.io/api/reactnative
 bin/environment.sh
+api_key.py
+client-secret.json

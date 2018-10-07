@@ -1,2 +1,7 @@
 yarn.lock
 node_modules/
+client-secret.json
+api_key.py
+credentials.tar.gz
+credentials.tar.gz.enc
+.gitignore

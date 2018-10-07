@@ -21,6 +21,13 @@ Useful tutorials
 Gotchas
 * React-router and Redux don't play that well together -- you may have to wrap components in `withRouter()`. [Details here](https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/redux.md).
 
+## From 0 to Wobbly
+* [Install yarn](https://yarnpkg.com/en/docs/install). Yarn is the package manager we use.
+* Clone this repo: `git clone git@github.com:Wobbly-App/wobbly-frontend.git`
+* `cd` into the repo and run `yarn install`
+* Run `yarn web` and open `localhost:8080` in your web browser. If you're using Firefox or Chrome, you can view Wobbly with mobile dimensions:
+  * In Firefox, use [Responsive Design Mode](https://developer.mozilla.org/en-US/docs/Tools/Responsive_Design_Mode)
+  * In Chrome, the same functionality is called [Device Mode](https://developers.google.com/web/tools/chrome-devtools/device-mode/)
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app). Below you'll find information about performing common tasks.
 

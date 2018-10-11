@@ -1,20 +1,17 @@
 import * as React from "react";
 import { Provider } from "react-redux";
-import { applyMiddleware, compose, createStore, Store } from "redux";
-import thunk from "redux-thunk";
+import { Store } from "redux";
 
 import Main from "./Main";
 import { Router } from "./router";
-import { rootReducer } from "./store";
+import reduxStore from "./reduxStore";
 
 export default class App extends React.Component<{}> {
   private store: Store;
 
   public constructor(props: {}) {
     super(props);
-    // enable Redux Devtools extension
-    const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-    this.store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+    this.store = reduxStore;
   }
 
   public render() {

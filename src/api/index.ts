@@ -1,3 +1,6 @@
+// need to polyfill URL because node/jest throws reference error
+import { URL } from "whatwg-url";
+
 import { ICurrentUser } from "../store/currentUser/types";
 
 const ROOT_URL = new URL("http://localhost/api/v1");

@@ -7,6 +7,4 @@ WORKDIR /code
 COPY package.json .
 RUN yarn
 
-COPY . /code/
-
-RUN chmod +x bin/docker-entrypoint.sh
+COPY . /code

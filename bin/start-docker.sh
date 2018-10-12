@@ -10,7 +10,7 @@ while getopts ":dp" opt; do
           docker-compose -f docker-compose-development.yml up
           ;;
         p)
-          docker-compose -f docker-compose-production.yml up
+          docker-compose up
           ;;
         *)
           usage

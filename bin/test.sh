@@ -9,7 +9,7 @@ while getopts ":dp" opt; do
           docker-compose -f docker-compose-development.yml run --entrypoint bin/test-docker-entrypoint.sh wobbly-frontend-service -p 8080
           ;;
         p)
-          docker-compose -f docker-compose-production.yml run --entrypoint bin/test-docker-entrypoint.sh wobbly-frontend-service -p 8080
+          docker-compose run --entrypoint bin/test-docker-entrypoint.sh wobbly-frontend-service -p 8080
           ;;
         *)
           usage

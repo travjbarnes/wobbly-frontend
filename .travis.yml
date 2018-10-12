@@ -3,13 +3,9 @@ sudo: required
 services:
   - docker
 
-cache:
-  directories:
-  - "$HOME/google-cloud-sdk/"
-
 script:
   - bin/build-docker.sh -p
   - bin/test.sh -p
 
 after_success:
-  - bin/deploy-gcloud.sh
+  - bin/deploy.sh

@@ -1,5 +1,4 @@
 FROM node:10.11.0-stretch
-MAINTAINER Nathan Miller <nmiller217@gmail.com>
 
 RUN mkdir /code
 WORKDIR /code

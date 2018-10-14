@@ -4,7 +4,7 @@ import { ThunkDispatch } from "redux-thunk";
 
 import { IApplicationState } from "../";
 import * as API from "../../api";
-import { loginSuccess } from "./actions";
+import { editUserAction, loginSuccess } from "./actions";
 import { ICurrentUser } from "./types";
 
 /** Sends login details to the backend and sets the current user with auth token (if no error)
@@ -15,8 +15,25 @@ export const login = (email: string, password: string, history: History) => (
 ) => {
   API.login(email, password).then(response => {
     // TODO: handle login errors
-    dispatch(loginSuccess({ id: (response as ICurrentUser).id, email, token: (response as ICurrentUser).token }));
+    dispatch(
+      loginSuccess({
+        id: (response as ICurrentUser).id,
+        email,
+        token: (response as ICurrentUser).token,
+        isUpdating: false
+      })
+    );
     // We logged in, now redirect to the group overview
     history.push("/groups");
+  });
+};
+
+export const editUser = (email: string, displayName: string, password: string) => (
+  dispatch: ThunkDispatch<IApplicationState, void, AnyAction>
+) => {
+  dispatch(editUserAction.request());
+  API.editUser(email, displayName, password).then(response => {
+    // TODO: handle failure
+    dispatch(editUserAction.success(response as ICurrentUser));
   });
 };

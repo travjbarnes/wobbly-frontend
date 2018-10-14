@@ -85,6 +85,7 @@
     "@types/react-redux": "^6.0.9",
     "@types/react-router-native": "^4.2.3",
     "@types/react-test-renderer": "^16.0.1",
+    "@types/whatwg-url": "^6.4.0",
     "@types/yup": "^0.24.9",
     "babel-loader": "^7.1.2",
     "babel-plugin-expo-web": "^0.0.5",

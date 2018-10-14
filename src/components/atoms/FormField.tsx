@@ -9,6 +9,7 @@ export interface IFormFieldProps {
   value?: string;
   secureTextEntry?: boolean;
   placeholder?: string;
+  backgroundColor?: string;
 }
 /**
  * A wrapper for `<TextInput>` with custom styling.
@@ -21,10 +22,10 @@ export interface IFormFieldProps {
  */
 class FormField extends React.PureComponent<IFormFieldProps> {
   public render() {
-    const { onChangeText, value, secureTextEntry, placeholder } = this.props;
+    const { onChangeText, value, secureTextEntry, placeholder, backgroundColor } = this.props;
     return (
       <TextInput
-        style={styles.textInput}
+        style={[styles.textInput, { backgroundColor }]}
         onChangeText={onChangeText}
         onBlur={this.handleBlur}
         value={value}

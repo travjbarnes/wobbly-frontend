@@ -8,10 +8,15 @@ export const enum CurrentUserActionType {
   // Signup
   SIGNUP_REQUEST = "SIGNUP_REQUEST",
   SIGNUP_SUCCESS = "SIGNUP_SUCCESS",
-  SIGNUP_FAILURE = "SIGNUP_FAILURE"
+  SIGNUP_FAILURE = "SIGNUP_FAILURE",
+  // Editing
+  USER_EDIT_REQUEST = "USER_EDIT_REQUEST",
+  USER_EDIT_SUCCESS = "USER_EDIT_SUCCESS",
+  USER_EDIT_FAILURE = "USER_EDIT_FAILURE"
 }
 
 export interface ICurrentUser extends IUser {
   token: string;
   email: string;
+  isUpdating: boolean;
 }

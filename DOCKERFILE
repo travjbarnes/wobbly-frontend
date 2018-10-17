@@ -7,3 +7,5 @@ COPY package.json .
 RUN yarn
 
 COPY . /code
+
+ENTRYPOINT [ "/code/bin/docker-entrypoint.sh" ]

@@ -10,7 +10,8 @@ while getopts ":dp" opt; do
           docker-compose -f docker-compose-development.yml up
           ;;
         p)
-          docker-compose up
+          #docker-compose up
+          docker run -it $DOCKER_IMAGE:latest -p 8080:8080 bin/docker-entrypoint.sh
           ;;
         *)
           usage

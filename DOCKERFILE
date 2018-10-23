@@ -1,4 +1,6 @@
 FROM node:10.11.0-stretch
+EXPOSE 8080
+ENTRYPOINT ["bin/docker-entrypoint.sh"]
 
 RUN mkdir /code
 WORKDIR /code
@@ -7,5 +9,3 @@ COPY package.json .
 RUN yarn
 
 COPY . /code
-
-ENTRYPOINT [ "/code/bin/docker-entrypoint.sh" ]

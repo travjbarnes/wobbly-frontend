@@ -1,9 +1,5 @@
 #! /bin/bash -x
 
-export CLUSTER_NAME="wobbly-frontend-cluster"
-export DEPLOYMENT_NAME="wobbly-frontend-app"
-export COMPUTE_ZONE="us-west2-a"
-
 gcloud config set compute/zone $COMPUTE_ZONE
 
 # create kubernetes cluster
@@ -16,7 +12,7 @@ gcloud container clusters get-credentials $CLUSTER_NAME
 #kubectl run $DEPLOYMENT_NAME --image $REMOTE_DOCKER_PATH --port 8000
 
 # update cluster's deployed image
-kubectl set image deployment/$DEPLOYMENT_NAME $DOCKER_IMAGE=$REMOTE_DOCKER_PATH:$TAG
+kubectl set image deployment/$DEPLOYMENT_NAME $IMAGE_NAME=$REMOTE_DOCKER_PATH:$TAG
 
 kubectl rollout status deployment/$DEPLOYMENT_NAME
 

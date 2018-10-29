@@ -1,7 +1,5 @@
 #! /bin/bash
 
-export COMPUTE_ZONE="us-west2-a"
-export GCLOUD_PROJECT="wobbly-backend"
 export CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
 openssl aes-256-cbc -K $encrypted_0e1011058c7f_key -iv $encrypted_0e1011058c7f_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d

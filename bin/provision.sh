@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-gcloud config set compute/zone $COMPUTE_ZONE
+#gcloud config set compute/zone $COMPUTE_ZONE
 
 # create kubernetes cluster
 #gcloud container clusters create $CLUSTER_NAME

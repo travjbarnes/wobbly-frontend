@@ -3,7 +3,7 @@
 export CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
 openssl aes-256-cbc -K $encrypted_0e1011058c7f_key -iv $encrypted_0e1011058c7f_iv -in credentials/credentials.tar.gz.enc -out credentials/credentials.tar.gz -d
-tar -xzf credentials/credentials.tar.gz
+tar -xzf credentials/credentials.tar.gz --directory credentials/
 mkdir -p lib
 
 gcloud auth activate-service-account --key-file credentials/client-secret.json

@@ -16,3 +16,12 @@ while getopts ":dp" opt; do
           ;;
     esac
 done
+
+# fix ownership on created files
+echo "Fixing ownership on created files"
+if [ `uname -s` = "Linux" ]
+then
+  echo "sudo chown -R `id -u $USER`:`id -g $USER` ."
+  sudo chown -R `id -u $USER`:`id -g $USER` .
+  ls -l
+fi

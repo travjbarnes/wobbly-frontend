@@ -23,6 +23,7 @@ Gotchas
 
 ## From 0 to Wobbly
 * [Install yarn](https://yarnpkg.com/en/docs/install). Yarn is the package manager we use.
+* Install TypeScript: `yarn global add typescript`
 * Clone this repo: `git clone git@github.com:Wobbly-App/wobbly-frontend.git`
 * `cd` into the repo and run `yarn install`
 * Run `yarn web` and open `localhost:8080` in your web browser. If you're using Firefox or Chrome, you can view Wobbly with mobile dimensions:

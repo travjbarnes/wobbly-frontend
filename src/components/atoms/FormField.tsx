@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 
 import { colors } from "../../style/common";
 
@@ -23,15 +23,18 @@ export interface IFormFieldProps {
 class FormField extends React.PureComponent<IFormFieldProps> {
   public render() {
     const { onChangeText, value, secureTextEntry, placeholder, backgroundColor } = this.props;
+    const wrapperStyle = backgroundColor ? [styles.wrapper, { backgroundColor }] : styles.wrapper;
     return (
-      <TextInput
-        style={[styles.textInput, { backgroundColor }]}
-        onChangeText={onChangeText}
-        onBlur={this.handleBlur}
-        value={value}
-        secureTextEntry={secureTextEntry || false}
-        placeholder={placeholder}
-      />
+      <View style={wrapperStyle}>
+        <TextInput
+          style={styles.textInput}
+          onChangeText={onChangeText}
+          onBlur={this.handleBlur}
+          value={value}
+          secureTextEntry={secureTextEntry || false}
+          placeholder={placeholder}
+        />
+      </View>
     );
   }
 
@@ -56,12 +59,13 @@ class FormField extends React.PureComponent<IFormFieldProps> {
 export default FormField;
 
 const styles = StyleSheet.create({
-  textInput: {
-    flex: 1,
-    margin: 8,
-    padding: 8,
-    borderRadius: 3,
+  wrapper: {
     backgroundColor: colors.white,
+    borderRadius: 3,
+    margin: 8,
+    padding: 8
+  },
+  textInput: {
     color: colors.black
   }
 });

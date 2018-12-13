@@ -1,6 +1,6 @@
 import { Formik, FormikProps } from "formik";
 import * as React from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
@@ -35,7 +35,7 @@ class AccountScreen extends React.Component<IAccountScreenProps> {
           })}
         >
           {(formikBag: FormikProps<IEditUserFormFields>) => (
-            <View>
+            <View style={style.wrapper}>
               <FormLabel>Email</FormLabel>
               <FormField
                 onChangeText={formikBag.handleChange("email")}
@@ -69,6 +69,13 @@ class AccountScreen extends React.Component<IAccountScreenProps> {
     setSubmitting(false);
   };
 }
+
+const style = StyleSheet.create({
+  wrapper: {
+    height: "100%",
+    width: "100%"
+  }
+});
 
 const mapStateToProps = (state: IApplicationState) => ({
   displayName: state.currentUser!.displayName,

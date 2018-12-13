@@ -27,7 +27,6 @@ export default WobblyButton;
 
 const style = StyleSheet.create({
   button: {
-    flex: 1,
     margin: 8,
     padding: 8,
     borderRadius: 3,

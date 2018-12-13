@@ -17,7 +17,6 @@ export default ({ placeholder }: ISearchBarProps) => (
 
 const styles = StyleSheet.create({
   searchBar: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

@@ -4,7 +4,9 @@ import { Store } from "redux";
 
 import Main from "./Main";
 import { Router } from "./router";
-import reduxStore from "./reduxStore";
+import { reduxStore, persistor } from "./reduxStore";
+import { PersistGate } from "redux-persist/integration/react";
+import Splash from "./components/screens/Splash";
 
 export default class App extends React.Component<{}> {
   private store: Store;
@@ -17,9 +19,11 @@ export default class App extends React.Component<{}> {
   public render() {
     return (
       <Provider store={this.store}>
-        <Router>
-          <Main />
-        </Router>
+        <PersistGate loading={<Splash />} persistor={persistor}>
+          <Router>
+            <Main />
+          </Router>
+        </PersistGate>
       </Provider>
     );
   }

@@ -40,19 +40,19 @@ class AccountScreen extends React.Component<IAccountScreenProps> {
               <FormField
                 onChangeText={formikBag.handleChange("email")}
                 value={formikBag.values.email}
-                backgroundColor={colors.lightGray}
+                backgroundColor={colors.lightGray1}
               />
               <FormLabel>Display name</FormLabel>
               <FormField
                 onChangeText={formikBag.handleChange("displayName")}
                 value={formikBag.values.displayName}
-                backgroundColor={colors.lightGray}
+                backgroundColor={colors.lightGray1}
               />
               <FormLabel>Password</FormLabel>
               <FormField
                 onChangeText={formikBag.handleChange("password")}
                 value={formikBag.values.password}
-                backgroundColor={colors.lightGray}
+                backgroundColor={colors.lightGray1}
               />
               <WobblyButton onPress={formikBag.handleSubmit} disabled={this.props.isUpdating}>
                 {this.props.isUpdating ? <ActivityIndicator /> : "Submit"}

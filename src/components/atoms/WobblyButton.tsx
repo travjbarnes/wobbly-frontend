@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import { colors, fontSizes } from "../../style/common";
+import { colors, fontSizes, standardColors } from "../../style/common";
 
 interface IWobblyButtonProps {
   children: ReactNode;
@@ -30,10 +30,10 @@ const style = StyleSheet.create({
     margin: 8,
     padding: 8,
     borderRadius: 3,
-    backgroundColor: colors.green
+    backgroundColor: standardColors.primaryButtonBackground
   },
   disabled: {
-    backgroundColor: colors.lightGray
+    backgroundColor: standardColors.disabledButtonBackground
   },
   buttonText: {
     color: colors.white,

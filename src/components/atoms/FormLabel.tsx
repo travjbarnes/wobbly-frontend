@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, Text } from "react-native";
 
-import { colors } from "../../style/common";
+import { standardColors } from "../../style/common";
 
 interface IFormLabelProps {
   children: string;
@@ -12,6 +12,6 @@ export default FormLabel;
 
 const style = StyleSheet.create({
   label: {
-    color: colors.gray
+    color: standardColors.primaryText
   }
 });

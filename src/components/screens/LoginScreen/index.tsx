@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   welcome: {
     flex: 1,
     padding: 20,
-    backgroundColor: colors.gray,
+    backgroundColor: colors.darkGray1,
     justifyContent: "space-around"
   },
   welcomeHeading: {

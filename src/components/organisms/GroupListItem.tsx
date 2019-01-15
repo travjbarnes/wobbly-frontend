@@ -17,7 +17,7 @@ const onPress = () => {
 };
 
 const GroupListItem = (props: IGroupListItemProps) => (
-  <TouchableHighlight onPress={onPress} underlayColor={colors.veryLightGray}>
+  <TouchableHighlight onPress={onPress} underlayColor={colors.lightGray1}>
     <View style={styles.itemWrapper}>
       <View style={styles.placeholderBadge} />
       <View style={styles.groupDetailView}>

@@ -1,5 +1,4 @@
-import { History } from "history";
-import { RouteComponentProps } from "react-router";
+import { ICreateOrUpdateUserErrors } from "../../../api/types";
 
 // The different views contained in `LoginScreen`
 export enum LoginScreenView {
@@ -9,8 +8,11 @@ export enum LoginScreenView {
 }
 
 // Component props/state
-export interface ILoginScreenProps extends RouteComponentProps {
-  login: (email: string, password: string, history: History) => void;
+export interface ILoginScreenProps {
+  loginError?: string;
+  signupErrors?: ICreateOrUpdateUserErrors;
+  login: (email: string, password: string) => void;
+  signUp: (email: string, displayName: string, password: string) => void;
 }
 export interface ILoginScreenState {
   view: LoginScreenView;
@@ -19,12 +21,13 @@ export interface ILoginScreenState {
 
 // Form field types
 export interface ILoginFormFields {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
 }
 
 export interface ISignupFormFields {
-  email?: string;
-  password?: string;
-  passwordConfirmation?: string;
+  email: string;
+  displayName: string;
+  password: string;
+  passwordConfirmation: string;
 }

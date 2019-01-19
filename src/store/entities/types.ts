@@ -1,29 +1,40 @@
+import { ActionType } from "typesafe-actions";
+import * as entitiesActions from "./actions";
+
 export const enum EntitiesActionType {
-  // Fetches information about the current user
-  USER_REQUEST = "USER_REQUEST",
-  USER_SUCCESS = "USER_SUCCESS",
-  USER_FAILURE = "USER_FAILURE",
+  // Fetches information about a user
+  FETCH_USER_REQUEST = "FETCH_USER_REQUEST",
+  FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS",
+  FETCH_USER_FAILURE = "FETCH_USER_FAILURE",
   // Fetches information about a group
-  GROUP_REQUEST = "GROUP_REQUEST",
-  GROUP_SUCCESS = "GROUP_SUCCESS"
+  FETCH_GROUP_REQUEST = "FETCH_GROUP_REQUEST",
+  FETCH_GROUP_SUCCESS = "FETCH_GROUP_SUCCESS",
+  FETCH_GROUP_FAILURE = "FETCH_GROUP_FAILURE"
 }
 
+// Users
 export interface IUser {
-  id: string;
-  displayName?: string;
+  id: number;
+  displayName: string;
+  // image: ...
 }
-
 interface IUsers {
   [id: number]: IUser;
 }
 
-interface IUserErrors {
-  // TODO: we'll want to use our own custom error response type
-  [id: number]: Error;
+// Groups
+export interface IGroup {
+  id: number;
+  name: string;
+  description: string;
+}
+interface IGroups {
+  [id: number]: IGroup;
 }
 
 export interface IEntitiesState {
-  readonly users: IUsers;
-  readonly loadingUserIds: number[];
-  readonly userErrors: IUserErrors;
+  readonly usersById: IUsers;
+  readonly groupsById: IGroups;
 }
+
+export type EntitiesAction = ActionType<typeof entitiesActions>;

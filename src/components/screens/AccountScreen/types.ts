@@ -1,8 +1,8 @@
 export interface IEditUserFormFields {
   // TODO: profile image
-  displayName: string;
+  // TODO: change password
   email: string;
-  password: string;
+  displayName: string;
 }
 
 export interface IHandleSubmitProps {

@@ -1,23 +1,22 @@
+import { getType } from "typesafe-actions";
+
+import { IEntitiesState, EntitiesAction } from "./types";
 import { Reducer } from "redux";
-import { ActionType } from "typesafe-actions";
+import { fetchUserAction } from "./actions";
 
-import * as entities from "./actions";
-import { EntitiesActionType, IEntitiesState } from "./types";
-
-export type EntitiesAction = ActionType<typeof entities>;
 const initialState: IEntitiesState = {
-  users: {},
-  loadingUserIds: [],
-  userErrors: {}
+  usersById: {},
+  groupsById: {}
 };
-const entitiesReducer: Reducer<IEntitiesState> = (state = initialState, action) => {
+
+const entitiesReducer: Reducer<IEntitiesState, EntitiesAction> = (state = initialState, action) => {
   switch (action.type) {
-    case EntitiesActionType.USER_REQUEST:
-      return { ...state, loadingUserIds: [...state.loadingUserIds, action.payload] };
-    case EntitiesActionType.USER_SUCCESS:
-      return { ...state, users: { ...state.users, [action.payload.id]: action.payload } };
-    case EntitiesActionType.USER_FAILURE:
-      return { ...state, userErrors: { ...state.userErrors, [action.payload.id]: action.payload } };
+    // Fetch user
+    case getType(fetchUserAction.request):
+      return state; // TODO
+    case getType(fetchUserAction.success):
+      return { ...state, usersById: { ...state.usersById, [action.payload.id]: action.payload } };
+    case getType(fetchUserAction.failure):
     default:
       return state;
   }

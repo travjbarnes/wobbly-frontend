@@ -1,15 +1,14 @@
 import { Formik, FormikProps } from "formik";
-import { History } from "history";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import * as yup from "yup";
+import { values } from "lodash";
 
 import { IApplicationState } from "../../../store";
-import { login } from "../../../store/currentUser/thunks";
+import { loginThunk, createUserThunk } from "../../../store/auth/thunks";
 import { colors } from "../../../style/common";
 import { HeadingType } from "../../../types";
 import FormField from "../../atoms/FormField";
@@ -17,12 +16,16 @@ import Heading from "../../atoms/Heading";
 import WobblyButton from "../../atoms/WobblyButton";
 import VerticalButtonGroup from "../../molecules/VerticalButtonGroup";
 import { ILoginFormFields, ILoginScreenProps, ILoginScreenState, ISignupFormFields, LoginScreenView } from "./types";
+import FormErrors from "../../atoms/FormErrors";
 
 /**
  * This screen handles both logins and signups.
  * It's all handled in one component so that we can share e.g. the email field between the login and signup forms.
  */
 class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> {
+  private loginForm?: Formik<ILoginFormFields, { children?: any }> | null;
+  private signupForm?: Formik<ISignupFormFields, { children?: any }> | null;
+
   constructor(props: ILoginScreenProps) {
     super(props);
     this.state = { view: LoginScreenView.WELCOME };
@@ -41,6 +44,19 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
         content = this.renderWelcome();
     }
     return <View style={styles.welcome}>{content}</View>;
+  }
+
+  public componentDidUpdate() {
+    // This is how we pass server-side errors to the Formik component
+    const { signupErrors, loginError } = this.props;
+    if (this.loginForm && loginError) {
+      this.loginForm.setErrors({ email: loginError });
+      this.loginForm.setSubmitting(false);
+    }
+    if (this.signupForm && signupErrors) {
+      this.signupForm.setErrors(signupErrors);
+      this.signupForm.setSubmitting(false);
+    }
   }
 
   private renderWelcome = () => (
@@ -66,9 +82,15 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
         If you don't specify initial values, you'll get a console error about a React component changing from
         uncontrolled to controlled
         */}
-        <Formik initialValues={{ email: this.state.email || "", password: "" }} onSubmit={this.handleLogin}>
+        <Formik
+          ref={el => (this.loginForm = el)}
+          initialValues={{ email: this.state.email || "", password: "" }}
+          onSubmit={this.handleLogin}
+          validateOnChange={false}
+        >
           {(formikBag: FormikProps<ILoginFormFields>) => (
             <View>
+              <FormErrors errors={values(formikBag.errors)} />
               <FormField
                 onChangeText={formikBag.handleChange("email")}
                 value={formikBag.values.email}
@@ -104,14 +126,20 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
           Sign up
         </Heading>
         <Formik
-          initialValues={{ email: this.state.email || "", password: "", passwordConfirmation: "" }}
-          onSubmit={this.handleLogin}
+          ref={el => (this.signupForm = el)}
+          initialValues={{ email: this.state.email || "", displayName: "", password: "", passwordConfirmation: "" }}
+          onSubmit={this.handleSignup}
+          validateOnChange={false}
           // TODO: the validation here should match server-side validation
           validationSchema={yup.object().shape({
             email: yup
               .string()
               .email("Invalid email")
               .required("Email is required"),
+            displayName: yup
+              .string()
+              .max(128, "Display name must be fewer than 128 characters")
+              .required("A display name is required"),
             password: yup
               .string()
               .min(8, "Password must be at least 8 characters")
@@ -124,20 +152,17 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
         >
           {(formikBag: FormikProps<ISignupFormFields>) => (
             <View>
-              <View style={styles.formError}>
-                {Object.keys(formikBag.touched)
-                  .map(k => (formikBag as any).errors[k])
-                  .map((error: string) => (
-                    <Text key={error} style={styles.formErrorText}>
-                      {error}
-                    </Text>
-                  ))}
-              </View>
+              <FormErrors errors={values(formikBag.errors)} />
               <FormField
                 onChangeText={formikBag.handleChange("email")}
                 onBlur={this.persistEmailToState}
                 value={formikBag.values.email}
                 placeholder="Email"
+              />
+              <FormField
+                onChangeText={formikBag.handleChange("displayName")}
+                value={formikBag.values.displayName}
+                placeholder="Display name"
               />
               <FormField
                 onChangeText={formikBag.handleChange("password")}
@@ -170,8 +195,12 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
 
   /* Util functions */
 
-  private handleLogin = (values: ILoginFormFields) => {
-    this.props.login(values.email!, values.password!, this.props.history);
+  private handleLogin = (formValues: ILoginFormFields) => {
+    this.props.login(formValues.email!, formValues.password!);
+  };
+
+  private handleSignup = (formValues: ISignupFormFields) => {
+    this.props.signUp(formValues.email!, formValues.displayName!, formValues.password!);
   };
 
   private persistEmailToState = (fieldValue: string) => {
@@ -193,15 +222,19 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
   };
 }
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<IApplicationState, void, AnyAction>) => ({
-  login: (email: string, password: string, history: History) => dispatch(login(email, password, history))
+const mapStateToProps = (state: IApplicationState) => ({
+  loginError: state.auth.loginError,
+  signupErrors: state.auth.signupErrors
 });
-export default withRouter(
-  connect(
-    null, // No `mapStateToProps`
-    mapDispatchToProps
-  )(LoginScreen)
-);
+const mapDispatchToProps = (dispatch: ThunkDispatch<IApplicationState, void, AnyAction>) => ({
+  login: (email: string, password: string) => dispatch(loginThunk(email, password)),
+  signUp: (email: string, displayName: string, password: string) =>
+    dispatch(createUserThunk(email, displayName, password))
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginScreen);
 
 const styles = StyleSheet.create({
   welcome: {
@@ -214,10 +247,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: colors.white,
     marginBottom: 10
-  },
-  formError: { flex: 1, paddingBottom: 10 },
-  formErrorText: {
-    flex: 1,
-    color: "red"
   }
 });

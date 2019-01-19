@@ -7,7 +7,7 @@ import { AccountScreen, LoginScreen, NotificationScreen, GroupsScreen } from "./
 import { Redirect, Route, Switch } from "./router";
 import { IApplicationState } from "./store";
 import { colors } from "./style/common";
-import PrivateRoute from "./components/atoms/PrivateRoute";
+import PrivateRoute, { UnauthenticatedRoute } from "./components/atoms/PrivateRoute";
 
 interface IMainProps extends RouteComponentProps {
   isAuthenticated: boolean;
@@ -24,7 +24,7 @@ class Main extends React.Component<IMainProps> {
           <PrivateRoute path="/groups" auth={isAuthenticated} component={GroupsScreen} />
           <PrivateRoute path="/notifications" auth={isAuthenticated} component={NotificationScreen} />
           <PrivateRoute path="/account" auth={isAuthenticated} component={AccountScreen} />
-          <Route path="/login" component={LoginScreen} />
+          <UnauthenticatedRoute path="/login" auth={isAuthenticated} component={LoginScreen} />
           {/* Catchall for undeclared routes */}
           <Route render={this.chooseInitialScreen} />
         </Switch>
@@ -36,15 +36,10 @@ class Main extends React.Component<IMainProps> {
     this.props.isAuthenticated ? <Redirect to="/groups" /> : <Redirect to="/login" />;
 }
 const mapStateToProps = (state: IApplicationState) => ({
-  isAuthenticated: !!state.currentUser
+  isAuthenticated: !!state.auth.token
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    null
-  )(Main)
-);
+export default withRouter(connect(mapStateToProps)(Main));
 
 const style = StyleSheet.create({
   container: {

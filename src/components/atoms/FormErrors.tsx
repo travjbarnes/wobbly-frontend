@@ -3,16 +3,14 @@ import { StyleSheet, View, Text } from "react-native";
 import { colors } from "../../style/common";
 
 interface IFormErrorsProps {
-  errors?: string[] | string;
+  errors: Array<string | undefined>;
 }
 const FormErrors: React.SFC<IFormErrorsProps> = ({ errors }) => {
-  if (typeof errors === "string") {
-    errors = [errors];
-  }
+  const filteredErrors = errors.filter(error => !!error) as string[];
   return (
     <View style={style.formError}>
-      {errors &&
-        errors.map((error: string, idx: number) => (
+      {filteredErrors &&
+        filteredErrors.map((error: string, idx: number) => (
           <Text key={`${idx}-${error}`} style={style.formErrorText}>
             {error}
           </Text>

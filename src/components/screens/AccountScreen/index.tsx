@@ -2,40 +2,65 @@ import { Formik, FormikProps } from "formik";
 import * as React from "react";
 import { ActivityIndicator, View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { AnyAction } from "redux";
-import { ThunkDispatch } from "redux-thunk";
 import * as yup from "yup";
+import { values } from "lodash";
 
 import { IApplicationState } from "../../../store";
-import { editUser } from "../../../store/currentUser/thunks";
 import { colors } from "../../../style/common";
 import { WobblyButton } from "../../atoms";
 import FormField from "../../atoms/FormField";
 import FormLabel from "../../atoms/FormLabel";
 import Screen from "../Screen";
-import { IEditUserFormFields, IHandleSubmitProps } from "./types";
+import { IEditUserFormFields } from "./types";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
+import { logoutThunk, editUserThunk } from "../../../store/auth/thunks";
+import FormErrors from "../../atoms/FormErrors";
+import { ICreateOrUpdateUserErrors } from "../../../api/types";
 
 interface IAccountScreenProps {
   displayName: string;
   email: string;
-  isUpdating: boolean;
+  token: string;
+  isEditingUser: boolean;
+  editUserErrors: ICreateOrUpdateUserErrors;
   editUser: (email: string, displayName: string, password: string) => void;
+  logout: (token: string) => void;
 }
 class AccountScreen extends React.Component<IAccountScreenProps> {
+  private editUserForm?: Formik<IEditUserFormFields, { children?: any }> | null;
+
+  public componentDidUpdate() {
+    // This is how we pass server-side errors to the Formik component
+    const { editUserErrors } = this.props;
+    if (this.editUserForm && editUserErrors) {
+      this.editUserForm.setErrors(editUserErrors);
+      this.editUserForm.setSubmitting(false);
+    }
+  }
+
   public render() {
     return (
       <Screen title="Account">
         <Formik
-          initialValues={{ displayName: this.props.displayName, email: this.props.email, password: "" }}
+          ref={el => (this.editUserForm = el)}
+          initialValues={{ displayName: this.props.displayName, email: this.props.email }}
           onSubmit={this.handleSubmit}
+          validateOnChange={false}
           validationSchema={yup.object().shape({
-            email: yup.string().email("Invalid email"),
-            displayName: yup.string(),
-            password: yup.string().min(8, "Password must be at least 8 characters")
+            email: yup
+              .string()
+              .email("Invalid email")
+              .required(),
+            displayName: yup
+              .string()
+              .max(128, "Display name must be fewer than 128 characters")
+              .required()
           })}
         >
           {(formikBag: FormikProps<IEditUserFormFields>) => (
             <View style={style.wrapper}>
+              <FormErrors errors={values(formikBag.errors)} />
               <FormLabel>Email</FormLabel>
               <FormField
                 onChangeText={formikBag.handleChange("email")}
@@ -48,14 +73,11 @@ class AccountScreen extends React.Component<IAccountScreenProps> {
                 value={formikBag.values.displayName}
                 backgroundColor={colors.lightGray1}
               />
-              <FormLabel>Password</FormLabel>
-              <FormField
-                onChangeText={formikBag.handleChange("password")}
-                value={formikBag.values.password}
-                backgroundColor={colors.lightGray1}
-              />
-              <WobblyButton onPress={formikBag.handleSubmit} disabled={this.props.isUpdating}>
-                {this.props.isUpdating ? <ActivityIndicator /> : "Submit"}
+              <WobblyButton onPress={formikBag.handleSubmit} disabled={this.props.isEditingUser}>
+                {this.props.isEditingUser ? <ActivityIndicator /> : "Submit"}
+              </WobblyButton>
+              <WobblyButton onPress={this.handleLogout} disabled={this.props.isEditingUser}>
+                {"Log out"}
               </WobblyButton>
             </View>
           )}
@@ -64,9 +86,13 @@ class AccountScreen extends React.Component<IAccountScreenProps> {
     );
   }
 
-  private handleSubmit = (values: IEditUserFormFields, { setSubmitting }: IHandleSubmitProps) => {
-    this.props.editUser(values.email, values.displayName, values.password);
-    setSubmitting(false);
+  private handleSubmit = (formValues: IEditUserFormFields) => {
+    this.props.editUser(this.props.token, formValues.email, formValues.displayName);
+    // setSubmitting(false);
+  };
+
+  private handleLogout = (): void => {
+    this.props.logout(this.props.token);
   };
 }
 
@@ -78,12 +104,15 @@ const style = StyleSheet.create({
 });
 
 const mapStateToProps = (state: IApplicationState) => ({
-  displayName: state.currentUser!.displayName,
-  email: state.currentUser!.email,
-  isUpdating: state.currentUser!.isUpdating
+  email: state.auth.email,
+  displayName: state.auth.displayName,
+  token: state.auth.token,
+  isEditingUser: state.auth.isEditingUser,
+  editUserErrors: state.auth.editUserErrors
 });
 const mapDispatchToProps = (dispatch: ThunkDispatch<IApplicationState, void, AnyAction>) => ({
-  editUser: (email: string, displayName: string, password: string) => dispatch(editUser(email, displayName, password))
+  editUser: (token: string, email: string, displayName: string) => dispatch(editUserThunk(token, email, displayName)),
+  logout: (token: string) => dispatch(logoutThunk(token) as any)
 });
 export default connect(
   mapStateToProps,

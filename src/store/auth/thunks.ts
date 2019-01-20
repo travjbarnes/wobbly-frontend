@@ -1,13 +1,16 @@
+import { NavigationActions } from "react-navigation";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 
 import { IApplicationState, resetAppAction } from "../";
 import * as AuthAPI from "../../api/auth";
-import { fetchUserAction } from "../entities/actions";
-import { persistor } from "../../reduxStore";
-import { ICreateOrUpdateUserErrors } from "../../api/types";
 import { APIError } from "../../api/errors";
-import { signupAction, loginAction, editUserAction } from "./actions";
+import { ICreateOrUpdateUserErrors } from "../../api/types";
+import { persistor } from "../../reduxStore";
+import NavigationService from "../../util/NavigationService";
+import { fetchUserAction } from "../entities/actions";
+
+import { editUserAction, loginAction, signupAction } from "./actions";
 import { AuthAction } from "./types";
 
 /** Sign up for a new account */
@@ -44,6 +47,7 @@ export const loginThunk = (email: string, password: string) => (
         );
         // Also store our own user info in our collection of entities
         dispatch(fetchUserAction.success(userDetails));
+        NavigationService.navigate("App");
       });
     })
     .catch(error => {
@@ -62,19 +66,24 @@ export const logoutThunk = (token: string) => (dispatch: ThunkDispatch<IApplicat
       dispatch(resetAppAction());
       // immediately write all pending state to disk (returns a promise)
       persistor.flush();
+      NavigationService.navigate("Auth");
     })
     .catch((error: APIError<any>) => {
       if (error.status === 401) {
+        // @ts-ignore
+        // tslint:disable-next-line:no-console
+        console.warn("Invalid token but logging out anyway!");
         // HTTP 401 Unauthorized
         // This means that the auth token is invalid. If this is the case, proceed with clearing the app state.
         dispatch(resetAppAction());
         // immediately write all pending state to disk (returns a promise)
         persistor.flush();
+        NavigationService.navigate("Auth");
       } else {
         // TODO
         // @ts-ignore
         // tslint:disable-next-line:no-console
-        console.error(error.json);
+        console.error(error);
       }
     });
 };

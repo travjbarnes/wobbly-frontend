@@ -1,4 +1,4 @@
-import { post, getAuthHeader, get, put } from ".";
+import { get, getAuthHeader, post, put } from ".";
 import { ILoginResponse, IOwnUser } from "./types";
 
 const AUTH_PATH = "/auth";

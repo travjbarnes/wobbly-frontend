@@ -1,5 +1,5 @@
-import { buildRequest } from "./util";
 import { APIError } from "./errors";
+import { buildRequest } from "./util";
 
 export const ROOT_URL = __DEV__ ? "http://0.0.0.0" : "https://production.wobbly.app";
 export const API_PATH = "/api/v1";

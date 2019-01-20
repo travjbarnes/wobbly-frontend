@@ -1,24 +1,25 @@
 import { Formik, FormikProps } from "formik";
-import * as React from "react";
-import { ActivityIndicator, View, StyleSheet } from "react-native";
-import { connect } from "react-redux";
-import * as yup from "yup";
 import { values } from "lodash";
+import * as React from "react";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { NavigationInjectedProps, NavigationScreenProp } from "react-navigation";
+import { connect } from "react-redux";
+import { AnyAction } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import * as yup from "yup";
 
+import { ICreateOrUpdateUserErrors } from "../../../api/types";
 import { IApplicationState } from "../../../store";
+import { editUserThunk, logoutThunk } from "../../../store/auth/thunks";
 import { colors } from "../../../style/common";
 import { WobblyButton } from "../../atoms";
+import FormErrors from "../../atoms/FormErrors";
 import FormField from "../../atoms/FormField";
 import FormLabel from "../../atoms/FormLabel";
-import Screen from "../Screen";
-import { IEditUserFormFields } from "./types";
-import { ThunkDispatch } from "redux-thunk";
-import { AnyAction } from "redux";
-import { logoutThunk, editUserThunk } from "../../../store/auth/thunks";
-import FormErrors from "../../atoms/FormErrors";
-import { ICreateOrUpdateUserErrors } from "../../../api/types";
 
-interface IAccountScreenProps {
+import { IEditUserFormFields } from "./types";
+
+interface IAccountScreenProps extends Partial<NavigationInjectedProps> {
   displayName: string;
   email: string;
   token: string;
@@ -28,6 +29,10 @@ interface IAccountScreenProps {
   logout: (token: string) => void;
 }
 class AccountScreen extends React.Component<IAccountScreenProps> {
+  public static navigationOptions = {
+    title: "Account"
+  };
+
   private editUserForm?: Formik<IEditUserFormFields, { children?: any }> | null;
 
   public componentDidUpdate() {
@@ -41,48 +46,46 @@ class AccountScreen extends React.Component<IAccountScreenProps> {
 
   public render() {
     return (
-      <Screen title="Account">
-        <Formik
-          ref={el => (this.editUserForm = el)}
-          initialValues={{ displayName: this.props.displayName, email: this.props.email }}
-          onSubmit={this.handleSubmit}
-          validateOnChange={false}
-          validationSchema={yup.object().shape({
-            email: yup
-              .string()
-              .email("Invalid email")
-              .required(),
-            displayName: yup
-              .string()
-              .max(128, "Display name must be fewer than 128 characters")
-              .required()
-          })}
-        >
-          {(formikBag: FormikProps<IEditUserFormFields>) => (
-            <View style={style.wrapper}>
-              <FormErrors errors={values(formikBag.errors)} />
-              <FormLabel>Email</FormLabel>
-              <FormField
-                onChangeText={formikBag.handleChange("email")}
-                value={formikBag.values.email}
-                backgroundColor={colors.lightGray1}
-              />
-              <FormLabel>Display name</FormLabel>
-              <FormField
-                onChangeText={formikBag.handleChange("displayName")}
-                value={formikBag.values.displayName}
-                backgroundColor={colors.lightGray1}
-              />
-              <WobblyButton onPress={formikBag.handleSubmit} disabled={this.props.isEditingUser}>
-                {this.props.isEditingUser ? <ActivityIndicator /> : "Submit"}
-              </WobblyButton>
-              <WobblyButton onPress={this.handleLogout} disabled={this.props.isEditingUser}>
-                {"Log out"}
-              </WobblyButton>
-            </View>
-          )}
-        </Formik>
-      </Screen>
+      <Formik
+        ref={el => (this.editUserForm = el)}
+        initialValues={{ displayName: this.props.displayName, email: this.props.email }}
+        onSubmit={this.handleSubmit}
+        validateOnChange={false}
+        validationSchema={yup.object().shape({
+          email: yup
+            .string()
+            .email("Invalid email")
+            .required(),
+          displayName: yup
+            .string()
+            .max(128, "Display name must be fewer than 128 characters")
+            .required()
+        })}
+      >
+        {(formikBag: FormikProps<IEditUserFormFields>) => (
+          <View>
+            <FormErrors errors={values(formikBag.errors)} />
+            <FormLabel>Email</FormLabel>
+            <FormField
+              onChangeText={formikBag.handleChange("email")}
+              value={formikBag.values.email}
+              backgroundColor={colors.lightGray1}
+            />
+            <FormLabel>Display name</FormLabel>
+            <FormField
+              onChangeText={formikBag.handleChange("displayName")}
+              value={formikBag.values.displayName}
+              backgroundColor={colors.lightGray1}
+            />
+            <WobblyButton onPress={formikBag.handleSubmit} disabled={this.props.isEditingUser}>
+              {this.props.isEditingUser ? <ActivityIndicator /> : "Submit"}
+            </WobblyButton>
+            <WobblyButton onPress={this.handleLogout} disabled={this.props.isEditingUser}>
+              {"Log out"}
+            </WobblyButton>
+          </View>
+        )}
+      </Formik>
     );
   }
 
@@ -95,13 +98,6 @@ class AccountScreen extends React.Component<IAccountScreenProps> {
     this.props.logout(this.props.token);
   };
 }
-
-const style = StyleSheet.create({
-  wrapper: {
-    height: "100%",
-    width: "100%"
-  }
-});
 
 const mapStateToProps = (state: IApplicationState) => ({
   email: state.auth.email,

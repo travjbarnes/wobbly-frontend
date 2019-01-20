@@ -4,7 +4,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { WobblyButton } from "../atoms";
 import SearchBar from "../molecules/SearchBar";
 import { GroupListItem } from "../organisms";
-import Screen from "./Screen";
 
 interface IGroupListItem {
   id: string;
@@ -62,6 +61,10 @@ const groups: IGroupListItem[] = [
 ];
 
 class GroupScreen extends Component<IGroupsScreenProps, {}> {
+  public static navigationOptions = {
+    title: "Groups"
+  };
+
   // TODO: Navigate to add group page
   public handlePress = () => {
     return null;
@@ -70,22 +73,20 @@ class GroupScreen extends Component<IGroupsScreenProps, {}> {
   public render() {
     const { handlePress } = this;
     return (
-      <Screen title="Groups">
-        <View style={styles.screenWrapper}>
-          <SearchBar />
-          <ScrollView style={styles.groupWrapper}>
-            {groups.map((group: IGroupListItem) => (
-              <GroupListItem
-                key={group.id}
-                name={group.name}
-                description={group.description}
-                memberList={group.memberList}
-              />
-            ))}
-          </ScrollView>
-          <WobblyButton onPress={handlePress}>Create group</WobblyButton>
-        </View>
-      </Screen>
+      <View style={styles.screenWrapper}>
+        <SearchBar />
+        <ScrollView style={styles.groupWrapper}>
+          {groups.map((group: IGroupListItem) => (
+            <GroupListItem
+              key={group.id}
+              name={group.name}
+              description={group.description}
+              memberList={group.memberList}
+            />
+          ))}
+        </ScrollView>
+        <WobblyButton onPress={handlePress}>Create group</WobblyButton>
+      </View>
     );
   }
 }

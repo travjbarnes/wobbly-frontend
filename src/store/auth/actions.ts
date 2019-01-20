@@ -1,7 +1,8 @@
 import { createAsyncAction } from "typesafe-actions";
 
-import { AuthActionType, IAuthenticated } from "./types";
 import { ICreateOrUpdateUserErrors, ILoginErrors, IOwnUser } from "../../api/types";
+
+import { AuthActionType, IAuthenticated } from "./types";
 
 export const loginAction = createAsyncAction(
   AuthActionType.LOGIN_REQUEST,

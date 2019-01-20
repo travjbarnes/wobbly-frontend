@@ -15,10 +15,7 @@ const babelOptions = {
     "expo-web",
     "react-native-web",
     "transform-decorators-legacy",
-    [
-      "transform-runtime",
-      { helpers: false, polyfill: false, regenerator: true }
-    ]
+    ["transform-runtime", { helpers: false, polyfill: false, regenerator: true }]
   ],
   // The 'react-native' preset is recommended to match React Native's packager
   presets: ["react-native"]
@@ -55,8 +52,8 @@ const babelLoaderConfiguration = {
     path.resolve(appDirectory, "node_modules/@expo/samples"),
     path.resolve(appDirectory, "node_modules/@expo/vector-icons"),
     path.resolve(appDirectory, "node_modules/react-native-platform-touchable"),
-    path.resolve(appDirectory, "node_modules/react-router"),
-    path.resolve(appDirectory, "node_modules/react-router-native")
+    path.resolve(appDirectory, "node_modules/@react-navigation/core"),
+    path.resolve(appDirectory, "node_modules/@react-navigation/web")
   ],
   use: {
     loader: "babel-loader",
@@ -123,9 +120,7 @@ module.exports = {
     // builds to eliminate development checks and reduce build size. You may
     // wish to include additional optimizations.
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify(
-        process.env.NODE_ENV || "development"
-      ),
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
       __DEV__: process.env.NODE_ENV === "production" || true
     })
   ],

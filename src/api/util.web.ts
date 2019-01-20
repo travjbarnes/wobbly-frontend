@@ -1,5 +1,6 @@
 // need to polyfill URL because node/jest throws reference error (but only for web)
 import { URL } from "whatwg-url";
+
 import { ROOT_URL } from ".";
 
 /**

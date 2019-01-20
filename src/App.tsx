@@ -1,18 +1,20 @@
+/** Entrypoint for react-native on iOS and Android. */
+import { Buffer } from "buffer";
 import * as React from "react";
 import { Provider } from "react-redux";
 import { Store } from "redux";
-
-import Main from "./Main";
-import { Router } from "./router";
-import { reduxStore, persistor } from "./reduxStore";
 import { PersistGate } from "redux-persist/integration/react";
-import Splash from "./components/screens/Splash";
+import { URL, URLSearchParams } from "whatwg-url";
+
+import AppNavigation from "./AppNavigation";
+import SplashScreen from "./components/screens/SplashScreen";
+import { persistor, reduxStore } from "./reduxStore";
+import NavigationService from "./util/NavigationService";
 
 // see https://github.com/facebook/react-native/issues/14796
-import { Buffer } from "buffer";
 global.Buffer = Buffer;
+
 // see https://github.com/facebook/react-native/issues/16434
-import { URL, URLSearchParams } from "whatwg-url";
 // @ts-ignore
 global.URL = URL;
 // @ts-ignore
@@ -29,10 +31,12 @@ export default class App extends React.Component<{}> {
   public render() {
     return (
       <Provider store={this.store}>
-        <PersistGate loading={<Splash />} persistor={persistor}>
-          <Router>
-            <Main />
-          </Router>
+        <PersistGate loading={<SplashScreen />} persistor={persistor}>
+          <AppNavigation
+            ref={el => {
+              NavigationService.setTopLevelNavigator(el);
+            }}
+          />
         </PersistGate>
       </Provider>
     );

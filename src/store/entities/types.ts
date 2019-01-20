@@ -1,4 +1,5 @@
 import { ActionType } from "typesafe-actions";
+
 import * as entitiesActions from "./actions";
 
 export const enum EntitiesActionType {

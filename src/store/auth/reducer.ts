@@ -1,7 +1,8 @@
-import { IAuthState, AuthAction } from "./types";
-import { loginAction, signupAction, editUserAction } from "./actions";
-import { getType } from "typesafe-actions";
 import { Reducer } from "redux";
+import { getType } from "typesafe-actions";
+
+import { editUserAction, loginAction, signupAction } from "./actions";
+import { AuthAction, IAuthState } from "./types";
 
 const initialState: IAuthState = {
   isEditingUser: false

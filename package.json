@@ -52,10 +52,7 @@
     ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/?!(react-router)"
-    ]
+    }
   },
   "dependencies": {
     "buffer": "^5.2.1",
@@ -68,10 +65,8 @@
     "react-dom": "~16.4.0",
     "react-native": "~0.55.2",
     "react-native-web": "^0.8.0",
+    "react-navigation": "^3.0.9",
     "react-redux": "^5.0.7",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
-    "react-router-native": "^4.3.0",
     "redux": "^4.0.0",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
@@ -86,8 +81,8 @@
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
     "@types/react-native": "^0.56.23",
+    "@types/react-navigation": "^3.0.1",
     "@types/react-redux": "^6.0.9",
-    "@types/react-router-native": "^4.2.3",
     "@types/react-test-renderer": "^16.0.1",
     "@types/whatwg-url": "^6.4.0",
     "@types/yup": "^0.24.9",

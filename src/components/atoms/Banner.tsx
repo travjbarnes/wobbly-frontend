@@ -1,6 +1,7 @@
-import * as React from "react";
-import { View, StyleSheet, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import * as React from "react";
+import { StyleSheet, Text, View } from "react-native";
+
 import { colors } from "../../style/common";
 
 interface IBannerProps {

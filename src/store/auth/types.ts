@@ -1,6 +1,8 @@
-import { ICreateOrUpdateUserErrors, IOwnUser } from "../../api/types";
-import * as authActions from "./actions";
 import { ActionType } from "typesafe-actions";
+
+import { ICreateOrUpdateUserErrors, IOwnUser } from "../../api/types";
+
+import * as authActions from "./actions";
 
 export const enum AuthActionType {
   // Login

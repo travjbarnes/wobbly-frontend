@@ -1,10 +1,10 @@
-import { combineReducers, Reducer, AnyAction } from "redux";
+import { AnyAction, combineReducers, Reducer } from "redux";
+import { createAction } from "typesafe-actions";
 
+import authReducer from "./auth/reducer";
 import { IAuthState } from "./auth/types";
 import entitiesReducer from "./entities/reducer";
 import { IEntitiesState } from "./entities/types";
-import authReducer from "./auth/reducer";
-import { createAction } from "typesafe-actions";
 
 export interface IApplicationState {
   readonly auth: IAuthState;

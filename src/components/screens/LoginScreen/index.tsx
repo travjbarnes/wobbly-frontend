@@ -1,22 +1,23 @@
 import { Formik, FormikProps } from "formik";
+import { values } from "lodash";
 import * as React from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, SafeAreaView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import * as yup from "yup";
-import { values } from "lodash";
 
 import { IApplicationState } from "../../../store";
-import { loginThunk, createUserThunk } from "../../../store/auth/thunks";
+import { createUserThunk, loginThunk } from "../../../store/auth/thunks";
 import { colors } from "../../../style/common";
 import { HeadingType } from "../../../types";
+import FormErrors from "../../atoms/FormErrors";
 import FormField from "../../atoms/FormField";
 import Heading from "../../atoms/Heading";
 import WobblyButton from "../../atoms/WobblyButton";
 import VerticalButtonGroup from "../../molecules/VerticalButtonGroup";
+
 import { ILoginFormFields, ILoginScreenProps, ILoginScreenState, ISignupFormFields, LoginScreenView } from "./types";
-import FormErrors from "../../atoms/FormErrors";
 
 /**
  * This screen handles both logins and signups.
@@ -43,7 +44,7 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
       default:
         content = this.renderWelcome();
     }
-    return <View style={styles.welcome}>{content}</View>;
+    return <SafeAreaView style={styles.welcome}>{content}</SafeAreaView>;
   }
 
   public componentDidUpdate() {

@@ -1,8 +1,8 @@
+import { Reducer } from "redux";
 import { getType } from "typesafe-actions";
 
-import { IEntitiesState, EntitiesAction } from "./types";
-import { Reducer } from "redux";
 import { fetchUserAction } from "./actions";
+import { EntitiesAction, IEntitiesState } from "./types";
 
 const initialState: IEntitiesState = {
   usersById: {},

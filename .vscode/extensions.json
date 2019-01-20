@@ -5,7 +5,6 @@
   // List of extensions which should be recommended for users of this workspace.
   "recommendations": [
     "kevinmcgowan.typescriptimport",
-    "mike-co.import-sorter",
     "eg2.tslint",
     "esbenp.prettier-vscode"
   ],

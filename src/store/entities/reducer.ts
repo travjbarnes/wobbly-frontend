@@ -15,7 +15,7 @@ const entitiesReducer: Reducer<IEntitiesState, EntitiesAction> = (state = initia
     case getType(fetchUserAction.request):
       return state; // TODO
     case getType(fetchUserAction.success):
-      return { ...state, usersById: { ...state.usersById, [action.payload.id]: action.payload } };
+      return { ...state, usersById: { ...state.usersById, [action.payload.uuid]: action.payload } };
     case getType(fetchUserAction.failure):
     default:
       return state;

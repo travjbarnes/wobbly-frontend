@@ -1,7 +1,7 @@
 import { Formik, FormikProps } from "formik";
 import { values } from "lodash";
 import * as React from "react";
-import { ActivityIndicator, SafeAreaView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, KeyboardAvoidingView, SafeAreaView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
@@ -11,11 +11,8 @@ import { IApplicationState } from "../../../store";
 import { createUserThunk, loginThunk } from "../../../store/auth/thunks";
 import { colors } from "../../../style/common";
 import { HeadingType } from "../../../types";
-import FormErrors from "../../atoms/FormErrors";
-import FormField from "../../atoms/FormField";
-import Heading from "../../atoms/Heading";
-import WobblyButton from "../../atoms/WobblyButton";
-import VerticalButtonGroup from "../../molecules/VerticalButtonGroup";
+import { FormErrors, FormField, Heading, WobblyButton } from "../../atoms";
+import { VerticalButtonGroup } from "../../molecules";
 
 import { ILoginFormFields, ILoginScreenProps, ILoginScreenState, ISignupFormFields, LoginScreenView } from "./types";
 
@@ -24,8 +21,8 @@ import { ILoginFormFields, ILoginScreenProps, ILoginScreenState, ISignupFormFiel
  * It's all handled in one component so that we can share e.g. the email field between the login and signup forms.
  */
 class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> {
-  private loginForm?: Formik<ILoginFormFields, { children?: any }> | null;
-  private signupForm?: Formik<ISignupFormFields, { children?: any }> | null;
+  private loginForm?: Formik<ILoginFormFields> | null;
+  private signupForm?: Formik<ISignupFormFields> | null;
 
   constructor(props: ILoginScreenProps) {
     super(props);
@@ -75,7 +72,7 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
 
   private renderLogin = () => {
     return (
-      <View>
+      <KeyboardAvoidingView behavior="padding">
         <Heading level={HeadingType.H2} style={styles.welcomeHeading}>
           Login
         </Heading>
@@ -97,6 +94,7 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
                 value={formikBag.values.email}
                 onBlur={this.persistEmailToState}
                 placeholder="Email"
+                keyboardType="email-address"
               />
               <FormField
                 onChangeText={formikBag.handleChange("password")}
@@ -116,13 +114,13 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
             </View>
           )}
         </Formik>
-      </View>
+      </KeyboardAvoidingView>
     );
   };
 
   private renderSignup = () => {
     return (
-      <View>
+      <KeyboardAvoidingView behavior="padding">
         <Heading level={HeadingType.H2} style={styles.welcomeHeading}>
           Sign up
         </Heading>
@@ -159,6 +157,7 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
                 onBlur={this.persistEmailToState}
                 value={formikBag.values.email}
                 placeholder="Email"
+                keyboardType="email-address"
               />
               <FormField
                 onChangeText={formikBag.handleChange("displayName")}
@@ -190,7 +189,7 @@ class LoginScreen extends React.Component<ILoginScreenProps, ILoginScreenState> 
             </View>
           )}
         </Formik>
-      </View>
+      </KeyboardAvoidingView>
     );
   };
 

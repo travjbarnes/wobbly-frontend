@@ -4,3 +4,4 @@ export { default as FormField } from "./FormField";
 export { default as FormLabel } from "./FormLabel";
 export { default as Heading } from "./Heading";
 export { default as WobblyButton } from "./WobblyButton";
+export { default as KeyboardDismissingTouchable } from "./KeyboardDismissingTouchable";

@@ -12,6 +12,8 @@ export default FormLabel;
 
 const style = StyleSheet.create({
   label: {
-    color: standardColors.primaryText
+    color: standardColors.primaryText,
+    marginLeft: 8,
+    marginRight: 8
   }
 });

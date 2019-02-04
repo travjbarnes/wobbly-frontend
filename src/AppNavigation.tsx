@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
 import {
   createAppContainer,
@@ -6,10 +7,7 @@ import {
   createSwitchNavigator
 } from "react-navigation";
 
-import { Ionicons } from "@expo/vector-icons";
-
-import { AccountScreen, GroupsScreen, LoginScreen } from "./components/screens";
-import SplashScreen from "./components/screens/SplashScreen";
+import { AccountScreen, GroupsScreen, LoginScreen, SplashScreen } from "./components/screens";
 
 // Main app stacks
 const GroupsStack = createStackNavigator({

@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
+import * as React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { colors, fontSizes, standardColors } from "../../style/common";
 
 interface IWobblyButtonProps {
-  children: ReactNode;
+  children: React.ReactNode;
   onPress?: () => void;
   disabled?: boolean;
 }

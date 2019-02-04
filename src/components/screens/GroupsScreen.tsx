@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { WobblyButton } from "../atoms";
@@ -60,7 +60,7 @@ const groups: IGroupListItem[] = [
   }
 ];
 
-class GroupScreen extends Component<IGroupsScreenProps, {}> {
+class GroupScreen extends React.Component<IGroupsScreenProps, {}> {
   public static navigationOptions = {
     title: "Groups"
   };

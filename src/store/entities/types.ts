@@ -2,7 +2,7 @@ import { ActionType } from "typesafe-actions";
 
 import * as entitiesActions from "./actions";
 
-export const enum EntitiesActionType {
+export enum EntitiesActionType {
   // Fetches information about a user
   FETCH_USER_REQUEST = "FETCH_USER_REQUEST",
   FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS",
@@ -15,7 +15,7 @@ export const enum EntitiesActionType {
 
 // Users
 export interface IUser {
-  id: number;
+  uuid: string;
   displayName: string;
   // image: ...
 }

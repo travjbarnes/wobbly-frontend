@@ -1,4 +1,4 @@
-import { ICreateOrUpdateUserErrors } from "../../../api/types";
+import { ICreateOrUpdateUserErrors } from "../../../store/auth/types";
 
 // The different views contained in `LoginScreen`
 export enum LoginScreenView {

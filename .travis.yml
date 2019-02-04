@@ -1,9 +1,9 @@
-services:
-  - docker
+language: node_js
+node_js:
+  - node
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.13.0
+  - export PATH=$HOME/.yarn/bin:$PATH
+cache:
+  yarn: true
 
-script:
-  - set -e
-  - bin/build-docker.sh -p
-  - bin/test-docker.sh -p
-  - bin/tag-git.sh
-  - bin/deploy.sh

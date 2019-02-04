@@ -1,15 +1,16 @@
-import React from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import * as React from "react";
+import { KeyboardTypeOptions, StyleSheet, TextInput, View } from "react-native";
 
 import { colors } from "../../style/common";
 
 export interface IFormFieldProps {
   onChangeText: (e: string | React.ChangeEvent<any>) => void;
-  onBlur?: ((s: string) => void);
+  onBlur?: (s: string) => void;
   value?: string;
   secureTextEntry?: boolean;
   placeholder?: string;
   backgroundColor?: string;
+  keyboardType?: KeyboardTypeOptions;
 }
 /**
  * A wrapper for `<TextInput>` with custom styling.
@@ -22,7 +23,7 @@ export interface IFormFieldProps {
  */
 class FormField extends React.PureComponent<IFormFieldProps> {
   public render() {
-    const { onChangeText, value, secureTextEntry, placeholder, backgroundColor } = this.props;
+    const { onChangeText, value, secureTextEntry, placeholder, backgroundColor, keyboardType } = this.props;
     const wrapperStyle = backgroundColor ? [styles.wrapper, { backgroundColor }] : styles.wrapper;
     return (
       <View style={wrapperStyle}>
@@ -33,6 +34,8 @@ class FormField extends React.PureComponent<IFormFieldProps> {
           value={value}
           secureTextEntry={secureTextEntry || false}
           placeholder={placeholder}
+          keyboardType={keyboardType}
+          autoCorrect={false}
         />
       </View>
     );
@@ -62,7 +65,10 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: colors.white,
     borderRadius: 3,
-    margin: 8,
+    marginLeft: 8,
+    marginRight: 8,
+    marginBottom: 8,
+    marginTop: 4,
     padding: 8
   },
   textInput: {

@@ -1,10 +1,8 @@
 import { ActionType } from "typesafe-actions";
 
-import { ICreateOrUpdateUserErrors, IOwnUser } from "../../api/types";
-
 import * as authActions from "./actions";
 
-export const enum AuthActionType {
+export enum AuthActionType {
   // Login
   LOGIN_REQUEST = "LOGIN_REQUEST",
   LOGIN_SUCCESS = "LOGIN_SUCCESS",
@@ -19,16 +17,36 @@ export const enum AuthActionType {
   EDIT_USER_FAILURE = "EDIT_USER_FAILURE"
 }
 
+export interface ICreateOrUpdateUserErrors {
+  // A list of the errors for each field
+  [field: string]: string[];
+}
+
+// This will always be a single-element list with the string
+// "Unable to login with provided credentials".
+export interface ILoginErrors {
+  non_field_errors: string[];
+}
+
+/** Public fields of any user. */
+export interface IUser {
+  uuid: string;
+  displayName: string;
+  image?: any; // TODO
+}
+
+/** Users can see their own email, but not that of others. */
 /** These fields are present when the user is authenticated. */
-export interface IAuthenticated extends IOwnUser {
+export interface IOwnUser extends IUser {
+  email: string;
   token: string;
 }
 
 /**
- * By extending `Partial<IAuthenticated>`, we show that the authenticated fields (e.g. a bearer token)
+ * By extending `Partial<IOwnUser>`, we show that the authenticated fields (e.g. a bearer token)
  * may not be present.
  */
-export interface IAuthState extends Partial<IAuthenticated> {
+export interface IAuthState extends Partial<IOwnUser> {
   isEditingUser: boolean;
   loginError?: string; // A string is enough for this. E.g. "Unable to login with provided credentials".
   signupErrors?: ICreateOrUpdateUserErrors;

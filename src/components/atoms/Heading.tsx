@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { StyleSheet, Text, TextStyle } from "react-native";
 
 import { fontSizes } from "../../style/common";

@@ -9,7 +9,7 @@ interface IFormErrorsProps {
 const FormErrors: React.SFC<IFormErrorsProps> = ({ errors }) => {
   const filteredErrors = errors.filter(error => !!error) as string[];
   return (
-    <View style={style.formError}>
+    <View style={style.formErrors}>
       {filteredErrors &&
         filteredErrors.map((error: string, idx: number) => (
           <Text key={`${idx}-${error}`} style={style.formErrorText}>
@@ -21,10 +21,11 @@ const FormErrors: React.SFC<IFormErrorsProps> = ({ errors }) => {
 };
 
 const style = StyleSheet.create({
-  formError: { flex: 1, paddingBottom: 10 },
+  formErrors: {
+    padding: 10
+  },
   formErrorText: {
-    flex: 1,
-    color: colors.red1
+    color: colors.red5
   }
 });
 

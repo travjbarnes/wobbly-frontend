@@ -1,14 +1,12 @@
 import { createAsyncAction } from "typesafe-actions";
 
-import { ICreateOrUpdateUserErrors, ILoginErrors, IOwnUser } from "../../api/types";
-
-import { AuthActionType, IAuthenticated } from "./types";
+import { AuthActionType, ICreateOrUpdateUserErrors, ILoginErrors, IOwnUser } from "./types";
 
 export const loginAction = createAsyncAction(
   AuthActionType.LOGIN_REQUEST,
   AuthActionType.LOGIN_SUCCESS,
   AuthActionType.LOGIN_FAILURE
-)<void, IAuthenticated, ILoginErrors>();
+)<void, IOwnUser, ILoginErrors>();
 
 export const signupAction = createAsyncAction(
   AuthActionType.SIGNUP_REQUEST,
@@ -20,4 +18,4 @@ export const editUserAction = createAsyncAction(
   AuthActionType.EDIT_USER_REQUEST,
   AuthActionType.EDIT_USER_SUCCESS,
   AuthActionType.EDIT_USER_FAILURE
-)<void, IOwnUser, ICreateOrUpdateUserErrors>();
+)<void, Partial<IOwnUser>, ICreateOrUpdateUserErrors>();

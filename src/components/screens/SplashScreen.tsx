@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 
 import { IApplicationState } from "../../store";
 import { standardColors } from "../../style/common";
-import { WobblyButton } from "../atoms";
 
 interface ISplashScreenProps extends Partial<NavigationInjectedProps> {
   token?: string;
@@ -38,8 +37,6 @@ class SplashScreen extends React.PureComponent<ISplashScreenProps> {
     return (
       <SafeAreaView style={style.wrapper}>
         <Text style={style.text}>Wobbly</Text>
-        {/* tslint:disable-next-line */}
-        <WobblyButton onPress={() => this.props.navigation!.navigate("Auth")}>Ugh</WobblyButton>
       </SafeAreaView>
     );
   }

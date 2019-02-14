@@ -1,0 +1,121 @@
+import hoistNonReactStatics from "hoist-non-react-statics";
+import { inflect } from "inflection";
+import { remove } from "lodash";
+import * as React from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import { Image, ListItem } from "react-native-elements";
+import { NavigationInjectedProps } from "react-navigation";
+
+import { getGroups, getGroups_groups } from "../../generated/getGroups";
+import {
+  LEAVE_GROUP_MUTATION,
+  LeaveGroupMutation,
+  LeaveGroupMutationFn,
+  LeaveGroupMutationResult,
+  LeaveGroupMutationUpdaterFn
+} from "../../graphql/mutations";
+import { GROUP_DETAILS_QUERY, GroupDetailsQuery, GroupDetailsQueryResult, GROUPS_QUERY } from "../../graphql/queries";
+import { NavigationService } from "../../services";
+import { colors } from "../../style/common";
+import { ListSection } from "../atoms";
+import WobblyText from "../atoms/WobblyText";
+import { LoadingState, PersonList } from "../organisms";
+
+interface IGroupDetailsScreen extends NavigationInjectedProps {
+  groupDetails: GroupDetailsQueryResult;
+  leaveGroup: LeaveGroupMutationFn;
+  leaveGroupResult: LeaveGroupMutationResult;
+}
+class GroupDetailsScreen extends React.PureComponent<IGroupDetailsScreen> {
+  public static navigationOptions = () => {
+    return {
+      title: "Group details"
+    };
+  };
+  private groupId: string;
+  private groupName: string;
+
+  public constructor(props: IGroupDetailsScreen) {
+    super(props);
+    this.groupId = props.navigation.getParam("groupId", "");
+    this.groupName = props.navigation.getParam("groupName", "");
+  }
+
+  public render() {
+    if (this.props.groupDetails.loading) {
+      return <LoadingState />;
+    } else {
+      const group = this.props.groupDetails.data!.group!;
+      const members = group.members || [];
+      return (
+        <ScrollView style={style.container}>
+          <Image source={{ uri: "https://placeimg.com/600/200/nature" }} resizeMode="cover" style={style.groupImage} />
+          <ListSection>
+            <ListItem title={<WobblyText h4={true}>{this.groupName}</WobblyText>} bottomDivider={true} />
+            <ListItem title={group.description || "Add a description"} bottomDivider={true} />
+          </ListSection>
+          <ListSection>
+            <WobblyText listHeading={true}>
+              {`${members.length} ${inflect("member", members.length)}`.toUpperCase()}
+            </WobblyText>
+            <PersonList people={members} />
+          </ListSection>
+          <ListSection>
+            <ListItem
+              title="Leave group"
+              leftIcon={{ name: "md-exit", type: "ionicon" }}
+              onPress={this.handleLeaveGroup}
+            />
+          </ListSection>
+        </ScrollView>
+      );
+    }
+  }
+
+  private handleLeaveGroup = () => {
+    this.props.leaveGroup({ variables: { groupId: this.groupId } }).then(() => {
+      NavigationService.navigate("GroupsList");
+    });
+  };
+}
+
+const style = StyleSheet.create({
+  container: {
+    backgroundColor: colors.lightGray4,
+    height: "100%"
+  },
+  groupImage: {
+    height: 200,
+    width: "100%"
+  }
+});
+
+const updateCache: LeaveGroupMutationUpdaterFn = (cache, { data }) => {
+  const oldData = cache.readQuery<getGroups>({ query: GROUPS_QUERY });
+  const groups = (oldData && oldData.groups) || [];
+  const leftGroupId = data!.leaveGroup.id;
+  remove(groups, (group: getGroups_groups) => group.id === leftGroupId);
+  cache.writeQuery({
+    query: GROUPS_QUERY,
+    data: {
+      groups
+    }
+  });
+};
+const EnhancedComponent = ({ navigation }: NavigationInjectedProps) => (
+  <GroupDetailsQuery query={GROUP_DETAILS_QUERY} variables={{ groupId: navigation.getParam("groupId") }}>
+    {groupDetails => (
+      <LeaveGroupMutation mutation={LEAVE_GROUP_MUTATION} update={updateCache}>
+        {(leaveGroup, leaveGroupResult) => (
+          <GroupDetailsScreen
+            groupDetails={groupDetails}
+            leaveGroup={leaveGroup}
+            leaveGroupResult={leaveGroupResult}
+            navigation={navigation}
+          />
+        )}
+      </LeaveGroupMutation>
+    )}
+  </GroupDetailsQuery>
+);
+export default hoistNonReactStatics(EnhancedComponent, GroupDetailsScreen);

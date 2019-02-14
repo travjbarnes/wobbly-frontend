@@ -57,5 +57,7 @@ export const fontSizes = {
   medium: 18,
   large: 28,
   h1: 48,
-  h2: 36
+  h2: 36,
+  h3: 24,
+  h4: 20
 };

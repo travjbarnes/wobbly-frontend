@@ -1,33 +1,76 @@
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { ApolloClient } from "apollo-client";
+import { setContext } from "apollo-link-context";
+import { createHttpLink } from "apollo-link-http";
+import { Font, SecureStore } from "expo";
 import * as React from "react";
+import { ApolloProvider } from "react-apollo";
 import { NavigationContainerComponent } from "react-navigation";
-import { Provider } from "react-redux";
-import { Store } from "redux";
-import { PersistGate } from "redux-persist/integration/react";
 
 import AppNavigation from "./AppNavigation";
-import SplashScreen from "./components/screens/SplashScreen";
-import { persistor, reduxStore } from "./reduxStore";
-import NavigationService from "./util/NavigationService";
+import { SplashScreen } from "./components/screens";
+import { NavigationService } from "./services";
 
-export default class App extends React.Component<{}> {
-  private store: Store;
+interface IAppState {
+  clientHasLoaded: boolean;
+  fontsHaveLoaded: boolean;
+}
+export default class App extends React.Component<{}, IAppState> {
+  private client?: ApolloClient<any>;
 
   public constructor(props: {}) {
     super(props);
-    this.store = reduxStore;
+    this.state = { clientHasLoaded: false, fontsHaveLoaded: false };
+  }
+
+  public async componentDidMount() {
+    await this.initClient();
+    await this.initFonts();
   }
 
   public render() {
+    if (!this.state.clientHasLoaded || !this.state.fontsHaveLoaded || !this.client) {
+      return <SplashScreen />;
+    }
+    const navigationPersistenceKey = __DEV__ ? "NavigationStateDEV" : null;
     return (
-      <Provider store={this.store}>
-        <PersistGate loading={<SplashScreen />} persistor={persistor}>
-          <AppNavigation
-            ref={(el: NavigationContainerComponent | null) => {
-              NavigationService.setTopLevelNavigator(el);
-            }}
-          />
-        </PersistGate>
-      </Provider>
+      <ApolloProvider client={this.client}>
+        <AppNavigation
+          ref={(el: NavigationContainerComponent | null) => {
+            NavigationService.setTopLevelNavigator(el);
+          }}
+          persistenceKey={navigationPersistenceKey}
+        />
+      </ApolloProvider>
     );
+  }
+
+  private async initClient() {
+    const httpLink = createHttpLink({
+      uri: __DEV__ ? "http://192.168.1.169:4000" : "https://production.wobbly.app"
+    });
+    const authLink = setContext(async (_, { headers }) => {
+      const token = await SecureStore.getItemAsync("token");
+      return {
+        headers: {
+          ...headers,
+          authorization: token ? `Bearer ${token}` : ""
+        }
+      };
+    });
+    this.client = new ApolloClient({
+      link: authLink.concat(httpLink),
+      cache: new InMemoryCache()
+    });
+    this.setState({ clientHasLoaded: true });
+  }
+
+  private async initFonts() {
+    await Font.loadAsync({
+      "open-sans-regular": require("../assets/fonts/OpenSans-Regular.ttf"),
+      "open-sans-semi-bold": require("../assets/fonts/OpenSans-SemiBold.ttf"),
+      "montserrat-regular": require("../assets/fonts/Montserrat-Regular.ttf")
+    });
+    this.setState({ fontsHaveLoaded: true });
   }
 }

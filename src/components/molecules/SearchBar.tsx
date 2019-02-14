@@ -1,33 +1,65 @@
-import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
 import { colors } from "../../style/common";
 
-export interface ISearchBarProps {
+interface ISearchBarProps {
   placeholder?: string;
+  onSubmit: (text: string) => void;
 }
-export default ({ placeholder }: ISearchBarProps) => (
-  <View style={styles.searchBar}>
-    <Ionicons style={styles.searchIcon} name="ios-search" size={20} />
-    <TextInput style={styles.searchInput} placeholder={placeholder || "Search..."} />
-  </View>
-);
+interface ISearchBarState {
+  text?: string;
+}
+
+class SearchBar extends React.PureComponent<ISearchBarProps, ISearchBarState> {
+  public render() {
+    const { placeholder } = this.props;
+    return (
+      <View style={styles.searchBar}>
+        <MaterialIcons style={styles.searchIcon} name="search" size={20} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder={placeholder || "Search..."}
+          placeholderTextColor={colors.darkGray5}
+          clearButtonMode="while-editing"
+          enablesReturnKeyAutomatically={true}
+          returnKeyType="search"
+          onSubmitEditing={this.onSubmit}
+          onChangeText={this.onChangeText}
+        />
+      </View>
+    );
+  }
+
+  private onChangeText = (text: string) => {
+    this.setState({ text });
+  };
+
+  private onSubmit = () => {
+    const { text } = this.state;
+    if (!text) {
+      return;
+    }
+    this.props.onSubmit(text);
+  };
+}
+export default SearchBar;
 
 const styles = StyleSheet.create({
   searchBar: {
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: colors.lightGray1,
-    borderRadius: 20
+    backgroundColor: colors.lightGray3,
+    borderRadius: 10,
+    margin: 10
   },
   searchIcon: {
     padding: 10,
-    paddingLeft: 20
+    paddingLeft: 20,
+    color: colors.darkGray5
   },
   searchInput: {
-    flex: 1,
-    padding: 10
+    padding: 5,
+    flex: 1
   }
 });

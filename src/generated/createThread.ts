@@ -15,6 +15,7 @@ export interface createThread_createThread_posts {
   __typename: "Post";
   id: string;
   content: string;
+  createdAt: any;
   author: createThread_createThread_posts_author;
 }
 

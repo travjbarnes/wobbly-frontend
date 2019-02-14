@@ -60,6 +60,7 @@ export const CREATE_THREAD_MUTATION = gql`
       posts(first: 1) {
         id
         content
+        createdAt
         author {
           id
           name

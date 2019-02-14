@@ -2,7 +2,7 @@ import hoistNonReactStatics from "hoist-non-react-statics";
 import { inflect } from "inflection";
 import { remove } from "lodash";
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { Alert, ScrollView, StyleSheet } from "react-native";
 import { Image, ListItem } from "react-native-elements";
 import { NavigationInjectedProps } from "react-navigation";
 
@@ -73,9 +73,14 @@ class GroupDetailsScreen extends React.PureComponent<IGroupDetailsScreen> {
   }
 
   private handleLeaveGroup = () => {
-    this.props.leaveGroup({ variables: { groupId: this.groupId } }).then(() => {
-      NavigationService.navigate("GroupsList");
-    });
+    const leaveGroup = () =>
+      this.props.leaveGroup({ variables: { groupId: this.groupId } }).then(() => {
+        NavigationService.navigate("GroupsList");
+      });
+    Alert.alert("Confirm", "Are you sure you want to leave the group?", [
+      { text: "Cancel" },
+      { text: "Yes", onPress: leaveGroup }
+    ]);
   };
 }
 

@@ -6,7 +6,7 @@ import HeaderButtons from "react-navigation-header-buttons";
 import { GROUPS_QUERY, GroupsQuery, GroupsQueryResult } from "../../graphql/queries";
 import { createNavigatorFunction } from "../../util";
 import { NonIdealState, WobblyHeaderButtons } from "../molecules";
-import { ErrorState, LoadingState, NodesList } from "../organisms";
+import { ErrorState, GroupsList, LoadingState } from "../organisms";
 
 interface IGroupsListScreenProps {
   result: GroupsQueryResult;
@@ -35,7 +35,7 @@ class GroupsListScreen extends React.PureComponent<IGroupsListScreenProps> {
 
     const groups = result.data && result.data.groups;
     if (groups && groups.length > 0) {
-      return <NodesList nodes={groups} onPressFactory={this.onPressFactory} />;
+      return <GroupsList groups={groups} onPressFactory={this.onPressFactory} />;
     }
 
     return (

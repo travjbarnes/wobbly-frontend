@@ -9,6 +9,7 @@ export interface searchGroups_searchGroups {
   __typename: "Group";
   id: string;
   name: string;
+  memberCount: number;
 }
 
 export interface searchGroups {

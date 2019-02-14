@@ -87,7 +87,7 @@ const updateCache: CreateGroupMutationUpdaterFn = (cache, { data }) => {
   cache.writeQuery({
     query: GROUPS_QUERY,
     data: {
-      groups: (prevData!.groups || []).concat(data!.createGroup)
+      groups: (prevData!.groups || []).concat({ ...data!.createGroup, memberCount: 1 })
     }
   });
 };

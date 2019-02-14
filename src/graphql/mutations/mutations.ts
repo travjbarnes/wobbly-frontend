@@ -32,6 +32,7 @@ export const JOIN_GROUP_MUTATION = gql`
     joinGroup(groupId: $groupId) {
       id
       name
+      memberCount
     }
   }
 `;

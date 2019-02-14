@@ -3,18 +3,17 @@ import { withApollo, WithApolloClient } from "react-apollo";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-elements";
 
-import { searchGroups } from "../../generated/searchGroups";
+import { searchGroups, searchGroups_searchGroups } from "../../generated/searchGroups";
 import { SEARCH_GROUPS_QUERY } from "../../graphql/queries";
 import { NavigationService } from "../../services";
 import { colors } from "../../style/common";
-import { IGroup } from "../../types";
 import { createNavigatorFunction } from "../../util";
 import { CreateGroupFooter, SearchBar } from "../molecules";
-import { LoadingState, NodesList } from "../organisms";
+import { GroupsList, LoadingState } from "../organisms";
 
 interface ISearchGroupsModalProps extends WithApolloClient<{}> {}
 interface ISearchGroupsModalState {
-  results?: IGroup[];
+  results?: searchGroups_searchGroups[];
   loading: boolean;
   query: string;
 }
@@ -41,7 +40,7 @@ class SearchGroupsModal extends React.PureComponent<ISearchGroupsModalProps, ISe
     if (loading) {
       content = <LoadingState />;
     } else if (results && results.length > 0) {
-      content = <NodesList nodes={results} onPressFactory={this.onPressFactory} />;
+      content = <GroupsList groups={results} onPressFactory={this.onPressFactory} />;
     } else if (results !== undefined && results.length === 0) {
       content = (
         <View style={style.noResultsWrapper}>
@@ -78,15 +77,17 @@ class SearchGroupsModal extends React.PureComponent<ISearchGroupsModalProps, ISe
           results: response.data.searchGroups
             .filter(group => group && group.name && group.id)
             .map(group => ({
+              __typename: "Group" as "Group",
               name: group!.name,
-              id: group!.id
+              id: group!.id,
+              memberCount: group!.memberCount
             })),
           loading: false
         });
       });
   };
 
-  private onPressFactory = (item: IGroup): (() => void) => {
+  private onPressFactory = (item: searchGroups_searchGroups): (() => void) => {
     return createNavigatorFunction("JoinGroup", { groupId: item.id, groupName: item.name });
   };
 }

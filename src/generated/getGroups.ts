@@ -9,6 +9,7 @@ export interface getGroups_groups {
   __typename: "Group";
   id: string;
   name: string;
+  memberCount: number;
 }
 
 export interface getGroups {

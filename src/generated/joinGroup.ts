@@ -9,6 +9,7 @@ export interface joinGroup_joinGroup {
   __typename: "Group";
   id: string;
   name: string;
+  memberCount: number;
 }
 
 export interface joinGroup {

@@ -15,6 +15,7 @@ export const GROUPS_QUERY = gql`
     groups {
       id
       name
+      memberCount
     }
   }
 `;
@@ -24,6 +25,7 @@ export const SEARCH_GROUPS_QUERY = gql`
     searchGroups(searchQuery: $searchQuery) {
       id
       name
+      memberCount
     }
   }
 `;

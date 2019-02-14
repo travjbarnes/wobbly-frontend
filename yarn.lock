@@ -989,10 +989,10 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
-"@types/expo__vector-icons@^9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@types/expo__vector-icons/-/expo__vector-icons-9.0.0.tgz#f8f12c124ddcd88d97ededa61d5dbb47c14ffdbd"
-  integrity sha512-3dqOYEjp6cOtZ+axr6NnRfgh9o1f4KbzwcC5C3Y/HsvqpSKzYHa9C+JDfs44o5vFHx0ah/UY1SoJv613x+jYrA==
+"@types/expo__vector-icons@^9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@types/expo__vector-icons/-/expo__vector-icons-9.0.1.tgz#46a0a9701cb69e632a05b87aafa7b0f537919896"
+  integrity sha512-xcdtdQSojtUO0mSuVDCP01cyqAXhZCIMGN1jXuqfA6DbOIg5cIcIBLIC5vhiGP0vR5gdviSyIHgPf4NR2d3wOg==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"

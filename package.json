@@ -6,11 +6,11 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "typecheck": "tsc --noEmit",
-    "test": "yarn run lint",
+    "test": "yarn lint",
     "pretty": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "lint": "yarn run typecheck && tslint -p tsconfig.json -c tslint.json \"src/**/*.{ts,tsx}\"",
-    "lint:fix": "yarn run typecheck && tslint -p tsconfig.json -c tslint.json --fix \"src/**/*.{ts,tsx}\"",
-    "codegen": "dotenv -- apollo client:codegen -c apollo.config.js --target=typescript --outputFlat src/generated/"
+    "lint": "yarn typecheck && tslint -p tsconfig.json -c tslint.json \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "yarn typecheck && tslint -p tsconfig.json -c tslint.json --fix \"src/**/*.{ts,tsx}\"",
+    "codegen": "dotenv -- apollo client:codegen -c apollo.config.js --target=typescript --addTypename --outputFlat src/generated/"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,json,css}": [
@@ -19,9 +19,16 @@
       "git add"
     ]
   },
+  "codegen": {
+    "src/generated/**/*.{ts,tsx}": [
+      "yarn codegen",
+      "git add"
+    ]
+  },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && yarn codegen",
+      "post-merge": "yarn install"
     }
   },
   "prettier": {

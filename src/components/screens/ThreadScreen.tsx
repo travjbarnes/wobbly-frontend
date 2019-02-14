@@ -25,7 +25,7 @@ import {
   THREADS_QUERY
 } from "../../graphql/queries";
 import { Post } from "../molecules";
-import { LoadingState } from "../organisms";
+import { ErrorState, LoadingState } from "../organisms";
 
 interface IThreadScreenProps extends NavigationInjectedProps {
   postsResult: PostsQueryResult;
@@ -54,8 +54,11 @@ class ThreadScreen extends React.PureComponent<IThreadScreenProps> {
     const { ownInfoResult, postsResult } = this.props;
     if (ownInfoResult.loading || postsResult.loading) {
       return <LoadingState />;
+    } else if (ownInfoResult.error) {
+      return <ErrorState subtitle={ownInfoResult.error.message} />;
+    } else if (postsResult.error) {
+      return <ErrorState subtitle={postsResult.error.message} />;
     }
-    // TODO: error state
     const posts = (postsResult.data && postsResult.data!.posts) || [];
     const person = ownInfoResult.data && ownInfoResult.data.me;
     if (!person) {

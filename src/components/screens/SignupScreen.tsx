@@ -45,7 +45,6 @@ class SignupForm extends React.PureComponent<ISignupFormProps> {
             initialValues={{ email: "", displayName: "", password: "", passwordConfirmation: "" }}
             onSubmit={this.processSignup}
             validateOnChange={false}
-            // TODO: the validation here should match server-side validation
             validationSchema={yup.object().shape({
               email: yup
                 .string()

@@ -91,8 +91,8 @@ const style = StyleSheet.create({
 });
 
 const updateCache: LeaveGroupMutationUpdaterFn = (cache, { data }) => {
-  const oldData = cache.readQuery<getGroups>({ query: GROUPS_QUERY });
-  const groups = (oldData && oldData.groups) || [];
+  const prevData = cache.readQuery<getGroups>({ query: GROUPS_QUERY });
+  const groups = (prevData && prevData.groups) || [];
   const leftGroupId = data!.leaveGroup.id;
   remove(groups, (group: getGroups_groups) => group.id === leftGroupId);
   cache.writeQuery({

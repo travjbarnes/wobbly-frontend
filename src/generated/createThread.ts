@@ -18,17 +18,11 @@ export interface createThread_createThread_posts {
   author: createThread_createThread_posts_author;
 }
 
-export interface createThread_createThread_group {
-  __typename: "Group";
-  id: string;
-}
-
 export interface createThread_createThread {
   __typename: "Thread";
   id: string;
   title: string;
   posts: createThread_createThread_posts[];
-  group: createThread_createThread_group;
 }
 
 export interface createThread {

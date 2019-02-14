@@ -65,9 +65,6 @@ export const CREATE_THREAD_MUTATION = gql`
           name
         }
       }
-      group {
-        id
-      }
     }
   }
 `;
@@ -81,9 +78,6 @@ export const CREATE_POST_MUTATION = gql`
       author {
         id
         name
-      }
-      thread {
-        id
       }
     }
   }

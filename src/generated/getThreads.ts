@@ -19,17 +19,11 @@ export interface getThreads_threads_posts {
   author: getThreads_threads_posts_author;
 }
 
-export interface getThreads_threads_group {
-  __typename: "Group";
-  id: string;
-}
-
 export interface getThreads_threads {
   __typename: "Thread";
   id: string;
   title: string;
   posts: getThreads_threads_posts[];
-  group: getThreads_threads_group;
 }
 
 export interface getThreads {

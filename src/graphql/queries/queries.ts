@@ -56,9 +56,6 @@ export const THREADS_QUERY = gql`
           name
         }
       }
-      group {
-        id
-      }
     }
   }
 `;
@@ -72,9 +69,6 @@ export const POSTS_QUERY = gql`
       author {
         id
         name
-      }
-      thread {
-        id
       }
     }
   }

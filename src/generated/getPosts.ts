@@ -11,18 +11,12 @@ export interface getPosts_posts_author {
   name: string;
 }
 
-export interface getPosts_posts_thread {
-  __typename: "Thread";
-  id: string;
-}
-
 export interface getPosts_posts {
   __typename: "Post";
   id: string;
   content: string;
   createdAt: any;
   author: getPosts_posts_author;
-  thread: getPosts_posts_thread;
 }
 
 export interface getPosts {

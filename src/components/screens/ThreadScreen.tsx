@@ -1,15 +1,17 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
+import { remove } from "lodash";
 import * as React from "react";
 import { Platform, SafeAreaView, StyleSheet } from "react-native";
 import { GiftedChat, IMessage, MessageProps } from "react-native-gifted-chat";
 import KeyboardSpacer from "react-native-keyboard-spacer";
 import { NavigationInjectedProps } from "react-navigation";
 
+import { createPostVariables } from "../../generated/createPost";
 import { getPosts, getPosts_posts } from "../../generated/getPosts";
+import { getThreads, getThreads_threads } from "../../generated/getThreads";
 import {
   CREATE_POST_MUTATION,
   CreatePostMutation,
-  CreatePostMutationFn,
   CreatePostMutationResult,
   CreatePostMutationUpdaterFn
 } from "../../graphql/mutations";
@@ -19,7 +21,8 @@ import {
   OwnInfoQueryResult,
   POSTS_QUERY,
   PostsQuery,
-  PostsQueryResult
+  PostsQueryResult,
+  THREADS_QUERY
 } from "../../graphql/queries";
 import { Post } from "../molecules";
 import { LoadingState } from "../organisms";
@@ -27,7 +30,7 @@ import { LoadingState } from "../organisms";
 interface IThreadScreenProps extends NavigationInjectedProps {
   postsResult: PostsQueryResult;
   ownInfoResult: OwnInfoQueryResult;
-  createPost: CreatePostMutationFn;
+  createPost: (vars: IOptimisticUpdateParams) => void;
   mutationResult: CreatePostMutationResult;
 }
 class ThreadScreen extends React.PureComponent<IThreadScreenProps> {
@@ -78,7 +81,9 @@ class ThreadScreen extends React.PureComponent<IThreadScreenProps> {
   private handleSend = (messages: IMessage[]) => {
     messages.forEach(msg => {
       this.props.createPost({
-        variables: { threadId: this.props.navigation.getParam("threadId", ""), content: msg.text }
+        threadId: this.props.navigation.getParam("threadId", ""),
+        content: msg.text,
+        groupId: this.props.navigation.getParam("groupId", "")
       });
     });
   };
@@ -90,40 +95,85 @@ const style = StyleSheet.create({
   }
 });
 
-const updateCache: CreatePostMutationUpdaterFn = (cache, { data }) => {
-  const threadId = data && data.createPost.thread.id;
-  const oldData = cache.readQuery<getPosts>({ query: POSTS_QUERY, variables: { threadId } });
+const getUpdateCacheFn = (groupId: string, threadId: string): CreatePostMutationUpdaterFn => (cache, { data }) => {
+  // Update the cache of posts in the current thread
+  const prevPosts = cache.readQuery<getPosts>({ query: POSTS_QUERY, variables: { threadId } })!.posts;
   cache.writeQuery({
     query: POSTS_QUERY,
     variables: {
       threadId
     },
     data: {
-      posts: [data!.createPost].concat(oldData!.posts)
+      posts: [data!.createPost].concat(prevPosts)
+    }
+  });
+
+  // Also update the query for threads. This is so we can sort them by recent activity
+  const prevThreads = cache.readQuery<getThreads>({ query: THREADS_QUERY, variables: { groupId } })!.threads!;
+  const thisThread = remove(prevThreads, (thread: getThreads_threads) => thread.id === threadId)[0];
+  // The threads query only asks for the most recent post (which in this case is the one we just created)
+  const updatedThreads = [{ ...thisThread, posts: [data!.createPost] }].concat(prevThreads);
+  cache.writeQuery({
+    query: THREADS_QUERY,
+    variables: {
+      groupId
+    },
+    data: {
+      threads: updatedThreads
     }
   });
 };
 
-const EnhancedComponent = ({ navigation }: NavigationInjectedProps) => (
-  <OwnInfoQuery query={OWN_INFO_QUERY}>
-    {ownInfoResult => (
-      <PostsQuery query={POSTS_QUERY} variables={{ threadId: navigation.getParam("threadId", "") }}>
-        {postsResult => (
-          <CreatePostMutation mutation={CREATE_POST_MUTATION} update={updateCache}>
-            {(createPost, mutationResult) => (
-              <ThreadScreen
-                ownInfoResult={ownInfoResult}
-                postsResult={postsResult}
-                createPost={createPost}
-                mutationResult={mutationResult}
-                navigation={navigation}
-              />
-            )}
-          </CreatePostMutation>
-        )}
-      </PostsQuery>
-    )}
-  </OwnInfoQuery>
-);
+interface IOptimisticUpdateParams extends createPostVariables {
+  groupId: string;
+}
+const EnhancedComponent = ({ navigation }: NavigationInjectedProps) => {
+  const updateCache = getUpdateCacheFn(navigation.getParam("groupId"), navigation.getParam("threadId"));
+  return (
+    <OwnInfoQuery query={OWN_INFO_QUERY}>
+      {ownInfoResult => (
+        <PostsQuery query={POSTS_QUERY} variables={{ threadId: navigation.getParam("threadId", "") }}>
+          {postsResult => (
+            <CreatePostMutation mutation={CREATE_POST_MUTATION} update={updateCache}>
+              {(createPost, mutationResult) => {
+                const optimisticCreatePost = ({ threadId, content }: createPostVariables) => {
+                  createPost({
+                    variables: {
+                      threadId,
+                      content
+                    },
+                    optimisticResponse: {
+                      createPost: {
+                        __typename: "Post",
+                        id: "x",
+                        content,
+                        createdAt: new Date(),
+                        author: {
+                          __typename: "Person",
+                          id: ownInfoResult.data!.me!.id,
+                          name: ownInfoResult.data!.me!.name
+                        }
+                      }
+                    },
+                    update: updateCache
+                  });
+                };
+                return (
+                  <ThreadScreen
+                    ownInfoResult={ownInfoResult}
+                    postsResult={postsResult}
+                    mutationResult={mutationResult}
+                    navigation={navigation}
+                    createPost={optimisticCreatePost}
+                  />
+                );
+              }}
+            </CreatePostMutation>
+          )}
+        </PostsQuery>
+      )}
+    </OwnInfoQuery>
+  );
+};
 
 export default hoistNonReactStatics(EnhancedComponent, ThreadScreen);

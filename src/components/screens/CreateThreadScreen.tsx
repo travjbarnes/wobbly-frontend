@@ -90,20 +90,19 @@ class CreateThreadScreen extends React.Component<ICreateThreadScreenProps> {
   };
 }
 
-const updateCache: CreateThreadMutationUpdaterFn = (cache, { data }) => {
-  const groupId = data && data.createThread.group.id;
-  const oldData = cache.readQuery<getThreads>({ query: THREADS_QUERY, variables: { groupId } });
+const getUpdateCacheFn = (groupId: string): CreateThreadMutationUpdaterFn => (cache, { data }) => {
+  const prevData = cache.readQuery<getThreads>({ query: THREADS_QUERY, variables: { groupId } });
   cache.writeQuery({
     query: THREADS_QUERY,
     variables: { groupId },
     data: {
-      threads: [data!.createThread].concat(oldData!.threads || [])
+      threads: [data!.createThread].concat(prevData!.threads || [])
     }
   });
 };
 
 const EnhancedComponent = ({ navigation }: NavigationInjectedProps) => (
-  <CreateThreadMutation mutation={CREATE_THREAD_MUTATION} update={updateCache}>
+  <CreateThreadMutation mutation={CREATE_THREAD_MUTATION} update={getUpdateCacheFn(navigation.getParam("groupId"))}>
     {(createThread, result) => (
       <CreateThreadScreen createThread={createThread} result={result} navigation={navigation} />
     )}

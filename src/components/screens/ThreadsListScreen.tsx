@@ -43,7 +43,8 @@ class ThreadsListScreen extends React.PureComponent<IThreadsListScreenProps> {
   }
 
   private onPressFactory = (item: getThreads_threads): (() => void) => {
-    return createNavigatorFunction("Thread", { threadId: item.id, threadTitle: item.title });
+    const groupId = this.props.navigation.getParam("groupId", "");
+    return createNavigatorFunction("Thread", { threadId: item.id, threadTitle: item.title, groupId });
   };
 }
 

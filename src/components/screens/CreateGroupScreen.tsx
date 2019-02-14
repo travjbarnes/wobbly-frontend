@@ -83,11 +83,11 @@ class CreateGroupScreen extends React.Component<ICreateGroupScreenProps> {
 }
 
 const updateCache: CreateGroupMutationUpdaterFn = (cache, { data }) => {
-  const oldData = cache.readQuery<getGroups>({ query: GROUPS_QUERY });
+  const prevData = cache.readQuery<getGroups>({ query: GROUPS_QUERY });
   cache.writeQuery({
     query: GROUPS_QUERY,
     data: {
-      groups: (oldData!.groups || []).concat(data!.createGroup)
+      groups: (prevData!.groups || []).concat(data!.createGroup)
     }
   });
 };

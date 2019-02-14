@@ -97,7 +97,7 @@ const updateCache: CreateThreadMutationUpdaterFn = (cache, { data }) => {
     query: THREADS_QUERY,
     variables: { groupId },
     data: {
-      threads: (oldData!.threads || []).concat(data!.createThread)
+      threads: [data!.createThread].concat(oldData!.threads || [])
     }
   });
 };

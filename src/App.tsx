@@ -47,7 +47,7 @@ export default class App extends React.Component<{}, IAppState> {
 
   private async initClient() {
     const httpLink = createHttpLink({
-      uri: __DEV__ ? "http://192.168.1.169:4000" : "https://production.wobbly.app"
+      uri: __DEV__ ? "http://10.0.3.2:4000" : "https://production.wobbly.app"
     });
     const authLink = setContext(async (_, { headers }) => {
       const token = await SecureStore.getItemAsync("token");

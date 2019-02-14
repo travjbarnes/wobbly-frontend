@@ -1,5 +1,5 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
-import { get } from "lodash";
+import { get, reverse, sortBy } from "lodash";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import HeaderButtons from "react-navigation-header-buttons";
@@ -8,7 +8,7 @@ import { getThreads_threads } from "../../generated/getThreads";
 import { THREADS_QUERY, ThreadsQuery, ThreadsQueryResult } from "../../graphql/queries";
 import { createNavigatorFunction } from "../../util";
 import { WobblyHeaderButtons } from "../molecules";
-import { LoadingState, ThreadsList } from "../organisms";
+import { ErrorState, LoadingState, ThreadsList } from "../organisms";
 
 interface IThreadsListScreenProps extends NavigationInjectedProps {
   result: ThreadsQueryResult;
@@ -34,11 +34,12 @@ class ThreadsListScreen extends React.PureComponent<IThreadsListScreenProps> {
     const { result } = this.props;
     if (result.loading) {
       return <LoadingState />;
+    } else if (result.error) {
+      return <ErrorState />;
     }
-    // TODO: error state
-    // TODO: no threads view
     const threads: getThreads_threads[] = get(result, "data.threads", []);
-    return <ThreadsList threads={threads} onPressFactory={this.onPressFactory} />;
+    const sortedThreads = reverse(sortBy(threads, thread => new Date(thread.posts[thread.posts.length - 1].createdAt)));
+    return <ThreadsList threads={sortedThreads} onPressFactory={this.onPressFactory} />;
   }
 
   private onPressFactory = (item: getThreads_threads): (() => void) => {

@@ -41,14 +41,7 @@ class SearchGroupsModal extends React.PureComponent<ISearchGroupsModalProps, ISe
     if (loading) {
       content = <LoadingState />;
     } else if (results && results.length > 0) {
-      content = (
-        <NodesList
-          nodes={results}
-          // refreshing={isLoadingNextPage}
-          // onEndReached={this.loadNextPage}
-          onPressFactory={this.onPressFactory}
-        />
-      );
+      content = <NodesList nodes={results} onPressFactory={this.onPressFactory} />;
     } else if (results !== undefined && results.length === 0) {
       content = (
         <View style={style.noResultsWrapper}>

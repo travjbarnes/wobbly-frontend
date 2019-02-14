@@ -15,7 +15,13 @@ export interface getThreads_threads_posts {
   __typename: "Post";
   id: string;
   content: string;
+  createdAt: any;
   author: getThreads_threads_posts_author;
+}
+
+export interface getThreads_threads_group {
+  __typename: "Group";
+  id: string;
 }
 
 export interface getThreads_threads {
@@ -23,6 +29,7 @@ export interface getThreads_threads {
   id: string;
   title: string;
   posts: getThreads_threads_posts[];
+  group: getThreads_threads_group;
 }
 
 export interface getThreads {

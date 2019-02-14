@@ -1,28 +1,18 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
-import { StyleSheet, Text, View } from "react-native";
 
-import { colors } from "../../style/common";
+import { NonIdealState } from "../molecules";
 
 interface IErrorStateProps {
-  title: string;
+  title?: string;
+  subtitle?: string;
 }
-const ErrorState: React.SFC<IErrorStateProps> = ({ title }) => (
-  <View style={style.container}>
-    <MaterialIcons name="error-outline" size={50} color={colors.darkGray5} />
-    <Text style={style.errorText}>{title}</Text>
-  </View>
+const ErrorState: React.FC<IErrorStateProps> = ({ title, subtitle }) => (
+  <NonIdealState
+    title={title || "An error occurred"}
+    subtitle={subtitle}
+    IconFamily={MaterialIcons}
+    iconName="error-outline"
+  />
 );
 export default ErrorState;
-
-const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  errorText: {
-    marginTop: 5,
-    color: colors.darkGray5
-  }
-});

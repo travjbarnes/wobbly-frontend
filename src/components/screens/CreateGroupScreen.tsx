@@ -71,7 +71,7 @@ class CreateGroupScreen extends React.Component<ICreateGroupScreenProps> {
       .then(result => {
         if (result && !result.errors) {
           const group = result.data!.createGroup;
-          NavigationService.navigate("GroupDetails", { groupName: group.name, groupId: group.id });
+          NavigationService.navigate("ThreadsList", { groupName: group.name, groupId: group.id });
         }
       })
       .catch((e: ApolloError) => {

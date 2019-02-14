@@ -50,10 +50,14 @@ export const THREADS_QUERY = gql`
       posts(last: 1) {
         id
         content
+        createdAt
         author {
           id
           name
         }
+      }
+      group {
+        id
       }
     }
   }

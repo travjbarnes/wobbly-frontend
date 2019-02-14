@@ -1,11 +1,12 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import * as React from "react";
 import HeaderButtons from "react-navigation-header-buttons";
 
 import { GROUPS_QUERY, GroupsQuery, GroupsQueryResult } from "../../graphql/queries";
 import { createNavigatorFunction } from "../../util";
-import { WobblyHeaderButtons } from "../molecules";
-import { LoadingState, NodesList } from "../organisms";
+import { NonIdealState, WobblyHeaderButtons } from "../molecules";
+import { ErrorState, LoadingState, NodesList } from "../organisms";
 
 interface IGroupsListScreenProps {
   result: GroupsQueryResult;
@@ -28,17 +29,23 @@ class GroupsListScreen extends React.PureComponent<IGroupsListScreenProps> {
     const { result } = this.props;
     if (result.loading) {
       return <LoadingState />;
+    } else if (result.error) {
+      return <ErrorState title="An error occurred" subtitle={result.error.message} />;
     }
 
-    // TODO: error state
-
     const groups = result.data && result.data.groups;
-    if (groups) {
+    if (groups && groups.length > 0) {
       return <NodesList nodes={groups} onPressFactory={this.onPressFactory} />;
     }
 
-    // TODO: empty view encouraging people to join/create a group
-    return null;
+    return (
+      <NonIdealState
+        title="No groups"
+        subtitle="Tap the search button above to find or create a new one! Lorem ipsum dolor sit amet, kjsflkjsflk"
+        IconFamily={MaterialCommunityIcons}
+        iconName={"border-none-variant"}
+      />
+    );
   }
 
   private onPressFactory = (item: any): (() => void) => {

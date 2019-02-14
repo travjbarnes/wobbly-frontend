@@ -32,7 +32,7 @@
     "graphql": "14.0.2"
   },
   "dependencies": {
-    "apollo-boost": "^0.1.27",
+    "apollo-boost": "^0.1.28",
     "apollo-link-context": "^1.0.14",
     "expo": "^32.0.0",
     "formik": "^1.4.3",

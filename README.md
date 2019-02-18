@@ -21,7 +21,7 @@ Useful tutorials
 * [Install yarn](https://yarnpkg.com/en/docs/install). Yarn is the package manager we use.
 * Install TypeScript and Expo: `yarn global add typescript expo-cli`
 * Clone this repo: `git clone git@github.com:Wobbly-App/wobbly-frontend.git`
-* `cd` into the repo and run `yarn install`
+* `cd` into the repo and run `yarn install`, then `yarn codegen`
 * Run `yarn start`. You can preview and live reload the app in an Android/iOS emulator or on your device using the Expo app.
 
 ## Connecting to the backend

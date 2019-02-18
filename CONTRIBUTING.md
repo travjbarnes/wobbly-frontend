@@ -3,7 +3,8 @@
 ## Table of Contents
 
 * [Ways to Contribute](#ways-to-contribute)
-  * [Using Github](#using-github)
+* [Using Github](#using-github)
+* [Recognizing all contributors](#recognizing-all-contributors)
 * [Read our Code of Conduct](CODE-OF-CONDUCT.md)
 * [Return to README](README.md)
 
@@ -20,12 +21,16 @@
   * Please identify what you would like to work on in Github Issues first (so as to prevent duplication of effort)
 * Please use the app, and provide us feedback!
 
-### Using Github
+## Using Github
 
 * [Github Basics](https://guides.github.com/activities/hello-world/)
 * [Understanding the Git Flow](https://guides.github.com/introduction/flow/)
 * [Forking a Repository](https://guides.github.com/activities/forking/)
 * [Making a Pull Request](https://yangsu.github.io/pull-request-tutorial/)
+
+## Recognizing all contributors
+* We adhere to the [All Contributors](https://allcontributors.org/) specification.
+* To add a contributor to the list on our README, use the [All Contributorsbot](https://allcontributors.org/docs/en/bot/usage)
 
 Read our [Code of Conduct](CODE-OF-CONDUCT.md).
 

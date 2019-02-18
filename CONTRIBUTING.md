@@ -30,7 +30,7 @@
 
 ## Recognizing all contributors
 * We adhere to the [All Contributors](https://allcontributors.org/) specification.
-* To add a contributor to the list on our README, use the [All Contributorsbot](https://allcontributors.org/docs/en/bot/usage)
+* To add a contributor to the list on our README, use the [All Contributors bot](https://allcontributors.org/docs/en/bot/usage)
 
 Read our [Code of Conduct](CODE-OF-CONDUCT.md).
 

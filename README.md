@@ -1,4 +1,4 @@
-# Wobbly
+# Wobbly [![Build Status](https://travis-ci.com/Wobbly-App/wobbly-frontend.svg?branch=develop)](https://travis-ci.com/Wobbly-App/wobbly-frontend) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=Wobbly-App/wobbly-frontend)](https://dependabot.com)
 
 Wobbly is an app for workplace organizing. See [wobbly.app](https://wobbly.app) for more details.
 

@@ -56,7 +56,7 @@
     "react-native-gifted-chat": "^0.7.2",
     "react-native-iphone-x-helper": "^1.2.0",
     "react-native-keyboard-spacer": "^0.4.1",
-    "react-navigation": "^3.0.9",
+    "react-navigation": "^3.3.0",
     "react-navigation-header-buttons": "^2.1.2",
     "tslib": "^1.9.3",
     "yup": "^0.26.10"

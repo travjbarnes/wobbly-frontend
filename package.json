@@ -36,14 +36,14 @@
     "parser": "typescript"
   },
   "resolutions": {
-    "graphql": "14.0.2"
+    "graphql": "14.1.1"
   },
   "dependencies": {
     "apollo-boost": "^0.1.28",
     "apollo-link-context": "^1.0.14",
     "expo": "^32.0.6",
     "formik": "^1.5.1",
-    "graphql": "14.0.2",
+    "graphql": "14.1.1",
     "graphql-tag": "^2.10.1",
     "hoist-non-react-statics": "^3.3.0",
     "inflection": "^1.12.0",

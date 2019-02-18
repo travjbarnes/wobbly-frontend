@@ -1,4 +1,0 @@
-#! /bin/bash
-
-export DOCKER_IMAGE="wobbly-frontend-image"
-export BACKEND_URL="0.0.0.0:8000"

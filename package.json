@@ -59,7 +59,6 @@
     "react-navigation": "^3.0.9",
     "react-navigation-header-buttons": "^2.1.2",
     "tslib": "^1.9.3",
-    "typesafe-actions": "^3.0.0",
     "yup": "^0.26.10"
   },
   "devDependencies": {

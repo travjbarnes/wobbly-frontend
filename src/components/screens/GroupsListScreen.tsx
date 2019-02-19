@@ -41,7 +41,7 @@ class GroupsListScreen extends React.PureComponent<IGroupsListScreenProps> {
     return (
       <NonIdealState
         title="No groups"
-        subtitle="Tap the search button above to find or create a new one! Lorem ipsum dolor sit amet, kjsflkjsflk"
+        subtitle="Tap the search button above to find or create a new one!"
         IconFamily={MaterialCommunityIcons}
         iconName={"border-none-variant"}
       />

@@ -8,35 +8,45 @@ import { searchGroups_searchGroups } from "../../generated/searchGroups";
 
 interface IGroupsListProps {
   groups: getGroups_groups[] | searchGroups_searchGroups[];
-  onPressFactory: (item: getGroups_groups) => () => void;
+  onPressFactory: (item: getGroups_groups | searchGroups_searchGroups) => () => void;
   refreshing?: boolean;
   onEndReached?: () => void;
 }
-const GroupsList: React.FC<IGroupsListProps> = ({ groups, onPressFactory, refreshing, onEndReached }) => {
-  const renderItem = ({ item }: { item: getGroups_groups }) => {
-    const onPress = onPressFactory(item);
+class GroupsList extends React.PureComponent<IGroupsListProps> {
+  public render() {
+    const { groups, refreshing, onEndReached } = this.props;
+    return (
+      <FlatList
+        data={groups as any} // TODO: fix this type hack
+        renderItem={this.renderItem}
+        keyExtractor={this.keyExtractor}
+        refreshing={refreshing}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.2}
+      />
+    );
+  }
+
+  private keyExtractor = (group: getGroups_groups | searchGroups_searchGroups) => group.id!;
+
+  private renderItem = ({ item }: { item: getGroups_groups | searchGroups_searchGroups }) => {
+    const onPress = this.props.onPressFactory(item);
+    const subtitle =
+      item.__typename === "Group"
+        ? `${item.memberCount} ${inflect("member", item.memberCount)}`
+        : item.description || undefined;
     return (
       <ListItem
         title={item.name}
-        subtitle={`${item.memberCount} ${inflect("member", item.memberCount!)}`}
+        subtitle={subtitle}
         onPress={onPress}
         leftAvatar={{ rounded: true, icon: { name: "home" } }}
         rightIcon={{ name: "chevron-right" }}
+        subtitleProps={{ numberOfLines: 1, ellipsizeMode: "tail" }}
         bottomDivider={true}
       />
     );
   };
-  return (
-    <FlatList
-      data={groups}
-      renderItem={renderItem}
-      keyExtractor={keyExtractor}
-      refreshing={refreshing}
-      onEndReached={onEndReached}
-      onEndReachedThreshold={0.2}
-    />
-  );
-};
-export default GroupsList;
+}
 
-const keyExtractor = (group: getGroups_groups) => group.id!;
+export default GroupsList;

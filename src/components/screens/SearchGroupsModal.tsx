@@ -40,7 +40,8 @@ class SearchGroupsModal extends React.PureComponent<ISearchGroupsModalProps, ISe
     if (loading) {
       content = <LoadingState />;
     } else if (results && results.length > 0) {
-      content = <GroupsList groups={results} onPressFactory={this.onPressFactory} />;
+      // TODO: fix `as any` type hack below
+      content = <GroupsList groups={results} onPressFactory={this.onPressFactory as any} />;
     } else if (results !== undefined && results.length === 0) {
       content = (
         <View style={style.noResultsWrapper}>
@@ -77,10 +78,10 @@ class SearchGroupsModal extends React.PureComponent<ISearchGroupsModalProps, ISe
           results: response.data.searchGroups
             .filter(group => group && group.name && group.id)
             .map(group => ({
-              __typename: "Group" as "Group",
+              __typename: "GroupSearchResponse" as "GroupSearchResponse",
               name: group!.name,
               id: group!.id,
-              memberCount: group!.memberCount
+              description: group!.description
             })),
           loading: false
         });

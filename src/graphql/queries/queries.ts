@@ -25,7 +25,17 @@ export const SEARCH_GROUPS_QUERY = gql`
     searchGroups(searchQuery: $searchQuery) {
       id
       name
-      memberCount
+      description
+    }
+  }
+`;
+
+export const PUBLIC_GROUP_DETAILS_QUERY = gql`
+  query getPublicGroupDetails($groupId: ID!) {
+    group(id: $groupId) {
+      id
+      name
+      description
     }
   }
 `;

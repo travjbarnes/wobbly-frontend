@@ -11,13 +11,21 @@ import {
   JoinGroupMutationResult,
   JoinGroupMutationUpdaterFn
 } from "../../graphql/mutations";
-import { GROUPS_QUERY } from "../../graphql/queries";
+import {
+  GetPublicGroupDetailsQuery,
+  GetPublicGroupDetailsQueryResult,
+  GROUPS_QUERY,
+  PUBLIC_GROUP_DETAILS_QUERY
+} from "../../graphql/queries";
 import { NavigationService } from "../../services";
 import { WobblyButton } from "../atoms";
+import WobblyText from "../atoms/WobblyText";
+import { ErrorState } from "../organisms";
 
 interface IJoinGroupScreenProps extends NavigationInjectedProps {
   joinGroup: JoinGroupMutationFn;
-  result: JoinGroupMutationResult;
+  mutationResult: JoinGroupMutationResult;
+  queryResult: GetPublicGroupDetailsQueryResult;
 }
 class JoinGroupScreen extends React.PureComponent<IJoinGroupScreenProps> {
   public static navigationOptions = ({ navigation }: NavigationInjectedProps) => {
@@ -36,11 +44,24 @@ class JoinGroupScreen extends React.PureComponent<IJoinGroupScreenProps> {
   }
 
   public render() {
-    const { result } = this.props;
+    const { mutationResult, queryResult } = this.props;
+    if (queryResult.loading) {
+      return <ActivityIndicator />;
+    } else if (queryResult.error) {
+      return <ErrorState subtitle={queryResult.error.message} />;
+    }
+
+    const description = queryResult.data!.group!.description;
+
     return (
       <View style={style.container}>
-        <WobblyButton disabled={result.loading} onPress={this.handleJoinGroup}>
-          {result.loading ? <ActivityIndicator /> : "Join this group"}
+        {description && (
+          <View style={style.descriptionContainer}>
+            <WobblyText>{description}</WobblyText>
+          </View>
+        )}
+        <WobblyButton disabled={mutationResult.loading} onPress={this.handleJoinGroup}>
+          {mutationResult.loading ? <ActivityIndicator /> : "Join this group"}
         </WobblyButton>
       </View>
     );
@@ -63,14 +84,32 @@ const updateCache: JoinGroupMutationUpdaterFn = (cache, { data }) => {
   });
 };
 const EnhancedComponent = ({ navigation }: NavigationInjectedProps) => (
-  <JoinGroupMutation mutation={JOIN_GROUP_MUTATION} update={updateCache}>
-    {(joinGroup, result) => <JoinGroupScreen joinGroup={joinGroup} result={result} navigation={navigation} />}
-  </JoinGroupMutation>
+  <GetPublicGroupDetailsQuery
+    query={PUBLIC_GROUP_DETAILS_QUERY}
+    variables={{ groupId: navigation.getParam("groupId") }}
+  >
+    {groupDetailsResult => (
+      <JoinGroupMutation mutation={JOIN_GROUP_MUTATION} update={updateCache}>
+        {(joinGroup, mutationResult) => (
+          <JoinGroupScreen
+            joinGroup={joinGroup}
+            mutationResult={mutationResult}
+            queryResult={groupDetailsResult}
+            navigation={navigation}
+          />
+        )}
+      </JoinGroupMutation>
+    )}
+  </GetPublicGroupDetailsQuery>
 );
 export default hoistNonReactStatics(EnhancedComponent, JoinGroupScreen);
 
 const style = StyleSheet.create({
   container: {
     flex: 1
+  },
+  descriptionContainer: {
+    marginHorizontal: 10,
+    marginVertical: 15
   }
 });

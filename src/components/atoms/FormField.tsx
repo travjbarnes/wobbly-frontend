@@ -11,6 +11,8 @@ export interface IFormFieldProps {
   placeholder?: string;
   backgroundColor?: string;
   keyboardType?: KeyboardTypeOptions;
+  autoCapitalize?: "characters" | "words" | "sentences" | "none";
+  disabled?: boolean;
 }
 /**
  * A wrapper for `<TextInput>` with custom styling.
@@ -23,11 +25,22 @@ export interface IFormFieldProps {
  */
 class FormField extends React.PureComponent<IFormFieldProps> {
   public render() {
-    const { onChangeText, value, secureTextEntry, placeholder, backgroundColor, keyboardType } = this.props;
+    const {
+      autoCapitalize,
+      disabled,
+      onChangeText,
+      value,
+      secureTextEntry,
+      placeholder,
+      backgroundColor,
+      keyboardType
+    } = this.props;
     const wrapperStyle = backgroundColor ? [styles.wrapper, { backgroundColor }] : styles.wrapper;
     return (
       <View style={wrapperStyle}>
         <TextInput
+          autoCapitalize={autoCapitalize}
+          editable={!disabled}
           style={styles.textInput}
           onChangeText={onChangeText}
           onBlur={this.handleBlur}

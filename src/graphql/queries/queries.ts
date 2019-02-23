@@ -6,6 +6,7 @@ export const OWN_INFO_QUERY = gql`
       id
       name
       email
+      emailConfirmed
     }
   }
 `;

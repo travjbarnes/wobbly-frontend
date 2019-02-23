@@ -1,6 +1,7 @@
 // tslint:disable:max-classes-per-file
 import { Mutation, MutationFn, MutationResult, MutationUpdaterFn } from "react-apollo";
 
+import { confirmEmail, confirmEmailVariables } from "../../generated/confirmEmail";
 import { createGroup, createGroupVariables } from "../../generated/createGroup";
 import { createPost, createPostVariables } from "../../generated/createPost";
 import { createThread, createThreadVariables } from "../../generated/createThread";
@@ -17,6 +18,10 @@ export type SignupMutationResult = MutationResult<signup>;
 export class LoginMutation extends Mutation<login, loginVariables> {}
 export type LoginMutationFn = MutationFn<login, loginVariables>;
 export type LoginMutationResult = MutationResult<login>;
+
+export class ConfirmEmailMutation extends Mutation<confirmEmail, confirmEmailVariables> {}
+export type ConfirmEmailMutationFn = MutationFn<confirmEmail, confirmEmailVariables>;
+export type ConfirmEmailMutationResult = MutationResult<confirmEmail>;
 
 export class UpdatePersonMutation extends Mutation<updatePerson, updatePersonVariables> {}
 export type UpdatePersonMutationFn = MutationFn<updatePerson, updatePersonVariables>;

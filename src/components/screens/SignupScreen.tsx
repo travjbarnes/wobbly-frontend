@@ -71,22 +71,26 @@ class SignupForm extends React.PureComponent<ISignupFormProps> {
                 <FormField
                   onChangeText={formikBag.handleChange("email")}
                   value={formikBag.values.email}
+                  autoCapitalize="none"
                   placeholder="Email"
                   keyboardType="email-address"
                 />
                 <FormField
                   onChangeText={formikBag.handleChange("displayName")}
+                  autoCapitalize="none"
                   value={formikBag.values.displayName}
                   placeholder="Display name"
                 />
                 <FormField
                   onChangeText={formikBag.handleChange("password")}
+                  autoCapitalize="none"
                   value={formikBag.values.password}
                   secureTextEntry={true}
                   placeholder="Password"
                 />
                 <FormField
                   onChangeText={formikBag.handleChange("passwordConfirmation")}
+                  autoCapitalize="none"
                   value={formikBag.values.passwordConfirmation}
                   secureTextEntry={true}
                   placeholder="Confirm password"

@@ -50,12 +50,14 @@ class LoginScreen extends React.PureComponent<ILoginScreenProps> {
             <View>
               <FormErrors errors={values(formikBag.errors)} />
               <FormField
+                autoCapitalize="none"
                 onChangeText={formikBag.handleChange("email")}
                 value={formikBag.values.email}
                 placeholder="Email"
                 keyboardType="email-address"
               />
               <FormField
+                autoCapitalize="none"
                 onChangeText={formikBag.handleChange("password")}
                 value={formikBag.values.password}
                 secureTextEntry={true}

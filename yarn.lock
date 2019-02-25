@@ -693,7 +693,7 @@
     lodash.get "^4"
     ts-node "^7"
 
-"@expo/react-native-action-sheet@^2.0.1":
+"@expo/react-native-action-sheet@^2.0.1", "@expo/react-native-action-sheet@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@expo/react-native-action-sheet/-/react-native-action-sheet-2.1.0.tgz#7c3f6def52aee15ca7bd9e03cc0529e64618592c"
   integrity sha512-gtFPQp36pLZxd29vTov+ewaJ7Bd3obP5XxaphwaKZRBVtHrbfd5DvdMBKs8//Y19pRseKrskdATou3b8EKk8Sg==
@@ -3701,7 +3701,7 @@ expo@^32.0.6:
     qs "^6.5.0"
     react-native-branch "2.2.5"
     react-native-gesture-handler "~1.0.14"
-    react-native-maps "github:expo/react-native-maps#v0.22.1-exp.0"
+    react-native-maps expo/react-native-maps#v0.22.1-exp.0
     react-native-reanimated "1.0.0-alpha.11"
     react-native-screens "1.0.0-alpha.22"
     react-native-svg "8.0.10"
@@ -6838,7 +6838,6 @@ react-native-maps@*:
 
 "react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
   version "0.22.1"
-  uid e6f98ff7272e5d0a7fe974a41f28593af2d77bb2
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
 react-native-parsed-text@^0.0.20:

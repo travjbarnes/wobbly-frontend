@@ -1,3 +1,4 @@
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
 import { setContext } from "apollo-link-context";
@@ -35,12 +36,14 @@ export default class App extends React.Component<{}, IAppState> {
     const navigationPersistenceKey = __DEV__ ? "NavigationStateDEV" : null;
     return (
       <ApolloProvider client={this.client}>
-        <AppNavigation
-          ref={(el: NavigationContainerComponent | null) => {
-            NavigationService.setTopLevelNavigator(el);
-          }}
-          persistenceKey={navigationPersistenceKey}
-        />
+        <ActionSheetProvider>
+          <AppNavigation
+            ref={(el: NavigationContainerComponent | null) => {
+              NavigationService.setTopLevelNavigator(el);
+            }}
+            persistenceKey={navigationPersistenceKey}
+          />
+        </ActionSheetProvider>
       </ApolloProvider>
     );
   }

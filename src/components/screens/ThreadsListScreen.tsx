@@ -38,8 +38,15 @@ class ThreadsListScreen extends React.PureComponent<IThreadsListScreenProps> {
       return <ErrorState />;
     }
     const threads: getThreads_threads[] = get(result, "data.threads", []);
-    const sortedThreads = reverse(sortBy(threads, thread => new Date(thread.posts[thread.posts.length - 1].createdAt)));
-    return <ThreadsList threads={sortedThreads} onPressFactory={this.onPressFactory} />;
+    let sortedThreads = sortBy(threads, thread => new Date(thread.posts[thread.posts.length - 1].createdAt));
+    sortedThreads = reverse(sortBy(sortedThreads, ["pinned"]));
+    return (
+      <ThreadsList
+        threads={sortedThreads}
+        onPressFactory={this.onPressFactory}
+        groupId={this.props.navigation.getParam("groupId")}
+      />
+    );
   }
 
   private onPressFactory = (item: getThreads_threads): (() => void) => {

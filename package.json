@@ -39,6 +39,7 @@
     "graphql": "14.1.1"
   },
   "dependencies": {
+    "@expo/react-native-action-sheet": "^2.1.0",
     "apollo-boost": "^0.1.28",
     "apollo-link-context": "^1.0.14",
     "expo": "^32.0.6",

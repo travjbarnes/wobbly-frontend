@@ -9,6 +9,7 @@ import { joinGroup, joinGroupVariables } from "../../generated/joinGroup";
 import { leaveGroup, leaveGroupVariables } from "../../generated/leaveGroup";
 import { login, loginVariables } from "../../generated/login";
 import { signup, signupVariables } from "../../generated/signup";
+import { toggleThreadPinning, toggleThreadPinningVariables } from "../../generated/toggleThreadPinning";
 import { updatePerson, updatePersonVariables } from "../../generated/updatePerson";
 
 export class SignupMutation extends Mutation<signup, signupVariables> {}
@@ -46,6 +47,11 @@ export class CreateThreadMutation extends Mutation<createThread, createThreadVar
 export type CreateThreadMutationFn = MutationFn<createThread, createThreadVariables>;
 export type CreateThreadMutationResult = MutationResult<createThread>;
 export type CreateThreadMutationUpdaterFn = MutationUpdaterFn<createThread>;
+
+export class ToggleThreadPinningMutation extends Mutation<toggleThreadPinning, toggleThreadPinningVariables> {}
+export type ToggleThreadPinningMutationFn = MutationFn<toggleThreadPinning, toggleThreadPinningVariables>;
+export type ToggleThreadPinningMutationResult = MutationResult<toggleThreadPinning>;
+export type ToggleThreadPinningMutationUpdaterFn = MutationUpdaterFn<toggleThreadPinning>;
 
 export class CreatePostMutation extends Mutation<createPost, createPostVariables> {}
 export type CreatePostMutationFn = MutationFn<createPost, createPostVariables>;

@@ -4,6 +4,7 @@
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "checkJs": false,
+    "experimentalDecorators": true,
     "importHelpers": true,
     "jsx": "react-native",
     "lib": ["es2015"],

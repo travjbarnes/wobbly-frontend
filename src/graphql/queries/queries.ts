@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
 
+import { threadListDetails } from "../fragments";
+
 export const OWN_INFO_QUERY = gql`
   query getOwnInfo {
     me {
@@ -58,19 +60,10 @@ export const GROUP_DETAILS_QUERY = gql`
 export const THREADS_QUERY = gql`
   query getThreads($groupId: ID!) {
     threads(groupId: $groupId) {
-      id
-      title
-      posts(last: 1) {
-        id
-        content
-        createdAt
-        author {
-          id
-          name
-        }
-      }
+      ...ThreadListDetails
     }
   }
+  ${threadListDetails}
 `;
 
 export const POSTS_QUERY = gql`

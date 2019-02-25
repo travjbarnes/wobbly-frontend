@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
 
+import { threadListDetails } from "../fragments";
+
 export const SIGNUP_MUTATION = gql`
   mutation signup($email: String!, $password: String!, $name: String!) {
     signup(email: $email, password: $password, name: $name) {
@@ -56,19 +58,19 @@ export const LOGIN_MUTATION = gql`
 export const CREATE_THREAD_MUTATION = gql`
   mutation createThread($groupId: ID!, $title: String!, $content: String!) {
     createThread(groupId: $groupId, title: $title, content: $content) {
-      id
-      title
-      posts(first: 1) {
-        id
-        content
-        createdAt
-        author {
-          id
-          name
-        }
-      }
+      ...ThreadListDetails
     }
   }
+  ${threadListDetails}
+`;
+
+export const TOGGLE_THREAD_PINNING_MUTATION = gql`
+  mutation toggleThreadPinning($threadId: ID!) {
+    toggleThreadPinning(threadId: $threadId) {
+      ...ThreadListDetails
+    }
+  }
+  ${threadListDetails}
 `;
 
 export const CREATE_POST_MUTATION = gql`

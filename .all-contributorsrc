@@ -15,7 +15,9 @@
       "avatar_url": "https://avatars3.githubusercontent.com/u/1309951?v=4",
       "profile": "https://btao.org",
       "contributions": [
-        "code"
+        "code",
+        "infra",
+        "review"
       ]
     }
   ],

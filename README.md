@@ -35,7 +35,7 @@ Thanks goes to these people ([emoji key](https://allcontributors.org/docs/en/emo
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-| [<img src="https://avatars3.githubusercontent.com/u/1309951?v=4" width="100px;" alt="Tao Bror Bojlén"/><br /><sub><b>Tao Bror Bojlén</b></sub>](https://btao.org)<br />[💻](https://github.com/Wobbly-App/wobbly-frontend/commits?author=brortao "Code") |
+| [<img src="https://avatars3.githubusercontent.com/u/1309951?v=4" width="100px;" alt="Tao Bror Bojlén"/><br /><sub><b>Tao Bror Bojlén</b></sub>](https://btao.org)<br />[💻](https://github.com/Wobbly-App/wobbly-frontend/commits?author=brortao "Code") [🚇](#infra-brortao "Infrastructure (Hosting, Build-Tools, etc)") [👀](#review-brortao "Reviewed Pull Requests") |
 | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 

@@ -74,7 +74,7 @@
     "@types/react-dom": "^16.8.2",
     "@types/react-native": "^0.57.38",
     "@types/react-native-keyboard-spacer": "^0.4.1",
-    "@types/react-navigation": "^3.0.3",
+    "@types/react-navigation": "^3.0.4",
     "@types/react-test-renderer": "^16.0.3",
     "@types/yup": "^0.26.7",
     "apollo": "^2.5.1",

@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { threadListDetails } from "../fragments";
+import { postListDetailsFragment, threadListDetailsFragment } from "../fragments";
 
 export const SIGNUP_MUTATION = gql`
   mutation signup($email: String!, $password: String!, $name: String!) {
@@ -61,7 +61,7 @@ export const CREATE_THREAD_MUTATION = gql`
       ...ThreadListDetails
     }
   }
-  ${threadListDetails}
+  ${threadListDetailsFragment}
 `;
 
 export const TOGGLE_THREAD_PINNING_MUTATION = gql`
@@ -70,21 +70,16 @@ export const TOGGLE_THREAD_PINNING_MUTATION = gql`
       ...ThreadListDetails
     }
   }
-  ${threadListDetails}
+  ${threadListDetailsFragment}
 `;
 
 export const CREATE_POST_MUTATION = gql`
   mutation createPost($threadId: ID!, $content: String!) {
     createPost(threadId: $threadId, content: $content) {
-      id
-      content
-      createdAt
-      author {
-        id
-        name
-      }
+      ...PostListDetails
     }
   }
+  ${postListDetailsFragment}
 `;
 
 export const CONFIRM_EMAIL_MUTATION = gql`

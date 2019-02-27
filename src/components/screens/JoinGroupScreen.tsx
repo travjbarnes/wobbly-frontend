@@ -1,4 +1,5 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
+import { get } from "lodash";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
@@ -51,15 +52,18 @@ class JoinGroupScreen extends React.PureComponent<IJoinGroupScreenProps> {
       return <ErrorState subtitle={queryResult.error.message} />;
     }
 
-    const description = queryResult.data!.group!.description;
+    const description = get(queryResult, "data.group.description", undefined);
+    const descriptionContainer = description ? (
+      <View style={style.descriptionContainer}>
+        <WobblyText>{description}</WobblyText>
+      </View>
+    ) : (
+      undefined
+    );
 
     return (
       <View style={style.container}>
-        {description && (
-          <View style={style.descriptionContainer}>
-            <WobblyText>{description}</WobblyText>
-          </View>
-        )}
+        {descriptionContainer}
         <WobblyButton disabled={mutationResult.loading} onPress={this.handleJoinGroup}>
           {mutationResult.loading ? <ActivityIndicator /> : "Join this group"}
         </WobblyButton>

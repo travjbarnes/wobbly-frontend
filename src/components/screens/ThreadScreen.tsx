@@ -33,7 +33,7 @@ interface IThreadScreenProps extends NavigationInjectedProps {
   createPost: (vars: IOptimisticUpdateParams) => void;
   mutationResult: CreatePostMutationResult;
 }
-class ThreadScreen extends React.PureComponent<IThreadScreenProps> {
+class ThreadScreen extends React.Component<IThreadScreenProps> {
   public static navigationOptions = ({ navigation }: NavigationInjectedProps) => ({
     title: navigation.getParam("threadTitle", "Thread")
   });

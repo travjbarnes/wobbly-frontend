@@ -46,8 +46,8 @@ class CreateThreadScreen extends React.Component<ICreateThreadScreenProps> {
         validationSchema={yup.object().shape({
           title: yup
             .string()
-            .min(8)
-            .max(100)
+            .min(1)
+            .max(60)
             .required(),
           content: yup.string().required()
         })}

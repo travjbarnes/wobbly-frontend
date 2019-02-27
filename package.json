@@ -79,7 +79,7 @@
     "@types/react-native-keyboard-spacer": "^0.4.1",
     "@types/react-navigation": "^3.0.4",
     "@types/react-test-renderer": "^16.0.3",
-    "@types/yup": "^0.26.7",
+    "@types/yup": "^0.26.10",
     "apollo": "^2.5.3",
     "babel-preset-expo": "^5.0.0",
     "dotenv-cli": "^1.4.0",

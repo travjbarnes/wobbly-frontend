@@ -33,6 +33,16 @@
       ]
     },
     {
+      "login": "chrisdevereux",
+      "name": "Chris Devereux",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/361391?v=4",
+      "profile": "http://coderwall.com/chrisdevereux",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    },
+    {
       "login": "runranron",
       "name": "William Pelton",
       "avatar_url": "https://avatars2.githubusercontent.com/u/24790942?v=4",

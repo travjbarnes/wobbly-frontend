@@ -1,6 +1,5 @@
 export { default as AccountScreen } from "./AccountScreen";
 export { default as GroupsListScreen } from "./GroupsListScreen";
-export { default as NotificationScreen } from "./NotificationScreen";
 export { default as SplashScreen } from "./SplashScreen";
 export { default as CreateGroupScreen } from "./CreateGroupScreen";
 export { default as SearchGroupsModal } from "./SearchGroupsModal";
@@ -13,3 +12,5 @@ export { default as LoginScreen } from "./LoginScreen";
 export { default as CreateThreadScreen } from "./CreateThreadScreen";
 export { default as SettingsScreen } from "./SettingsScreen";
 export { default as ThreadScreen } from "./ThreadScreen";
+export { default as EditGroupNameModal } from "./EditGroupNameModal";
+export { default as EditGroupDescriptionModal } from "./EditGroupDescriptionModal";

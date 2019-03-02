@@ -5,7 +5,7 @@ import { View } from "react-native";
 import HeaderButtons from "react-navigation-header-buttons";
 
 import { NavigationService } from "../../services";
-import { createNavigatorFunction } from "../../util";
+import { createNavigatorFunction, unregisterForPushNotificationsAsync } from "../../util";
 import { WobblyButton } from "../atoms";
 import { Intent } from "../atoms/WobblyButton";
 import { WobblyHeaderButtons } from "../molecules";
@@ -15,8 +15,11 @@ interface IAccountScreenProps extends WithApolloClient<{}> {
   displayName: string;
   email: string;
 }
+interface IAccountScreenState {
+  isLoggingOut: boolean;
+}
 
-class AccountScreen extends React.Component<IAccountScreenProps> {
+class AccountScreen extends React.Component<IAccountScreenProps, IAccountScreenState> {
   public static navigationOptions = () => {
     const navigateToSettings = createNavigatorFunction("Settings");
     return {
@@ -29,19 +32,29 @@ class AccountScreen extends React.Component<IAccountScreenProps> {
     };
   };
 
+  public constructor(props: IAccountScreenProps) {
+    super(props);
+    this.state = { isLoggingOut: false };
+  }
+
   public render() {
     return (
       <View>
         <UpdatePersonForm />
-        <WobblyButton text="Log out" onPress={this.logout} intent={Intent.DANGER} />
+        <WobblyButton text="Log out" onPress={this.logout} intent={Intent.DANGER} isLoading={this.state.isLoggingOut} />
       </View>
     );
   }
 
-  private logout = () => {
-    // These are both promises but we kick them both off at once
-    this.props.client.resetStore();
-    SecureStore.deleteItemAsync("token");
+  private logout = async () => {
+    this.setState({ isLoggingOut: true });
+    try {
+      await unregisterForPushNotificationsAsync(); // must come before the others as it depends on the token
+      await this.props.client.clearStore();
+      await SecureStore.deleteItemAsync("token");
+    } finally {
+      this.setState({ isLoggingOut: false });
+    }
     // Navigate to login screen
     NavigationService.navigate("Auth");
   };

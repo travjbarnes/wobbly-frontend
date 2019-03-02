@@ -1,10 +1,13 @@
 import { Formik, FormikProps } from "formik";
+import hoistNonReactStatics from "hoist-non-react-statics";
 import { get, values } from "lodash";
 import * as React from "react";
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
+import { NavigationInjectedProps } from "react-navigation";
 
 import { LOGIN_MUTATION, LoginMutation, LoginMutationFn, LoginMutationResult } from "../../graphql/mutations";
-import { createNavigatorFunction, saveTokenAndRedirect } from "../../util";
+import { NavigationService } from "../../services";
+import { createNavigatorFunction, registerForPushNotificationsAsync, saveAuthTokenAsync } from "../../util";
 import { FormErrors, FormField, WobblyButton } from "../atoms";
 import { Intent } from "../atoms/WobblyButton";
 import WobblyText from "../atoms/WobblyText";
@@ -14,7 +17,7 @@ export interface ILoginFormFields {
   password: string;
 }
 
-interface ILoginScreenProps {
+interface ILoginScreenProps extends NavigationInjectedProps {
   login: LoginMutationFn;
   result: LoginMutationResult;
 }
@@ -28,7 +31,7 @@ class LoginScreen extends React.PureComponent<ILoginScreenProps> {
   public componentDidUpdate() {
     const { data } = this.props.result;
     if (data && data.login.token) {
-      saveTokenAndRedirect(data.login.token);
+      saveAuthTokenAsync(data.login.token);
     }
   }
 
@@ -86,6 +89,19 @@ class LoginScreen extends React.PureComponent<ILoginScreenProps> {
           password: vals.password
         }
       })
+      .then(result => {
+        const token = get(result, "data.login.token", undefined);
+        if (!token) {
+          throw new Error("Did not receive auth token");
+        }
+        return saveAuthTokenAsync(token);
+      })
+      .then(() => {
+        return registerForPushNotificationsAsync();
+      })
+      .then(() => {
+        NavigationService.navigate("GroupsList");
+      })
       .catch(e => {
         const error = get(e, "graphQLErrors[0].message", "An error occurred");
         this.loginForm!.setErrors({ email: error });
@@ -93,11 +109,13 @@ class LoginScreen extends React.PureComponent<ILoginScreenProps> {
   };
 }
 
-export default () => (
+const EnhancedComponent = ({ navigation }: NavigationInjectedProps) => (
   <LoginMutation mutation={LOGIN_MUTATION}>
-    {(login, result) => <LoginScreen login={login} result={result} />}
+    {(login, result) => <LoginScreen login={login} result={result} navigation={navigation} />}
   </LoginMutation>
 );
+
+export default hoistNonReactStatics(EnhancedComponent, LoginScreen);
 
 const styles = StyleSheet.create({
   welcome: {

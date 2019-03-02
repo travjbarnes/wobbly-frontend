@@ -17,13 +17,13 @@ import { SplashScreen } from "./components/screens";
 import { OWN_INFO_QUERY, OwnInfoQuery } from "./graphql/queries";
 import { NavigationService } from "./services";
 
+export let client: ApolloClient<any>;
+
 interface IAppState {
   clientHasLoaded: boolean;
   fontsHaveLoaded: boolean;
 }
 export default class App extends React.Component<{}, IAppState> {
-  private client?: ApolloClient<any>;
-
   public constructor(props: {}) {
     super(props);
     this.state = { clientHasLoaded: false, fontsHaveLoaded: false };
@@ -35,13 +35,13 @@ export default class App extends React.Component<{}, IAppState> {
   }
 
   public render() {
-    if (!this.state.clientHasLoaded || !this.state.fontsHaveLoaded || !this.client) {
+    if (!this.state.clientHasLoaded || !this.state.fontsHaveLoaded || !client) {
       return <SplashScreen />;
     }
     const navigationPersistenceKey = __DEV__ ? "NavigationStateDEV" : null;
 
     return (
-      <ApolloProvider client={this.client}>
+      <ApolloProvider client={client}>
         <OwnInfoQuery query={OWN_INFO_QUERY}>
           {ownInfoResult => (
             <AppWithSubscriptions ownInfoResult={ownInfoResult}>
@@ -64,7 +64,7 @@ export default class App extends React.Component<{}, IAppState> {
     const protocol = __DEV__ ? "http" : "https";
     // 10.0.3.2 is the IP of the host machine that Genymotion runs on
     // If running on a real device, set this to the local IP of your machine
-    const serverHost = __DEV__ ? "10.0.3.2" : "staging.wobbly.app";
+    const serverHost = __DEV__ ? "172.20.192.1" : "staging.wobbly.app";
     const httpPort = __DEV__ ? "4000" : "443";
     const httpLink = createHttpLink({
       uri: `${protocol}://${serverHost}:${httpPort}`
@@ -81,13 +81,10 @@ export default class App extends React.Component<{}, IAppState> {
       }
     });
     const authLink = setContext(async (_, { headers }) => {
-      // TODO: can we get this once in `initClient` so that it doesn't run on
-      // every request?
-      const token = await SecureStore.getItemAsync("token");
       return {
         headers: {
           ...headers,
-          authorization: token ? `Bearer ${token}` : ""
+          authorization: authToken ? `Bearer ${authToken}` : ""
         }
       };
     });
@@ -102,7 +99,7 @@ export default class App extends React.Component<{}, IAppState> {
       authLink.concat(httpLink)
     );
 
-    this.client = new ApolloClient({
+    client = new ApolloClient({
       link: allLinks,
       cache: new InMemoryCache({ addTypename: true })
     });

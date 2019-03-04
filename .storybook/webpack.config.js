@@ -2,6 +2,7 @@ const path = require("path");
 
 module.exports = (baseConfig, env, config) => {
   config.module.rules.push(
+    // compile
     {
       test: /\.jsx?$/,
       include: [path.resolve("node_modules")],

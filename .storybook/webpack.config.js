@@ -42,7 +42,8 @@ module.exports = (baseConfig, env, config) => {
     // referenced from expo-web's icon stub, but doesn't seem to exist
     "react-native-vector-icons/AntDesign": require.resolve("./stubs/empty-module.ts"),
     "react-native-svg": require.resolve("react-native-svg-web"),
-    "react-native-video": require.resolve("./stubs/react-native-video.tsx")
+    "react-native-video": require.resolve("./stubs/react-native-video.tsx"),
+    "react-navigation": require.resolve("@react-navigation/core")
   };
 
   return config;

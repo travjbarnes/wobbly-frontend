@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "test": "yarn lint",
     "pretty": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "storybook": "start-storybook -p 6001",
+    "storybook": "(apollo service:download .storybook/schema.json || true) && start-storybook -p 6001",
     "lint": "yarn typecheck && tslint -p tsconfig.json -c tslint.json \"src/**/*.{ts,tsx}\"",
     "lint:fix": "yarn typecheck && tslint -p tsconfig.json -c tslint.json --fix \"src/**/*.{ts,tsx}\"",
     "codegen": "dotenv -- apollo client:codegen -c apollo.config.js --target=typescript --addTypename --outputFlat src/generated/"
@@ -69,6 +69,7 @@
     "yup": "^0.26.10"
   },
   "devDependencies": {
+    "@react-navigation/web": "^1.0.0-alpha.7",
     "@storybook/addon-actions": "4.0",
     "@storybook/addon-console": "^1.1.0",
     "@storybook/react": "4.0",
@@ -89,12 +90,14 @@
     "@types/storybook__react": "^4.0.1",
     "@types/yup": "^0.26.11",
     "apollo": "^2.5.3",
+    "apollo-link-schema": "^1.1.6",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
     "babel-preset-expo": "^5.0.0",
     "babel-preset-react-native": "^4.0.1",
     "dotenv-cli": "^1.4.0",
     "expo-web": "^0.0.14",
+    "graphql-tools": "^4.0.4",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.5",
     "prettier": "^1.16.3",

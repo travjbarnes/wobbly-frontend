@@ -1,73 +1,73 @@
-import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { StoryDecorator } from "@storybook/react";
 import React from "react";
 import { View } from "react-native";
-import { Header } from "react-native-elements";
-import { createNavigator, NavigationDescriptor, NavigationScreenOptions, StackRouter } from "react-navigation";
+import { NavigationScreenOptions } from "react-navigation";
 
-import WobblyText from "../components/atoms/WobblyText";
-import { NavigationService } from "../services";
+import { MockNavigator } from "./MockNavigator";
 
 export interface IScreenWrapperProps extends IScreenLayoutProps {
   navigationOptions?: NavigationScreenOptions;
 }
+/**
+ * Wrap a story in the
+ */
 export function screenWrapper({ navigationOptions, ...layoutProps }: IScreenWrapperProps = {}): StoryDecorator {
-  return children => {
+  return story => {
     class Screen extends React.Component {
       public static navigationOptions = navigationOptions;
 
       public render() {
-        return children();
+        return story();
       }
     }
 
-    const { createBrowserApp } = require("@react-navigation/web");
-
-    const Navigator = createNavigator(NavigationView, StackRouter({ Screen }, { initialRouteName: "Screen" }), {});
-    NavigationService.setTopLevelNavigator(Navigator);
-    const App = createBrowserApp(Navigator);
-
     return (
       <ScreenLayout {...layoutProps}>
-        <App
-          ref={(app: any) => {
-            NavigationService.setTopLevelNavigator(app && app._navigation);
-          }}
-        />
+        <MockNavigator screen={Screen} />
       </ScreenLayout>
     );
   };
 }
 
+/**
+ * Render a screen component, optionally providing it with some navigation params
+ */
 export function screenStory(Screen: React.ComponentType<any>, params?: {}) {
-  return () => {
-    const { createBrowserApp } = require("@react-navigation/web");
-
-    const Navigator = createNavigator(
-      NavigationView,
-      StackRouter({ Screen }, { initialRouteName: "Screen", initialRouteParams: params }),
-      {}
-    );
-
-    const App = createBrowserApp(Navigator);
-
-    return (
-      <ScreenLayout>
-        <App
-          ref={(app: any) => {
-            NavigationService.setTopLevelNavigator(app && app._navigation);
-          }}
-        />
-      </ScreenLayout>
-    );
-  };
+  return () => (
+    <ScreenLayout>
+      <MockNavigator screen={Screen} navigationParams={params} />
+    </ScreenLayout>
+  );
 }
 
 interface IScreenLayoutProps {
   backgroundColor?: string;
   children?: React.ReactNode;
 }
+/**
+ * Fixes the story dimensions to a phone screen size and renders a phone around the story if running interactively
+ */
 function ScreenLayout({ children, backgroundColor = "white" }: IScreenLayoutProps) {
+  // If running snapshot test, skip phone image surrounding the story and use the screen dimensions specified by the
+  // test configuration
+  if (process.env.STORYBOOK_LOKI) {
+    return (
+      <View
+        style={{
+          backgroundColor,
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          overflow: "hidden",
+          position: "relative"
+        }}
+      >
+        {children}
+      </View>
+    );
+  }
+
+  // If running interactively, scale down to ensure we fit on-screen and render with phone around the story
   return (
     <View style={{ transform: [{ scale: 0.75 }, { translateX: -100 }] }}>
       <img style={{ position: "absolute" }} src={require("./phone.svg")} />
@@ -85,35 +85,6 @@ function ScreenLayout({ children, backgroundColor = "white" }: IScreenLayoutProp
       >
         {children}
       </View>
-    </View>
-  );
-}
-
-interface INavigationViewProps {
-  descriptors: Record<string, NavigationDescriptor>;
-  navigation: any;
-}
-function NavigationView({ descriptors, navigation }: INavigationViewProps) {
-  const { SceneView } = require("@react-navigation/core");
-
-  const activeKey = navigation.state.routes[navigation.state.index].key;
-  const descriptor = descriptors[activeKey];
-  const { headerStyle, header, headerTitleStyle, headerTitle, headerLeft, headerRight, title } = descriptor.options;
-  const unwrapHeaderComponent = (x: typeof headerLeft) => (typeof x === "function" ? x({}) : x);
-
-  return (
-    <View style={{ width: "100%", height: "100%" }}>
-      {header || (
-        <Header
-          leftComponent={unwrapHeaderComponent(headerLeft) || undefined}
-          rightComponent={unwrapHeaderComponent(headerRight) || undefined}
-          containerStyle={[{ backgroundColor: "coral" }, headerStyle]}
-          centerComponent={<WobblyText style={headerTitleStyle}>{headerTitle || title}</WobblyText>}
-        />
-      )}
-      <ActionSheetProvider>
-        <SceneView component={descriptor.getComponent()} navigation={descriptor.navigation} />
-      </ActionSheetProvider>
     </View>
   );
 }

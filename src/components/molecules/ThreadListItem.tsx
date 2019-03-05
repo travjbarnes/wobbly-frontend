@@ -1,7 +1,6 @@
 import { ActionSheetProps, connectActionSheet } from "@expo/react-native-action-sheet";
 import * as React from "react";
-import { ActivityIndicator, TouchableHighlight, TouchableHighlightProps, View } from "react-native";
-import { ListItem } from "react-native-elements";
+import { ActivityIndicator } from "react-native";
 
 import { getThreads, getThreads_threads } from "../../generated/getThreads";
 import {
@@ -13,6 +12,7 @@ import {
 } from "../../graphql/mutations";
 import { THREADS_QUERY } from "../../graphql/queries";
 import { colors } from "../../style/common";
+import { WobblyListItem } from "../atoms/WobblyListItem";
 import WobblyText from "../atoms/WobblyText";
 
 /**
@@ -56,9 +56,8 @@ class ThreadListItem extends React.PureComponent<IThreadListItemProps, IThreadLi
       undefined
     );
     return (
-      <ListItem
+      <WobblyListItem
         leftIcon={leftIcon}
-        Component={SafeTouchableHighlight}
         title={<WobblyText headline={true}>{thread.title}</WobblyText>}
         subtitle={<WobblyText subhead={true}>{`${mostRecentAuthor}: ${mostRecentPost}`}</WobblyText>}
         onPress={onPress}
@@ -113,11 +112,3 @@ const EnhancedComponent = (props: IPublicProps) => (
   </ToggleThreadPinningMutation>
 );
 export default EnhancedComponent;
-
-// Ordinary TouchableHighlight throws an exception in web environment due to react-native-elements
-// giving it a non-native child. Wrap children in a view to work around this.
-const SafeTouchableHighlight = ({ children, ...props }: TouchableHighlightProps & { children?: React.ReactNode }) => (
-  <TouchableHighlight {...props}>
-    <View>{children}</View>
-  </TouchableHighlight>
-);

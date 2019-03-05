@@ -1,4 +1,5 @@
 import { Formik, FormikProps } from "formik";
+import hoistNonReactStatics from "hoist-non-react-statics";
 import { get, values } from "lodash";
 import * as React from "react";
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
@@ -93,11 +94,13 @@ class LoginScreen extends React.PureComponent<ILoginScreenProps> {
   };
 }
 
-export default () => (
+const EnhancedComponent = () => (
   <LoginMutation mutation={LOGIN_MUTATION}>
     {(login, result) => <LoginScreen login={login} result={result} />}
   </LoginMutation>
 );
+
+export default hoistNonReactStatics(EnhancedComponent, LoginScreen);
 
 const styles = StyleSheet.create({
   welcome: {

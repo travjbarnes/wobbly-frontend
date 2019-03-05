@@ -8,4 +8,4 @@ import { CreateGroupFooter } from ".";
 
 storiesOf("molecules/CreateGroupFooter", module)
   .addDecorator(screenWrapper())
-  .add("Stadard", () => <CreateGroupFooter onButtonPress={action("press")} />);
+  .add("Standard", () => <CreateGroupFooter onButtonPress={action("press")} />);

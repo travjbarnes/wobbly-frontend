@@ -7,6 +7,8 @@ import { addMockFunctionsToSchema, makeExecutableSchema } from "graphql-tools";
 import React from "react";
 import { ApolloProvider } from "react-apollo";
 
+import { someDateTime, someGroup, somePerson, somePost, someThread } from "./testData";
+
 interface IMockClientOpts {
   mocks?: any;
 }
@@ -18,7 +20,14 @@ export function withMockClient({ mocks }: IMockClientOpts = {}): StoryDecorator 
 
   addMockFunctionsToSchema({
     schema,
-    mocks
+    mocks: {
+      ...mocks,
+      Person: () => somePerson(),
+      Group: () => someGroup(),
+      Thread: () => someThread(),
+      DateTime: () => someDateTime(),
+      Post: () => somePost()
+    }
   });
 
   const client = new ApolloClient({

@@ -23,7 +23,7 @@ class SplashScreen extends React.PureComponent<ISplashScreenProps> {
 
   private bootstrap = async () => {
     const { navigation } = this.props;
-    if (!navigation) {
+    if (!navigation || !SecureStore) {
       return;
     }
     const token = await SecureStore.getItemAsync("token");

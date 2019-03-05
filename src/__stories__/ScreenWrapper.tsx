@@ -1,13 +1,16 @@
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { StoryDecorator } from "@storybook/react";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { Header } from "react-native-elements";
 import { createNavigator, NavigationDescriptor, NavigationScreenOptions, StackRouter } from "react-navigation";
+
+import WobblyText from "../components/atoms/WobblyText";
+import { NavigationService } from "../services";
 
 export interface IScreenWrapperProps extends IScreenLayoutProps {
   navigationOptions?: NavigationScreenOptions;
 }
-
 export function screenWrapper({ navigationOptions, ...layoutProps }: IScreenWrapperProps = {}): StoryDecorator {
   return children => {
     class Screen extends React.Component {
@@ -21,11 +24,40 @@ export function screenWrapper({ navigationOptions, ...layoutProps }: IScreenWrap
     const { createBrowserApp } = require("@react-navigation/web");
 
     const Navigator = createNavigator(NavigationView, StackRouter({ Screen }, { initialRouteName: "Screen" }), {});
+    NavigationService.setTopLevelNavigator(Navigator);
     const App = createBrowserApp(Navigator);
 
     return (
       <ScreenLayout {...layoutProps}>
-        <App />
+        <App
+          ref={(app: any) => {
+            NavigationService.setTopLevelNavigator(app && app._navigation);
+          }}
+        />
+      </ScreenLayout>
+    );
+  };
+}
+
+export function screenStory(Screen: React.ComponentType<any>, params?: {}) {
+  return () => {
+    const { createBrowserApp } = require("@react-navigation/web");
+
+    const Navigator = createNavigator(
+      NavigationView,
+      StackRouter({ Screen }, { initialRouteName: "Screen", initialRouteParams: params }),
+      {}
+    );
+
+    const App = createBrowserApp(Navigator);
+
+    return (
+      <ScreenLayout>
+        <App
+          ref={(app: any) => {
+            NavigationService.setTopLevelNavigator(app && app._navigation);
+          }}
+        />
       </ScreenLayout>
     );
   };
@@ -35,10 +67,9 @@ interface IScreenLayoutProps {
   backgroundColor?: string;
   children?: React.ReactNode;
 }
-
 function ScreenLayout({ children, backgroundColor = "white" }: IScreenLayoutProps) {
   return (
-    <View style={{ transform: [{ scale: 0.75 }, { translateX: -225 }] }}>
+    <View style={{ transform: [{ scale: 0.75 }, { translateX: -100 }] }}>
       <img style={{ position: "absolute" }} src={require("./phone.svg")} />
       <View
         style={{
@@ -76,11 +107,13 @@ function NavigationView({ descriptors, navigation }: INavigationViewProps) {
         <Header
           leftComponent={unwrapHeaderComponent(headerLeft) || undefined}
           rightComponent={unwrapHeaderComponent(headerRight) || undefined}
-          containerStyle={[{ backgroundColor: "tomato" }, headerStyle]}
-          centerComponent={<Text style={headerTitleStyle}>{headerTitle || title}</Text>}
+          containerStyle={[{ backgroundColor: "coral" }, headerStyle]}
+          centerComponent={<WobblyText style={headerTitleStyle}>{headerTitle || title}</WobblyText>}
         />
       )}
-      <SceneView component={descriptor.getComponent()} navigation={descriptor.navigation} />
+      <ActionSheetProvider>
+        <SceneView component={descriptor.getComponent()} navigation={descriptor.navigation} />
+      </ActionSheetProvider>
     </View>
   );
 }

@@ -1,6 +1,7 @@
 // tslint:disable: no-var-requires
 import "@storybook/addon-console";
 import { configure } from "@storybook/react";
+import "loki/configure-react";
 
 import { fonts } from "../src/fonts";
 

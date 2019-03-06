@@ -116,17 +116,46 @@ function NavigationView({ descriptors, navigation }: INavigationViewProps) {
     <Header
       leftComponent={unwrapHeaderComponent(headerLeft) || undefined}
       rightComponent={unwrapHeaderComponent(headerRight) || undefined}
-      containerStyle={[{ backgroundColor: "coral" }, headerStyle]}
+      containerStyle={[
+        {
+          height: "100%",
+          backgroundColor: "white"
+        },
+        headerStyle
+      ]}
       centerComponent={<WobblyText style={headerTitleStyle}>{headerTitle || title}</WobblyText>}
     />
   );
 
+  const headerContents = typeof header === "undefined" ? defaultHeader : header;
+
   return (
     <ActionSheetProvider>
       <View style={{ width: "100%", height: "100%" }}>
-        {typeof header === "undefined" ? defaultHeader : header}
+        {headerContents && <HeaderWrapper>{headerContents}</HeaderWrapper>}
         <SceneView component={descriptor.getComponent()} navigation={descriptor.navigation} />
       </View>
     </ActionSheetProvider>
+  );
+}
+
+function HeaderWrapper(props: { children: React.ReactNode }) {
+  return (
+    <>
+      <View
+        style={{
+          zIndex: 100,
+          position: "absolute",
+          shadowOpacity: 0.2,
+          shadowRadius: 7,
+          height: 56,
+          width: "100%",
+          shadowColor: "black"
+        }}
+      >
+        {props.children}
+      </View>
+      <View style={{ height: 56 }} />
+    </>
   );
 }

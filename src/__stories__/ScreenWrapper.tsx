@@ -9,12 +9,15 @@ export interface IScreenWrapperProps extends IScreenLayoutProps {
   navigationOptions?: NavigationScreenOptions;
 }
 /**
- * Wrap a story in the
+ * Render a story fixture with the
  */
 export function screenWrapper({ navigationOptions, ...layoutProps }: IScreenWrapperProps = {}): StoryDecorator {
-  return story => {
+  return (story, params) => {
     class Screen extends React.Component {
-      public static navigationOptions = navigationOptions;
+      public static navigationOptions = {
+        title: params.kind,
+        ...navigationOptions
+      };
 
       public render() {
         return story();
@@ -69,18 +72,19 @@ function ScreenLayout({ children, backgroundColor = "white" }: IScreenLayoutProp
 
   // If running interactively, scale down to ensure we fit on-screen and render with phone around the story
   return (
-    <View style={{ transform: [{ scale: 0.75 }, { translateX: -100 }] }}>
-      <img style={{ position: "absolute" }} src={require("./phone.svg")} />
+    <View>
+      <img style={{ position: "absolute", width: 431 }} src={require("./phone.svg")} />
       <View
         style={{
           backgroundColor,
           display: "flex",
           position: "absolute",
           overflow: "hidden",
-          left: 29,
-          top: 109,
-          height: 689,
-          width: 390
+          left: 28,
+          top: 105,
+          height: 667,
+          width: 375,
+          border: "1px solid lightgrey"
         }}
       >
         {children}

@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "typecheck": "tsc --noEmit",
-    "test": "yarn test:snapshot",
+    "test": "yarn lint && yarn test:snapshot",
     "test:snapshot": "STORYBOOK_LOKI=1 yarn build-storybook && loki",
     "test:snapshot:accept": "loki approve",
     "pretty": "prettier --write \"src/**/*.{ts,tsx}\"",

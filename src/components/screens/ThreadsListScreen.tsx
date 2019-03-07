@@ -55,7 +55,7 @@ class ThreadsListScreen extends React.Component<IThreadsListScreenProps> {
       return <ErrorState />;
     }
     const threads: getThreads_threads[] = get(threadsResult, "data.threads", []);
-    let sortedThreads = sortBy(threads, thread => new Date(thread.posts[thread.posts.length - 1].createdAt));
+    let sortedThreads = sortBy(threads, mostRecentlyUpdated);
     sortedThreads = reverse(sortBy(sortedThreads, ["pinned"])); // this is an in-place sort
     return (
       <ThreadsList
@@ -106,3 +106,10 @@ const EnhancedComponent = ({ navigation }: NavigationInjectedProps) => (
 );
 
 export default hoistNonReactStatics(EnhancedComponent, ThreadsListScreen);
+
+const mostRecentlyUpdated = (thread: getThreads_threads) => {
+  const lastPost = thread.posts[thread.posts.length - 1];
+  return lastPost ? new Date(lastPost.createdAt) : FAR_FUTURE;
+};
+
+const FAR_FUTURE = new Date("2100-01-01");

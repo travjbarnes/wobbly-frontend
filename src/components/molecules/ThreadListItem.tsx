@@ -46,8 +46,11 @@ class ThreadListItem extends React.PureComponent<IThreadListItemProps, IThreadLi
 
   public render() {
     const { thread, onPress } = this.props;
-    const mostRecentPost = thread.posts[0].content;
-    const mostRecentAuthor = thread.posts[0].author.name;
+
+    const mostRecentPost = thread.posts[0];
+
+    const mostRecentPostContent = mostRecentPost ? mostRecentPost.content : "";
+    const mostRecentAuthor = mostRecentPost ? mostRecentPost.author.name : "";
     const leftIcon = this.state.isTogglingPinning ? (
       <ActivityIndicator />
     ) : thread.pinned ? (
@@ -59,7 +62,11 @@ class ThreadListItem extends React.PureComponent<IThreadListItemProps, IThreadLi
       <WobblyListItem
         leftIcon={leftIcon}
         title={<WobblyText headline={true}>{thread.title}</WobblyText>}
-        subtitle={<WobblyText subhead={true}>{`${mostRecentAuthor}: ${mostRecentPost}`}</WobblyText>}
+        subtitle={
+          <WobblyText subhead={true}>
+            {mostRecentPost ? `${mostRecentAuthor}: ${mostRecentPostContent}` : ""}
+          </WobblyText>
+        }
         onPress={onPress}
         onLongPress={this.onLongPress}
         bottomDivider={true}

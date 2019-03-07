@@ -1,4 +1,3 @@
-import { StoryDecorator } from "@storybook/react";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import ApolloClient from "apollo-client";
 import { SchemaLink } from "apollo-link-schema";
@@ -9,11 +8,12 @@ import { ApolloProvider } from "react-apollo";
 
 import { someDateTime, someGroup, somePerson, somePost, someThread } from "./testData";
 
-interface IMockClientOpts {
+interface IGraphQLMockProviderProps {
   mocks?: any;
+  children?: React.ReactNode;
 }
 
-export function withMockClient({ mocks }: IMockClientOpts = {}): StoryDecorator {
+export function GraphQLMockProvider({ mocks, children }: IGraphQLMockProviderProps) {
   const schema = makeExecutableSchema({
     typeDefs: convertSchemaToTypeDefs(require("../../.storybook/schema.json"))
   });
@@ -24,6 +24,7 @@ export function withMockClient({ mocks }: IMockClientOpts = {}): StoryDecorator 
       ...mocks,
       Person: () => somePerson(),
       Group: () => someGroup(),
+      GroupSearchResponse: () => someGroup(),
       Thread: () => someThread(),
       DateTime: () => someDateTime(),
       Post: () => somePost()
@@ -37,7 +38,7 @@ export function withMockClient({ mocks }: IMockClientOpts = {}): StoryDecorator 
     })
   });
 
-  return story => <ApolloProvider client={client}>{story()}</ApolloProvider>;
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
 }
 
 function convertSchemaToTypeDefs(schema: any) {

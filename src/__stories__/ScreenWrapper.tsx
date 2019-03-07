@@ -1,12 +1,15 @@
 import { StoryDecorator } from "@storybook/react";
+import { IMocks } from "graphql-tools";
 import React from "react";
 import { View } from "react-native";
 import { NavigationScreenOptions } from "react-navigation";
 
+import { GraphQLMockProvider } from "./MockClient";
 import { MockNavigator } from "./MockNavigator";
 
 export interface IScreenWrapperProps extends IScreenLayoutProps {
   navigationOptions?: NavigationScreenOptions;
+  mocks?: IMocks;
 }
 /**
  * Render a story fixture with the
@@ -25,21 +28,29 @@ export function screenWrapper({ navigationOptions, ...layoutProps }: IScreenWrap
     }
 
     return (
-      <ScreenLayout {...layoutProps}>
-        <MockNavigator screen={Screen} />
-      </ScreenLayout>
+      <GraphQLMockProvider>
+        <ScreenLayout {...layoutProps}>
+          <MockNavigator screen={Screen} />
+        </ScreenLayout>
+      </GraphQLMockProvider>
     );
   };
 }
 
+interface IScreenStoryOpts {
+  navigationParams?: {};
+  mocks?: IMocks;
+}
 /**
  * Render a screen component, optionally providing it with some navigation params
  */
-export function screenStory(Screen: React.ComponentType<any>, params?: {}) {
+export function screenStory(Screen: React.ComponentType<any>, { navigationParams, mocks }: IScreenStoryOpts = {}) {
   return () => (
-    <ScreenLayout>
-      <MockNavigator screen={Screen} navigationParams={params} />
-    </ScreenLayout>
+    <GraphQLMockProvider mocks={mocks}>
+      <ScreenLayout>
+        <MockNavigator screen={Screen} navigationParams={navigationParams} />
+      </ScreenLayout>
+    </GraphQLMockProvider>
   );
 }
 

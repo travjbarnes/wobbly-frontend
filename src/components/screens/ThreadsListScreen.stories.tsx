@@ -1,11 +1,34 @@
 import { storiesOf } from "@storybook/react";
 
-import { withMockClient } from "../../__stories__/MockClient";
 import { screenStory } from "../../__stories__/ScreenWrapper";
-import { someId } from "../../__stories__/testData";
+import { someId, someSequence, someThread } from "../../__stories__/testData";
 
 import ThreadsListScreen from "./ThreadsListScreen";
 
 storiesOf("screens/ThreadsListScreen", module)
-  .addDecorator(withMockClient())
-  .add("Standard", screenStory(ThreadsListScreen, { groupId: someId() }));
+  .add(
+    "Standard",
+    screenStory(ThreadsListScreen, {
+      navigationParams: {
+        groupId: someId()
+      },
+      mocks: {
+        Query: () => ({
+          threads: () => someSequence(3, someThread)
+        })
+      }
+    })
+  )
+  .add(
+    "Empty State",
+    screenStory(ThreadsListScreen, {
+      navigationParams: {
+        groupId: someId()
+      },
+      mocks: {
+        Query: () => ({
+          threads: () => []
+        })
+      }
+    })
+  );

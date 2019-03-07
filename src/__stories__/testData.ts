@@ -16,6 +16,7 @@ export const someUser = (i?: number): User => ({
 interface IThread {
   __typename: "Thread";
   id: string;
+  createdAt: Date;
   title: string;
   pinned: boolean;
   posts: IPost[];
@@ -24,8 +25,9 @@ export const someThread = (i?: number): IThread => ({
   __typename: "Thread",
   id: someId(i, "thread"),
   title: pickOne(threadTitles, i),
+  createdAt: someDateTime(i),
   pinned: false,
-  posts: someSequence(5, somePost)
+  posts: someSequence(listSize(i), somePost, i)
 });
 
 interface IPost {
@@ -53,7 +55,7 @@ interface IPerson {
   name: string;
   email: string;
   emailConfirmed: boolean;
-  groups: unknown[];
+  groups: IGroup[];
 }
 export const somePerson = (i?: number): IPerson => {
   const user = pickOne(people, i);
@@ -79,14 +81,14 @@ interface IGroup {
   threads: IThread[];
   memberCount: number;
 }
-export const someGroup = (i?: number): IGroup => ({
+export const someGroup = (i: number = 0): IGroup => ({
   __typename: "Group",
   id: someId(i, "group"),
   ...pickOne(groups, i),
   createdAt: someDateTime(i),
-  members: someSequence(2, somePerson),
-  threads: someSequence(2, someThread),
-  memberCount: 2
+  members: someSequence(listSize(i), somePerson, i),
+  threads: someSequence(listSize(i), someThread, i),
+  memberCount: listSize(i)
 });
 
 export const someGiftedMessage = (i?: number, overrides: Partial<IMessage> = {}): IMessage => ({
@@ -97,36 +99,50 @@ export const someGiftedMessage = (i?: number, overrides: Partial<IMessage> = {})
   ...overrides
 });
 
-export const someSequence = <T>(count: number, generator: DataGenerator<T>) => {
+export const someSequence = <T>(count: number, generator: DataGenerator<T>, seed = 0) => {
   const items: T[] = [];
   for (let i = 0; i < count; ++i) {
-    items.push(generator(i));
+    items.push(generator(i + seed));
   }
   return items;
 };
 
+const listSize = (seed = 0, min: number = 0, max: number = 3) => {
+  const range = max - min;
+  return ((seed + (range - 1)) % range) + min;
+};
 const pickOne = <T>(collection: T[], i = 0) => collection[i % collection.length];
 
 const people = [
   {
-    name: "Emma Goldman",
-    avatar: require("./images/goldman.jpg")
+    name: "tamsin"
   },
   {
     name: "Skeletor",
     avatar: require("./images/skeletor.png")
+  },
+  {
+    name: "kieran",
+    avatar: require("./images/cat.jpg")
   }
 ];
-const threadTitles = ["Thing happening soon", "Another thing"];
+const threadTitles = ["Fundraising Plans?", "Another thing", "Nov 13th"];
 const messageText = [
-  "If love does not know how to give and take without restrictions, it is not love, but a transaction that never fails to lay stress on a plus and a minus",
-  "If I can't dance, I don't want to be part of your revolution"
+  "Thanks everyone for being there. Such a good start to the strike. Everyone will be fearless going into tomorrow!",
+  "Good luck everyone ✊",
+  "Was lovely meeting all you lot. Next time I'm in the city I'll hit this group up"
 ];
 const groups = [
   {
-    name: "McDonald's London Road"
+    name: "McDonald's London Road",
+    description: "1234x"
   },
   {
-    name: "McDonald's Princes Street"
+    name: "Hanover Outreach",
+    description: ""
+  },
+  {
+    name: "Wobbly Developers",
+    description: ""
   }
 ];

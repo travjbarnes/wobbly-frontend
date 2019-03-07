@@ -118,6 +118,7 @@
     "prettier": "^1.16.3",
     "react-art": "^16.8.3",
     "react-dom": "^16.8.3",
+    "react-native-svg-web": "^1.0.1",
     "react-native-web": "^0.10.0",
     "tslint": "^5.13.1",
     "tslint-config-prettier": "^1.17.0",

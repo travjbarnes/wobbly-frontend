@@ -1,4 +1,3 @@
-import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import React from "react";
 import { View } from "react-native";
 import { Header } from "react-native-elements";
@@ -19,8 +18,8 @@ interface IMockAppProps {
 }
 
 /**
- * Minimal stub providing enough of react-navigation's behavior for stories
- * without doing anything anoying like modifying the browser history
+ * Minimal stub providing enough of react-navigation's behavior for stories without doing anything anoying like
+ * modifying the browser history
  */
 export class MockNavigator extends React.Component<IMockAppProps> {
   public navigator = createNavigator(
@@ -102,7 +101,6 @@ interface INavigationViewProps {
 }
 /**
  * Stub navigation view capable of rendering a basic header.
- * TODO: make the styling of the header match native header (or always use the react-native-elements one)
  */
 function NavigationView({ descriptors, navigation }: INavigationViewProps) {
   const { SceneView } = require("@react-navigation/core");
@@ -130,12 +128,10 @@ function NavigationView({ descriptors, navigation }: INavigationViewProps) {
   const headerContents = typeof header === "undefined" ? defaultHeader : header;
 
   return (
-    <ActionSheetProvider>
-      <View style={{ width: "100%", height: "100%" }}>
-        {headerContents && <HeaderWrapper>{headerContents}</HeaderWrapper>}
-        <SceneView component={descriptor.getComponent()} navigation={descriptor.navigation} />
-      </View>
-    </ActionSheetProvider>
+    <View style={{ width: "100%", height: "100%" }}>
+      {headerContents && <HeaderWrapper>{headerContents}</HeaderWrapper>}
+      <SceneView component={descriptor.getComponent()} navigation={descriptor.navigation} />
+    </View>
   );
 }
 

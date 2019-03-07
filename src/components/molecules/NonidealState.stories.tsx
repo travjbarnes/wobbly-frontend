@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { screenWrapper } from "../../__stories__/ScreenWrapper";
+import { screenWrapper } from "../../__stories__/storyWrapper";
 
 import { NonIdealState } from ".";
 

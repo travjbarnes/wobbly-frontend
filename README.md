@@ -12,9 +12,16 @@ Wobbly is an app for workplace organizing. See [wobbly.app](https://wobbly.app) 
 * `cd` into the repo and run `yarn install` to get dependencies
 * Run `yarn codegen` to automatically generate the TypeScript typings for our GraphQL client
 * Run `yarn start`. You can preview and live reload the app in an Android/iOS emulator or on your device using the Expo app.
+* Optional: Run `yarn storybook` for a web-based [storybook](https://storybook.js.org) environment
 
 ## 🌐 Connecting to the backend
 Our [backend](https://github.com/Wobbly-App/graphql-backend) exposes a GraphQL API. In `App.tsx`, set the IP of the backend stack you want to connect to.
+
+## 🔥 Testing
+We use [loki](https://loki.js.org/) to run visual regression tests against our storybook. The general workflow for these are:
+* Write a story for your component
+* `yarn test` 
+* If the tests fail due to a visual change, check the contents of [./loki/difference](./loki/difference). If you are happy with all the changes, run `yarn loki approve` to update the reference screens.
 
 ## ⚙️ Frameworks
 * [Expo](https://expo.io)
@@ -28,7 +35,6 @@ Our [backend](https://github.com/Wobbly-App/graphql-backend) exposes a GraphQL A
 * [TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 * [React Native tutorial](https://facebook.github.io/react-native/docs/tutorial)
 
-
 ## 👩‍👩‍👧‍👦 Contributors
 
 Thanks goes to these people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -36,7 +42,7 @@ Thanks goes to these people ([emoji key](https://allcontributors.org/docs/en/emo
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
 | [<img src="https://avatars3.githubusercontent.com/u/1309951?v=4" width="100px;" alt="Tao Bror Bojlén"/><br /><sub><b>Tao Bror Bojlén</b></sub>](https://btao.org)<br />[💻](https://github.com/Wobbly-App/wobbly-frontend/commits?author=brortao "Code") [🚇](#infra-brortao "Infrastructure (Hosting, Build-Tools, etc)") [👀](#review-brortao "Reviewed Pull Requests") | [<img src="https://avatars0.githubusercontent.com/u/38507954?v=4" width="100px;" alt="John Evans"/><br /><sub><b>John Evans</b></sub>](http://bananananaba.com)<br />[🖋](#content-King-Mob "Content") [💼](#business-King-Mob "Business development") [🤔](#ideas-King-Mob "Ideas, Planning, & Feedback") [👀](#review-King-Mob "Reviewed Pull Requests") | [<img src="https://avatars2.githubusercontent.com/u/24790942?v=4" width="100px;" alt="William Pelton"/><br /><sub><b>William Pelton</b></sub>](https://www.icantotallycode.com/)<br />[💻](https://github.com/Wobbly-App/wobbly-frontend/commits?author=runranron "Code") [👀](#review-runranron "Reviewed Pull Requests") | [<img src="https://avatars1.githubusercontent.com/u/361391?v=4" width="100px;" alt="Chris Devereux"/><br /><sub><b>Chris Devereux</b></sub>](http://coderwall.com/chrisdevereux)<br />[💻](https://github.com/Wobbly-App/wobbly-frontend/commits?author=chrisdevereux "Code") [⚠️](https://github.com/Wobbly-App/wobbly-frontend/commits?author=chrisdevereux "Tests") |
-| :---: | :---: | :---: | :---: |
+| :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

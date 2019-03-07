@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/react";
 
-import { screenStory } from "../../__stories__/ScreenWrapper";
+import { screenStory } from "../../__stories__/storyWrapper";
 import { someId } from "../../__stories__/testData";
 
 import ThreadScreen from "./ThreadScreen";

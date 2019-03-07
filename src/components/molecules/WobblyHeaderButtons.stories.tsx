@@ -4,7 +4,7 @@ import React from "react";
 import { View } from "react-native";
 import HeaderButtons from "react-navigation-header-buttons";
 
-import { screenWrapper } from "../../__stories__/ScreenWrapper";
+import { screenWrapper } from "../../__stories__/storyWrapper";
 
 import { WobblyHeaderButtons } from ".";
 

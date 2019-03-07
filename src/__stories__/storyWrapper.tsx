@@ -1,3 +1,4 @@
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { StoryDecorator } from "@storybook/react";
 import { IMocks } from "graphql-tools";
 import React from "react";
@@ -12,7 +13,7 @@ export interface IScreenWrapperProps extends IScreenLayoutProps {
   mocks?: IMocks;
 }
 /**
- * Render a story fixture with the
+ * Story decorator to inject in all the required context
  */
 export function screenWrapper({ navigationOptions, ...layoutProps }: IScreenWrapperProps = {}): StoryDecorator {
   return (story, params) => {
@@ -30,7 +31,9 @@ export function screenWrapper({ navigationOptions, ...layoutProps }: IScreenWrap
     return (
       <GraphQLMockProvider>
         <ScreenLayout {...layoutProps}>
-          <MockNavigator screen={Screen} />
+          <ActionSheetProvider>
+            <MockNavigator screen={Screen} />
+          </ActionSheetProvider>
         </ScreenLayout>
       </GraphQLMockProvider>
     );
@@ -42,13 +45,16 @@ interface IScreenStoryOpts {
   mocks?: IMocks;
 }
 /**
- * Render a screen component, optionally providing it with some navigation params
+ * Return a story that renders a whole screen, with the appropriate context set up
+ * and, optionally, any navigation params / custom data
  */
 export function screenStory(Screen: React.ComponentType<any>, { navigationParams, mocks }: IScreenStoryOpts = {}) {
   return () => (
     <GraphQLMockProvider mocks={mocks}>
       <ScreenLayout>
-        <MockNavigator screen={Screen} navigationParams={navigationParams} />
+        <ActionSheetProvider>
+          <MockNavigator screen={Screen} navigationParams={navigationParams} />
+        </ActionSheetProvider>
       </ScreenLayout>
     </GraphQLMockProvider>
   );
@@ -81,7 +87,7 @@ function ScreenLayout({ children, backgroundColor = "white" }: IScreenLayoutProp
     );
   }
 
-  // If running interactively, scale down to ensure we fit on-screen and render with phone around the story
+  // If running interactively, render with phone around the story
   return (
     <View>
       <img style={{ position: "absolute", width: 431 }} src={require("./phone.svg")} />

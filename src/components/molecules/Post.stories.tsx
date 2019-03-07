@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 import { GiftedChat, IMessage } from "react-native-gifted-chat";
 
-import { screenWrapper } from "../../__stories__/ScreenWrapper";
+import { screenWrapper } from "../../__stories__/storyWrapper";
 import { someDateTime, someGiftedMessage, someUser } from "../../__stories__/testData";
 
 import { Post } from ".";

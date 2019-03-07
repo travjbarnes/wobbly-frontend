@@ -8,7 +8,6 @@
     "typecheck": "tsc --noEmit",
     "test": "yarn lint && yarn test:snapshot",
     "test:snapshot": "STORYBOOK_LOKI=1 yarn build-storybook && loki",
-    "test:snapshot:accept": "loki approve",
     "pretty": "prettier --write \"src/**/*.{ts,tsx}\"",
     "storybook": "(yarn download-schema || true) && start-storybook -p 6001",
     "build-storybook": "(yarn download-schema || true) && build-storybook",

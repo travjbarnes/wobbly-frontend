@@ -14,7 +14,7 @@
     "lint": "yarn typecheck && tslint -p tsconfig.json -c tslint.json \"src/**/*.{ts,tsx}\"",
     "lint:fix": "yarn typecheck && tslint -p tsconfig.json -c tslint.json --fix \"src/**/*.{ts,tsx}\"",
     "codegen": "dotenv -- apollo client:codegen -c apollo.config.js --target=typescript --addTypename --outputFlat src/generated/",
-    "download-schema": "apollo service:download .storybook/schema.json"
+    "download-schema": "apollo service:download -c apollo.config.js .storybook/schema.json"
   },
   "loki": {
     "diffingEngine": "looks-same",

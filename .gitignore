@@ -316,3 +316,6 @@ api_key.py
 client-secret.json
 credentials.tar.gz
 storybook-static
+.storybook/schema.json
+.loki/current
+.loki/difference

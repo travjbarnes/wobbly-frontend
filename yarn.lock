@@ -1477,12 +1477,13 @@ apollo-language-server@1.5.3:
     vscode-uri "^1.0.6"
     ws "^6.1.0"
 
-apollo-link-context@^1.0.14, apollo-link-context@^1.0.9:
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/apollo-link-context/-/apollo-link-context-1.0.14.tgz#6265eef49bedadddbbcff4026d04cd351094cd6c"
-  integrity sha512-l6SIN7Fwqhgg5C5eA8xSrt8gulHBmYTE3J4z5/Q2hP/8Kok0rQ/z5q3uy42/hkdYlnaktOvpz+ZIwEFzcXwujQ==
+apollo-link-context@^1.0.15, apollo-link-context@^1.0.9:
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/apollo-link-context/-/apollo-link-context-1.0.15.tgz#9e5dc3eb874b3ed975f0bb0062a65aa946fd30a2"
+  integrity sha512-CkUB0CaaNGCsiNxG6GImPSsXHL8f+lQZukl2TLdpDKao3EyCuPC9gSWvclUagwZ1TDnY8O+wJnNBDGymQiZTsA==
   dependencies:
-    apollo-link "^1.2.8"
+    apollo-link "^1.2.9"
+    tslib "^1.9.3"
 
 apollo-link-dedup@^1.0.0:
   version "1.0.15"

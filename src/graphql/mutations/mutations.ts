@@ -11,8 +11,8 @@ export const SIGNUP_MUTATION = gql`
 `;
 
 export const UPDATE_PERSON_MUTATION = gql`
-  mutation updatePerson($email: String, $password: String, $name: String) {
-    updatePerson(email: $email, password: $password, name: $name) {
+  mutation updatePerson($email: String, $oldPassword: String, $name: String, $newPassword: String) {
+    updatePerson(email: $email, oldPassword: $oldPassword, name: $name, newPassword: $newPassword) {
       name
       email
     }

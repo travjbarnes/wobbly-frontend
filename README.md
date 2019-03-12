@@ -22,6 +22,7 @@ We use [loki](https://loki.js.org/) to run visual regression tests against our s
 * Write a story for your component
 * `yarn test` 
 * If the tests fail due to a visual change, check the contents of [./loki/difference](./loki/difference). If you are happy with all the changes, run `yarn loki approve` to update the reference screens.
+* If the test fail on CI and you think they should have passed, check the travis logs for a link to a url hosting diffs between the current and reference snapshots
 
 ## ⚙️ Frameworks
 * [Expo](https://expo.io)

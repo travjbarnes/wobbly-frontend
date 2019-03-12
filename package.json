@@ -19,9 +19,10 @@
   "loki": {
     "diffingEngine": "looks-same",
     "reactUri": "file:./storybook-static",
+    "chromeTolerance": 1,
     "configurations": {
       "iphone7": {
-        "target": "chrome.app",
+        "target": "chrome.docker",
         "deviceScaleFactor": 2,
         "width": 375,
         "height": 667

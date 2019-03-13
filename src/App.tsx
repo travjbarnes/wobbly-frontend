@@ -16,6 +16,7 @@ import AppNavigation from "./AppNavigation";
 import AppWithSubscriptions from "./AppWithSubscriptions";
 import { SplashScreen } from "./components/screens";
 import { config } from "./config";
+import { fonts } from "./fonts";
 import { OWN_INFO_QUERY, OwnInfoQuery } from "./graphql/queries";
 import { NavigationService } from "./services";
 
@@ -107,13 +108,7 @@ export default class App extends React.Component<{}, IAppState> {
   }
 
   private async initFonts() {
-    await Font.loadAsync({
-      "open-sans-regular": require("../assets/fonts/OpenSans-Regular.ttf"),
-      "open-sans-bold": require("../assets/fonts/OpenSans-Bold.ttf"),
-      "montserrat-regular": require("../assets/fonts/Montserrat-Regular.ttf"),
-      "montserrat-bold": require("../assets/fonts/Montserrat-Bold.ttf"),
-      "montserrat-black": require("../assets/fonts/Montserrat-Black.ttf")
-    });
+    await Font.loadAsync(fonts);
     this.setState({ fontsHaveLoaded: true });
   }
 }

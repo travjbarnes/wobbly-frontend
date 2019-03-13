@@ -1,7 +1,6 @@
 import { ActionSheetProps, connectActionSheet } from "@expo/react-native-action-sheet";
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
-import { ListItem } from "react-native-elements";
 
 import { getThreads, getThreads_threads } from "../../generated/getThreads";
 import {
@@ -13,6 +12,7 @@ import {
 } from "../../graphql/mutations";
 import { THREADS_QUERY } from "../../graphql/queries";
 import { colors } from "../../style/common";
+import { WobblyListItem } from "../atoms/WobblyListItem";
 import WobblyText from "../atoms/WobblyText";
 
 /**
@@ -46,8 +46,11 @@ class ThreadListItem extends React.PureComponent<IThreadListItemProps, IThreadLi
 
   public render() {
     const { thread, onPress } = this.props;
-    const mostRecentPost = thread.posts[0].content;
-    const mostRecentAuthor = thread.posts[0].author.name;
+
+    const mostRecentPost = thread.posts[0];
+
+    const mostRecentPostContent = mostRecentPost ? mostRecentPost.content : "";
+    const mostRecentAuthor = mostRecentPost ? mostRecentPost.author.name : "";
     const leftIcon = this.state.isTogglingPinning ? (
       <ActivityIndicator />
     ) : thread.pinned ? (
@@ -56,10 +59,14 @@ class ThreadListItem extends React.PureComponent<IThreadListItemProps, IThreadLi
       undefined
     );
     return (
-      <ListItem
+      <WobblyListItem
         leftIcon={leftIcon}
         title={<WobblyText headline={true}>{thread.title}</WobblyText>}
-        subtitle={<WobblyText subhead={true}>{`${mostRecentAuthor}: ${mostRecentPost}`}</WobblyText>}
+        subtitle={
+          <WobblyText subhead={true}>
+            {mostRecentPost ? `${mostRecentAuthor}: ${mostRecentPostContent}` : ""}
+          </WobblyText>
+        }
         onPress={onPress}
         onLongPress={this.onLongPress}
         bottomDivider={true}

@@ -2,8 +2,7 @@ import hoistNonReactStatics from "hoist-non-react-statics";
 import { inflect } from "inflection";
 import { remove } from "lodash";
 import * as React from "react";
-import { Alert, ScrollView, StyleSheet } from "react-native";
-import { Image } from "react-native-elements";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 
 import { getGroups, getGroups_groups } from "../../generated/getGroups";
@@ -56,7 +55,7 @@ class GroupDetailsScreen extends React.PureComponent<IGroupDetailsScreen> {
       const members = group.members || [];
       return (
         <ScrollView style={style.container}>
-          <Image source={{ uri: "https://placeimg.com/600/200/nature" }} style={style.groupImage} />
+          <View style={style.groupImage} />
           <EditableTextView onPress={this.openEditNameModal}>
             <WobblyText title1={true}>{group.name}</WobblyText>
           </EditableTextView>

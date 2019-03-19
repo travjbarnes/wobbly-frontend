@@ -111,7 +111,7 @@
     "babel-loader": "^8.0.5",
     "babel-preset-expo": "^5.1.1",
     "babel-preset-react-native": "^4.0.1",
-    "dotenv-cli": "^1.4.0",
+    "dotenv-cli": "^2.0.0",
     "expo-web": "^0.0.14",
     "form-data": "^2.3.3",
     "graphql-tools": "^4.0.4",

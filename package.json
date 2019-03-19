@@ -109,7 +109,7 @@
     "apollo-link-schema": "^1.1.6",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
-    "babel-preset-expo": "^5.0.0",
+    "babel-preset-expo": "^5.1.1",
     "babel-preset-react-native": "^4.0.1",
     "dotenv-cli": "^1.4.0",
     "expo-web": "^0.0.14",

@@ -2323,15 +2323,15 @@ apollo-link-schema@^1.2.2:
     apollo-link "^1.2.11"
     tslib "^1.9.3"
 
-apollo-link-ws@^1.0.16, apollo-link-ws@^1.0.9:
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/apollo-link-ws/-/apollo-link-ws-1.0.16.tgz#f4075c0913b287ad79c73b7339395e43de19c406"
-  integrity sha512-uiR44CypjGMGza91t1q+XhWKOw6U7F9lPu47cQDDPrfyNG73pYX6MbE/9tZFAIl3eWnAO17TTpxzNTWfpIhODA==
+apollo-link-ws@^1.0.17, apollo-link-ws@^1.0.9:
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/apollo-link-ws/-/apollo-link-ws-1.0.17.tgz#a7ec3f90d2651b77d6be9bb6e63deff2efac56d4"
+  integrity sha512-0PKgahM2BOcUiI3QSJMYXOoUylWKzar5NTZLgMLEW4K/CczOTzC4CTXvKMjh/cx57Jto/U2xzKRy9BEoNfnK5Q==
   dependencies:
-    apollo-link "^1.2.10"
+    apollo-link "^1.2.11"
     tslib "^1.9.3"
 
-apollo-link@^1.0.0, apollo-link@^1.0.6, apollo-link@^1.2.10, apollo-link@^1.2.11, apollo-link@^1.2.3, apollo-link@^1.2.9:
+apollo-link@^1.0.0, apollo-link@^1.0.6, apollo-link@^1.2.11, apollo-link@^1.2.3, apollo-link@^1.2.9:
   version "1.2.11"
   resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.11.tgz#493293b747ad3237114ccd22e9f559e5e24a194d"
   integrity sha512-PQvRCg13VduLy3X/0L79M6uOpTh5iHdxnxYuo8yL7sJlWybKRJwsv4IcRBJpMFbChOOaHY7Og9wgPo6DLKDKDA==

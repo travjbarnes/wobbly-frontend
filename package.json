@@ -106,7 +106,7 @@
     "@types/storybook__react": "^4.0.1",
     "@types/yup": "^0.26.12",
     "apollo": "^2.6.0",
-    "apollo-link-schema": "^1.1.6",
+    "apollo-link-schema": "^1.2.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
     "babel-preset-expo": "^5.1.1",

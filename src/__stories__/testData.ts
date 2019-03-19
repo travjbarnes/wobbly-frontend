@@ -99,6 +99,8 @@ export const someGiftedMessage = (i?: number, overrides: Partial<IMessage> = {})
   ...overrides
 });
 
+export const someImage = (i: number = 0) => images[i];
+
 export const someSequence = <T>(count: number, generator: DataGenerator<T>, seed = 0) => {
   const items: T[] = [];
   for (let i = 0; i < count; ++i) {
@@ -145,4 +147,9 @@ const groups = [
     name: "Wobbly Developers",
     description: ""
   }
+];
+const images = [
+  // tslint:disable:no-var-requires
+  require("./images/400x200.png")
+  // tslint:enable:no-var-requires
 ];

@@ -3,7 +3,6 @@ import { inflect } from "inflection";
 import { remove } from "lodash";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
-import { Image } from "react-native-elements";
 import { NavigationInjectedProps } from "react-navigation";
 
 import { getGroups, getGroups_groups } from "../../generated/getGroups";
@@ -23,6 +22,7 @@ import { NavigationService } from "../../services";
 import { EditableTextView, ListSection, WobblyButton } from "../atoms";
 import { Intent } from "../atoms/WobblyButton";
 import WobblyText from "../atoms/WobblyText";
+import { GroupImage } from "../molecules";
 import { LoadingState, PersonList } from "../organisms";
 
 interface IGroupDetailsScreen extends NavigationInjectedProps {
@@ -56,7 +56,7 @@ class GroupDetailsScreen extends React.PureComponent<IGroupDetailsScreen> {
       const members = group.members || [];
       return (
         <ScrollView style={style.container}>
-          <Image source={{ uri: "https://placeimg.com/600/200/nature" }} style={style.groupImage} />
+          <GroupImage onPress={this.openEditImageModal} />
           <EditableTextView onPress={this.openEditNameModal}>
             <WobblyText title1={true}>{group.name}</WobblyText>
           </EditableTextView>
@@ -85,6 +85,11 @@ class GroupDetailsScreen extends React.PureComponent<IGroupDetailsScreen> {
     });
   };
 
+  private openEditImageModal = () => {
+    // TODO
+    return;
+  };
+
   private handleLeaveGroup = () => {
     const leaveGroup = () =>
       this.props.leaveGroup({ variables: { groupId: this.groupId } }).then(() => {
@@ -101,13 +106,6 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10
-  },
-  groupImage: {
-    height: 200,
-    width: "100%",
-    resizeMode: "cover",
-    borderRadius: 10,
-    marginBottom: 10
   }
 });
 

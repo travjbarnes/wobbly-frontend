@@ -5,3 +5,4 @@ export { default as CreateGroupFooter } from "./CreateGroupFooter";
 export { default as Post } from "./Post";
 export { default as NonIdealState } from "../molecules/NonIdealState";
 export { default as ThreadListItem } from "./ThreadListItem";
+export { default as GroupImage } from "./GroupImage";

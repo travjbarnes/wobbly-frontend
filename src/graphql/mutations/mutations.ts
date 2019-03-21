@@ -99,3 +99,17 @@ export const CONFIRM_EMAIL_MUTATION = gql`
     }
   }
 `;
+
+export const SEND_PASSWORD_RESET_MUTATION = gql`
+  mutation sendPasswordReset($email: String!) {
+    sendPasswordReset(email: $email)
+  }
+`;
+
+export const RESET_PASSWORD_MUTATION = gql`
+  mutation resetPassword($newPassword: String!, $passwordResetCode: String!, $email: String!) {
+    resetPassword(newPassword: $newPassword, passwordResetCode: $passwordResetCode, email: $email) {
+      token
+    }
+  }
+`;

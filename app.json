@@ -2,6 +2,7 @@
   "expo": {
     "name": "Wobbly",
     "slug": "wobbly",
+    "scheme": "wobbly",
     "privacy": "unlisted",
     "sdkVersion": "32.0.0",
     "platforms": [

@@ -18,14 +18,15 @@ import {
   GroupsListScreen,
   JoinGroupScreen,
   LoginScreen,
+  ResetPasswordScreen,
   SearchGroupsModal,
+  SettingsScreen,
   SignupScreen,
   SplashScreen,
   ThreadScreen,
   ThreadsListScreen,
   WelcomeScreen
 } from "./components/screens";
-import SettingsScreen from "./components/screens/SettingsScreen";
 
 // Main app stacks
 const GroupsStack = createStackNavigator({
@@ -83,7 +84,8 @@ const CreateThreadFlow = createStackNavigator({
 const AuthStack = createStackNavigator({
   Welcome: WelcomeScreen,
   Signup: SignupScreen,
-  Login: LoginScreen
+  Login: LoginScreen,
+  ResetPassword: ResetPasswordScreen
 });
 
 // We have stack navigators for these (even though there isn't actually a stack)

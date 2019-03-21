@@ -8,6 +8,8 @@ import { createThread, createThreadVariables } from "../../generated/createThrea
 import { joinGroup, joinGroupVariables } from "../../generated/joinGroup";
 import { leaveGroup, leaveGroupVariables } from "../../generated/leaveGroup";
 import { login, loginVariables } from "../../generated/login";
+import { resetPassword, resetPasswordVariables } from "../../generated/resetPassword";
+import { sendPasswordReset, sendPasswordResetVariables } from "../../generated/sendPasswordReset";
 import { signup, signupVariables } from "../../generated/signup";
 import { toggleThreadPinning, toggleThreadPinningVariables } from "../../generated/toggleThreadPinning";
 import { updateGroup, updateGroupVariables } from "../../generated/updateGroup";
@@ -20,6 +22,14 @@ export type SignupMutationResult = MutationResult<signup>;
 export class LoginMutation extends Mutation<login, loginVariables> {}
 export type LoginMutationFn = MutationFn<login, loginVariables>;
 export type LoginMutationResult = MutationResult<login>;
+
+export class SendPasswordResetMutation extends Mutation<sendPasswordReset, sendPasswordResetVariables> {}
+export type SendPasswordResetMutationFn = MutationFn<sendPasswordReset, sendPasswordResetVariables>;
+export type SendPasswordResetMutationResult = MutationResult<sendPasswordReset>;
+
+export class ResetPasswordMutation extends Mutation<resetPassword, resetPasswordVariables> {}
+export type ResetPasswordMutationFn = MutationFn<resetPassword, resetPasswordVariables>;
+export type ResetPasswordMutationResult = MutationResult<resetPassword>;
 
 export class ConfirmEmailMutation extends Mutation<confirmEmail, confirmEmailVariables> {}
 export type ConfirmEmailMutationFn = MutationFn<confirmEmail, confirmEmailVariables>;

@@ -35,6 +35,7 @@ class LoginScreen extends React.PureComponent<ILoginScreenProps> {
 
   public render() {
     const goToWelcome = createNavigatorFunction("Welcome");
+    const goToSendPasswordReset = createNavigatorFunction("ResetPassword");
     const isLoggingIn = this.props.result && this.props.result.loading;
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.welcome}>
@@ -72,6 +73,12 @@ class LoginScreen extends React.PureComponent<ILoginScreenProps> {
                 disabled={isLoggingIn}
               />
               <WobblyButton text="Cancel" onPress={goToWelcome} disabled={isLoggingIn} minimal={true} />
+              <WobblyButton
+                text="Forgot Password"
+                onPress={goToSendPasswordReset}
+                disabled={isLoggingIn}
+                minimal={true}
+              />
             </View>
           )}
         </Formik>

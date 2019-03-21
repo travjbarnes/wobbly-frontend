@@ -14,3 +14,4 @@ export { default as SettingsScreen } from "./SettingsScreen";
 export { default as ThreadScreen } from "./ThreadScreen";
 export { default as EditGroupNameModal } from "./EditGroupNameModal";
 export { default as EditGroupDescriptionModal } from "./EditGroupDescriptionModal";
+export { default as ResetPasswordScreen } from "./ResetPasswordScreen";

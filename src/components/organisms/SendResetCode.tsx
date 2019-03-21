@@ -49,7 +49,12 @@ class SendResetCodeScreen extends React.PureComponent<ISendResetCodeProps> {
           <View>
             <FormErrors errors={values(formikBag.errors)} />
             <FormLabel>Send Code</FormLabel>
-            <FormField onChangeText={formikBag.handleChange("email")} value={formikBag.values.email} />
+            <FormField
+              onChangeText={formikBag.handleChange("email")}
+              value={formikBag.values.email}
+              autoCapitalize="none"
+              textContentType="emailAddress"
+            />
             <WobblyButton
               text="Send Code"
               intent={Intent.PRIMARY}

@@ -65,9 +65,16 @@ class ResetPasswordScreen extends React.PureComponent<IResetPasswordProps> {
             <FormField
               onChangeText={formikBag.handleChange("passwordResetCode")}
               value={formikBag.values.passwordResetCode}
+              keyboardType="number-pad"
             />
             <FormLabel>New Password</FormLabel>
-            <FormField onChangeText={formikBag.handleChange("newPassword")} value={formikBag.values.newPassword} />
+            <FormField
+              onChangeText={formikBag.handleChange("newPassword")}
+              value={formikBag.values.newPassword}
+              autoCapitalize="none"
+              textContentType="password"
+              secureTextEntry={true}
+            />
             <WobblyButton
               text="Reset Time"
               intent={Intent.PRIMARY}

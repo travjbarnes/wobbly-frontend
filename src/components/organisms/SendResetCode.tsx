@@ -11,7 +11,7 @@ import {
   SendPasswordResetMutationResult
 } from "../../graphql/mutations";
 import { OWN_INFO_QUERY, OwnInfoQuery, OwnInfoQueryResult } from "../../graphql/queries";
-import { WobblyButton } from "../atoms";
+import { Toast, WobblyButton } from "../atoms";
 import FormErrors from "../atoms/FormErrors";
 import FormField from "../atoms/FormField";
 import FormLabel from "../atoms/FormLabel";
@@ -32,7 +32,14 @@ class SendResetCodeScreen extends React.PureComponent<ISendResetCodeProps> {
     title: "SendResetCode"
   };
 
+  private toast = new Toast({});
+
   private settingsForm?: Formik<ISendResetCodeFields> | null;
+
+  constructor(props: ISendResetCodeProps) {
+    super(props);
+    this.toast = new Toast({});
+  }
 
   public render() {
     return (
@@ -48,7 +55,7 @@ class SendResetCodeScreen extends React.PureComponent<ISendResetCodeProps> {
         {(formikBag: FormikProps<ISendResetCodeFields>) => (
           <View>
             <FormErrors errors={values(formikBag.errors)} />
-            <FormLabel>Send Code</FormLabel>
+            <FormLabel>Email</FormLabel>
             <FormField
               onChangeText={formikBag.handleChange("email")}
               value={formikBag.values.email}
@@ -60,6 +67,13 @@ class SendResetCodeScreen extends React.PureComponent<ISendResetCodeProps> {
               intent={Intent.PRIMARY}
               isLoading={this.props.ownInfoResult.loading}
               onPress={formikBag.handleSubmit}
+            />
+            <Toast
+              ref={toast => {
+                if (toast) {
+                  this.toast = toast;
+                }
+              }}
             />
           </View>
         )}
@@ -76,6 +90,7 @@ class SendResetCodeScreen extends React.PureComponent<ISendResetCodeProps> {
       })
       .then(() => {
         AsyncStorage.setItem("email", vals.email);
+        this.toast.show("Email sent");
       })
       .catch(e => {
         const error = get(e, "graphQLErrors[0].message", "An error occurred");

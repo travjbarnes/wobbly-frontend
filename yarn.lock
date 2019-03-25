@@ -1523,10 +1523,10 @@
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
   integrity sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
 
-"@types/expo@^32.0.8":
-  version "32.0.8"
-  resolved "https://registry.yarnpkg.com/@types/expo/-/expo-32.0.8.tgz#e9dd11d8b6466ce2bb8a37aaeb1c0e2f988d3965"
-  integrity sha512-dFMOYqvdeXuFZtn0X/d4rXBFbYQkG1mQVp/FJSkYcajDHdGnRex8pJzp9umIA6AylSw3gWwfppDsPNtwE7UHGA==
+"@types/expo@^32.0.9":
+  version "32.0.9"
+  resolved "https://registry.yarnpkg.com/@types/expo/-/expo-32.0.9.tgz#f32ec58e22159232a5246048ae09a9441007b9e9"
+  integrity sha512-9NvR7AkpM9B4SJ+/WptMWQi0nKNJzMQx/rWDBk3EJWsQf6aYv4/jfbacCN8n68xkbLYtvZNiS2VUKUIX/YX3iQ==
   dependencies:
     "@types/fbemitter" "*"
     "@types/react" "*"

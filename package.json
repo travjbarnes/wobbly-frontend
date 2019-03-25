@@ -119,7 +119,7 @@
     "loki": "^0.14.2",
     "node-fetch": "^2.3.0",
     "prettier": "^1.16.3",
-    "react-art": "^16.8.3",
+    "react-art": "^16.8.5",
     "react-dom": "^16.8.3",
     "react-native-svg-web": "^1.0.1",
     "react-native-web": "^0.10.0",

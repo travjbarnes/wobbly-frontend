@@ -10180,17 +10180,17 @@ react-apollo@^2.5.3:
     ts-invariant "^0.3.2"
     tslib "^1.9.3"
 
-react-art@^16.8.3:
-  version "16.8.4"
-  resolved "https://registry.yarnpkg.com/react-art/-/react-art-16.8.4.tgz#9c9afa3d8a78ded11c3328f262ba3495d9efa77e"
-  integrity sha512-f8dH7bWrWE9oFXjjvFf4NnhXSJAjPlGxtKsQyzJEHyDGX8iir1zwtuPamPByybezkGw2pxaSukCu+5ShJH8I6g==
+react-art@^16.8.5:
+  version "16.8.5"
+  resolved "https://registry.yarnpkg.com/react-art/-/react-art-16.8.5.tgz#be77c3f720ddc5835d672a7e6f816c2343c73e38"
+  integrity sha512-Y6w6PjpMbhjR2ti1oCslDVvCbGZ5Iff2nyZbyTWFvmx8zGAr+Tlvbo1rEz6V/gtIurmXbIdmSQtmHaiPwIZAqQ==
   dependencies:
     art "^0.10.1"
     create-react-class "^15.6.2"
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.13.4"
+    scheduler "^0.13.5"
 
 react-clone-referenced-element@^1.0.1:
   version "1.1.0"
@@ -11205,10 +11205,10 @@ schedule@^0.3.0:
   dependencies:
     object-assign "^4.1.1"
 
-scheduler@^0.13.4:
-  version "0.13.4"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.4.tgz#8fef05e7a3580c76c0364d2df5e550e4c9140298"
-  integrity sha512-cvSOlRPxOHs5dAhP9yiS/6IDmVAVxmk33f0CtTJRkmUWcb1Us+t7b1wqdzoC0REw2muC9V5f1L/w5R5uKGaepA==
+scheduler@^0.13.4, scheduler@^0.13.5:
+  version "0.13.5"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.5.tgz#b7226625167041298af3b98088a9dbbf6d7733a8"
+  integrity sha512-K98vjkQX9OIt/riLhp6F+XtDPtMQhqNcf045vsh+pcuvHq+PHy1xCrH3pq1P40m6yR46lpVvVhKdEOtnimuUJw==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

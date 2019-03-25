@@ -12,6 +12,7 @@ Wobbly is an app for workplace organizing. See [wobbly.app](https://wobbly.app) 
 * `cd` into the repo and run `yarn install` to get dependencies
 * Run `yarn codegen` to automatically generate the TypeScript typings for our GraphQL client
 * Run `yarn start`. You can preview and live reload the app in an Android/iOS emulator or on your device using the Expo app.
+  * See the "Connecting to the backend" section below for more details
 * Optional: Run `yarn storybook` for a web-based [storybook](https://storybook.js.org) environment
 
 ## 🌐 Connecting to the backend

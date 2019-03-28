@@ -1,7 +1,7 @@
 import { Formik, FormikProps } from "formik";
 import { get } from "lodash";
 import * as React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import * as yup from "yup";
 
 import {
@@ -11,14 +11,16 @@ import {
   UpdatePersonMutationResult
 } from "../../graphql/mutations";
 import { OWN_INFO_QUERY, OwnInfoQuery, OwnInfoQueryResult } from "../../graphql/queries";
-import { FormErrors, FormField, FormLabel, WobblyButton } from "../atoms";
+import { colors } from "../../style/common";
+import { FormErrors, FormField, FormLabel, Toast, WobblyButton } from "../atoms";
 import { Intent } from "../atoms/WobblyButton";
 
 interface IUpdatePersonFormFields {
   // TODO: profile image
-  // TODO: change password
-  // TODO: change email
+  email: string;
   name: string;
+  oldPassword: string;
+  newPassword: string;
 }
 
 interface IUpdatePersonFormProps {
@@ -29,14 +31,22 @@ interface IUpdatePersonFormProps {
 
 class UpdatePersonForm extends React.Component<IUpdatePersonFormProps> {
   private updatePersonForm?: Formik<IUpdatePersonFormFields> | null;
+  private toast: Toast;
+
+  constructor(props: IUpdatePersonFormProps) {
+    super(props);
+    this.toast = new Toast({});
+  }
 
   public render() {
     const { updatePersonResult, ownInfoResult } = this.props;
     const name = get(ownInfoResult, "data.me.name", "");
+    const email = get(ownInfoResult, "data.me.email", "");
+
     return (
       <Formik
         ref={el => (this.updatePersonForm = el)}
-        initialValues={{ name }}
+        initialValues={{ email, name, oldPassword: "", newPassword: "" }}
         enableReinitialize={true} // required for `initialValues` to update when the query completes
         onSubmit={this.handleSubmit}
         validateOnChange={false}
@@ -50,19 +60,46 @@ class UpdatePersonForm extends React.Component<IUpdatePersonFormProps> {
       >
         {(formikBag: FormikProps<IUpdatePersonFormFields>) => (
           <View>
-            <FormErrors
-              errors={get(this.props.updatePersonResult, "errors.graphQLErrors", []).map(
-                (e: any) => e.message || undefined
-              )}
-            />
-            <FormLabel>Name</FormLabel>
-            <FormField onChangeText={formikBag.handleChange("name")} value={formikBag.values.name} />
-            <WobblyButton
-              text="Submit"
-              isLoading={updatePersonResult.loading}
-              intent={Intent.PRIMARY}
-              onPress={formikBag.handleSubmit}
-              disabled={updatePersonResult.loading}
+            <View style={styles.formSection}>
+              <FormErrors
+                errors={get(this.props.updatePersonResult, "errors.graphQLErrors", []).map(
+                  (e: any) => e.message || undefined
+                )}
+              />
+              <FormLabel>Name</FormLabel>
+              <FormField onChangeText={formikBag.handleChange("name")} value={formikBag.values.name} />
+              <FormLabel>Email</FormLabel>
+              <FormField onChangeText={formikBag.handleChange("email")} value={formikBag.values.email} />
+              <FormLabel>New Password</FormLabel>
+              <FormField
+                autoCapitalize="none"
+                onChangeText={formikBag.handleChange("newPassword")}
+                secureTextEntry={true}
+                value={formikBag.values.newPassword}
+              />
+            </View>
+            <View style={styles.formSection}>
+              <FormLabel>Current Password (required)</FormLabel>
+              <FormField
+                autoCapitalize="none"
+                onChangeText={formikBag.handleChange("oldPassword")}
+                secureTextEntry={true}
+                value={formikBag.values.oldPassword}
+              />
+              <WobblyButton
+                text="Submit"
+                isLoading={updatePersonResult.loading}
+                intent={Intent.PRIMARY}
+                onPress={formikBag.handleSubmit}
+                disabled={updatePersonResult.loading}
+              />
+            </View>
+            <Toast
+              ref={toast => {
+                if (toast) {
+                  this.toast = toast;
+                }
+              }}
             />
           </View>
         )}
@@ -71,15 +108,22 @@ class UpdatePersonForm extends React.Component<IUpdatePersonFormProps> {
   }
 
   private handleSubmit = (vals: IUpdatePersonFormFields) => {
+    const { name, oldPassword, newPassword } = vals;
     this.props
       .updatePerson({
         variables: {
-          name: vals.name
+          name,
+          newPassword,
+          oldPassword
         }
+      })
+      .then(() => {
+        this.toast.show("update successful");
       })
       .catch(e => {
         const error = get(e, "graphQLErrors[0].message", "An error occurred");
         this.updatePersonForm!.setErrors({ name: error });
+        this.toast.show(error);
       });
   };
 }
@@ -99,3 +143,13 @@ export default () => (
     )}
   </OwnInfoQuery>
 );
+
+const styles = StyleSheet.create({
+  formSection: {
+    paddingBottom: 20,
+    marginBottom: 20,
+    marginHorizontal: 20,
+    borderBottomColor: colors.lightGray1,
+    borderBottomWidth: 1
+  }
+});

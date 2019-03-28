@@ -1,10 +1,10 @@
 import { inflect } from "inflection";
 import * as React from "react";
 import { FlatList } from "react-native";
-import { ListItem } from "react-native-elements";
 
 import { getGroups_groups } from "../../generated/getGroups";
 import { searchGroups_searchGroups } from "../../generated/searchGroups";
+import { WobblyListItem } from "../atoms/WobblyListItem";
 import WobblyText from "../atoms/WobblyText";
 
 interface IGroupsListProps {
@@ -37,7 +37,7 @@ class GroupsList extends React.PureComponent<IGroupsListProps> {
         ? `${item.memberCount} ${inflect("member", item.memberCount)}`
         : item.description || undefined;
     return (
-      <ListItem
+      <WobblyListItem
         title={<WobblyText>{item.name}</WobblyText>}
         subtitle={<WobblyText>{subtitle}</WobblyText>}
         onPress={onPress}

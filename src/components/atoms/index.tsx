@@ -1,6 +1,7 @@
 export { default as FormErrors } from "./FormErrors";
 export { default as FormField } from "./FormField";
 export { default as FormLabel } from "./FormLabel";
+export { default as Toast } from "./Toast";
 export { default as WobblyButton } from "./WobblyButton";
 export { default as WobblyHeaderButton } from "./WobblyHeaderButton";
 export { default as Footer } from "./Footer";

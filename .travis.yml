@@ -1,4 +1,6 @@
 language: node_js
+addons:
+  chrome: stable
 node_js:
   - node
 before_install:
@@ -6,6 +8,10 @@ before_install:
   - export PATH=$HOME/.yarn/bin:$PATH
 before_script:
   - yarn codegen
+script:
+  - yarn lint
+  - yarn test:snapshot --requireReference
+after_failure:
+  - node .loki/upload-failed-image-diffs
 cache:
   yarn: true
-

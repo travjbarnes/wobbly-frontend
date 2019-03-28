@@ -109,7 +109,7 @@ class LoginScreen extends React.PureComponent<ILoginScreenProps> {
   };
 }
 
-const EnhancedComponent = ({ navigation }: NavigationInjectedProps) => (
+const EnhancedComponent = () => (
   <LoginMutation mutation={LOGIN_MUTATION}>
     {(login, result) => <LoginScreen login={login} result={result} navigation={navigation} />}
   </LoginMutation>

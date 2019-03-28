@@ -10,10 +10,13 @@ import { Font, SecureStore } from "expo";
 import * as React from "react";
 import { ApolloProvider } from "react-apollo";
 import { NavigationContainerComponent } from "react-navigation";
+import { parse } from "url";
 
 import AppNavigation from "./AppNavigation";
 import AppWithSubscriptions from "./AppWithSubscriptions";
 import { SplashScreen } from "./components/screens";
+import { config } from "./config";
+import { fonts } from "./fonts";
 import { OWN_INFO_QUERY, OwnInfoQuery } from "./graphql/queries";
 import { NavigationService } from "./services";
 
@@ -61,18 +64,13 @@ export default class App extends React.Component<{}, IAppState> {
   }
 
   private async initClient() {
-    const protocol = __DEV__ ? "http" : "https";
-    // 10.0.3.2 is the IP of the host machine that Genymotion runs on
-    // If running on a real device, set this to the local IP of your machine
-    const serverHost = __DEV__ ? "172.20.192.1" : "staging.wobbly.app";
-    const httpPort = __DEV__ ? "4000" : "443";
     const httpLink = createHttpLink({
-      uri: `${protocol}://${serverHost}:${httpPort}`
+      uri: config.backendUrl
     });
 
     const authToken = await SecureStore.getItemAsync("token");
     const wsLink = new WebSocketLink({
-      uri: `ws://${serverHost}:${httpPort}/ws`,
+      uri: `ws://${parse(config.backendUrl).host}/ws`,
       options: {
         reconnect: true,
         connectionParams: {
@@ -107,13 +105,7 @@ export default class App extends React.Component<{}, IAppState> {
   }
 
   private async initFonts() {
-    await Font.loadAsync({
-      "open-sans-regular": require("../assets/fonts/OpenSans-Regular.ttf"),
-      "open-sans-bold": require("../assets/fonts/OpenSans-Bold.ttf"),
-      "montserrat-regular": require("../assets/fonts/Montserrat-Regular.ttf"),
-      "montserrat-bold": require("../assets/fonts/Montserrat-Bold.ttf"),
-      "montserrat-black": require("../assets/fonts/Montserrat-Black.ttf")
-    });
+    await Font.loadAsync(fonts);
     this.setState({ fontsHaveLoaded: true });
   }
 }

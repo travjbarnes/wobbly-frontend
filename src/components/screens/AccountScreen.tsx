@@ -1,7 +1,7 @@
 import { SecureStore } from "expo";
 import * as React from "react";
 import { withApollo, WithApolloClient } from "react-apollo";
-import { View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import HeaderButtons from "react-navigation-header-buttons";
 
 import { NavigationService } from "../../services";
@@ -39,10 +39,12 @@ class AccountScreen extends React.Component<IAccountScreenProps, IAccountScreenS
 
   public render() {
     return (
-      <View>
+      <ScrollView>
         <UpdatePersonForm />
-        <WobblyButton text="Log out" onPress={this.logout} intent={Intent.DANGER} isLoading={this.state.isLoggingOut} />
-      </View>
+        <View style={styles.bottomFormSection}>
+          <WobblyButton text="Log out" onPress={this.logout} intent={Intent.DANGER} />
+        </View>
+      </ScrollView>
     );
   }
 
@@ -61,3 +63,9 @@ class AccountScreen extends React.Component<IAccountScreenProps, IAccountScreenS
 }
 
 export default withApollo(AccountScreen);
+
+const styles = StyleSheet.create({
+  bottomFormSection: {
+    marginHorizontal: 20
+  }
+});

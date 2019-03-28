@@ -11,14 +11,15 @@ Wobbly is an app for workplace organizing. See [wobbly.app](https://wobbly.app) 
 * Clone this repo: `git clone git@github.com:Wobbly-App/wobbly-frontend.git`
 * `cd` into the repo and run `yarn install` to get dependencies
 * Run `yarn codegen` to automatically generate the TypeScript typings for our GraphQL client
+* Copy one of the example configurations from `config` to `app.json` in the repository root. Eg: `cp config/app.development.json app.json`
 * Run `yarn start`. You can preview and live reload the app in an Android/iOS emulator or on your device using the Expo app.
   * See the "Connecting to the backend" section below for more details
 * Optional: Run `yarn storybook` for a web-based [storybook](https://storybook.js.org) environment
 
 ## 🌐 Connecting to the backend
 Our [backend](https://github.com/Wobbly-App/graphql-backend) exposes a GraphQL API.
-* Running `yarn start` will connect to a local GraphQL backend that you need to have running (see instructions in the backend repo).
-* If you want to run the frontend against our remote staging server, use `yarn start --no-dev` instead. This is the quickest way of getting up and running.
+* Running `yarn start` will connect to the GraphQL backend specified in your app.json.
+* If you want to run against a local backend, remove the `backendUrl` field from your app.json (or use the provided example configuration). This is the default behaviour if no backend configuration is provided.
 
 ## 🔥 Testing
 We use [loki](https://loki.js.org/) to run visual regression tests against our storybook. The general workflow for these are:

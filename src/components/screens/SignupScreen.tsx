@@ -122,7 +122,7 @@ class SignupScreen extends React.Component<ISignupScreenProps> {
         }
       })
       .then(result => {
-        const token = get(result, "data.login.token", undefined);
+        const token = get(result, "data.signup.token", undefined);
         if (!token) {
           throw new Error("Did not receive auth token");
         }

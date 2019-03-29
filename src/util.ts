@@ -1,8 +1,8 @@
 import { ApolloError } from "apollo-client";
-import { Notifications, Permissions, SecureStore } from "expo";
+import { Constants, Notifications, Permissions, SecureStore } from "expo";
 import { AsyncStorage } from "react-native";
 
-import { client } from "./App";
+import { client } from "./apolloClient";
 import { ADD_PUSH_TOKEN, DELETE_PUSH_TOKEN } from "./graphql/mutations";
 import { NavigationService } from "./services";
 
@@ -36,7 +36,8 @@ export const registerForPushNotificationsAsync = async () => {
 
   // only ask if permissions have not already been determined, because
   // iOS won't necessarily prompt the user a second time.
-  if (existingStatus !== "granted") {
+  // also, don't ask on a simulator/emulator since these cannot receive push notifications.
+  if (existingStatus !== "granted" && Constants.isDevice) {
     // Android remote notification permissions are granted during the app
     // install, so this will only ask on iOS
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
@@ -68,6 +69,8 @@ export const unregisterForPushNotificationsAsync = async () => {
     await client.mutate({ mutation: DELETE_PUSH_TOKEN, variables: { token } }).catch((err: ApolloError) => {
       throw new Error(`Failed to unset push token: ${err.message}`);
     });
-    await AsyncStorage.removeItem("pushToken");
+    await AsyncStorage.removeItem("pushToken").catch(() => {
+      throw new Error("Failed to remove push token from AsyncStorage");
+    });
   }
 };

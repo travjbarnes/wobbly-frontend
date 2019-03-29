@@ -1,26 +1,16 @@
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { ApolloClient } from "apollo-client";
-import { split } from "apollo-link";
-import { setContext } from "apollo-link-context";
-import { createHttpLink } from "apollo-link-http";
-import { WebSocketLink } from "apollo-link-ws";
-import { getMainDefinition } from "apollo-utilities";
-import { Font, SecureStore } from "expo";
+import { Font } from "expo";
 import * as React from "react";
 import { ApolloProvider } from "react-apollo";
 import { NavigationContainerComponent } from "react-navigation";
-import { parse } from "url";
 
+import { client, initClient } from "./apolloClient";
 import AppNavigation from "./AppNavigation";
 import AppWithSubscriptions from "./AppWithSubscriptions";
 import { SplashScreen } from "./components/screens";
-import { config } from "./config";
 import { fonts } from "./fonts";
 import { OWN_INFO_QUERY, OwnInfoQuery } from "./graphql/queries";
 import { NavigationService } from "./services";
-
-export let client: ApolloClient<any>;
 
 interface IAppState {
   clientHasLoaded: boolean;
@@ -64,43 +54,7 @@ export default class App extends React.Component<{}, IAppState> {
   }
 
   private async initClient() {
-    const httpLink = createHttpLink({
-      uri: config.backendUrl
-    });
-
-    const authToken = await SecureStore.getItemAsync("token");
-    const wsLink = new WebSocketLink({
-      uri: `ws://${parse(config.backendUrl).host}/ws`,
-      options: {
-        reconnect: true,
-        connectionParams: {
-          Authorization: `Bearer ${authToken}`
-        }
-      }
-    });
-    const authLink = setContext(async (_, { headers }) => {
-      return {
-        headers: {
-          ...headers,
-          authorization: authToken ? `Bearer ${authToken}` : ""
-        }
-      };
-    });
-
-    // Make subscriptions go over the WebSocket link
-    const allLinks = split(
-      ({ query }) => {
-        const definition = getMainDefinition(query);
-        return definition.kind === "OperationDefinition" && definition.operation === "subscription";
-      },
-      wsLink,
-      authLink.concat(httpLink)
-    );
-
-    client = new ApolloClient({
-      link: allLinks,
-      cache: new InMemoryCache({ addTypename: true })
-    });
+    await initClient();
     this.setState({ clientHasLoaded: true });
   }
 

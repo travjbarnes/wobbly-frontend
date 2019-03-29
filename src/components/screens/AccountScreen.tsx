@@ -54,11 +54,14 @@ class AccountScreen extends React.Component<IAccountScreenProps, IAccountScreenS
       await unregisterForPushNotificationsAsync(); // must come before the others as it depends on the token
       await this.props.client.clearStore();
       await SecureStore.deleteItemAsync("token");
+    } catch (e) {
+      // tslint:disable-next-line:no-console
+      console.error(e);
     } finally {
       this.setState({ isLoggingOut: false });
+      // Navigate to login screen
+      NavigationService.navigate("Auth");
     }
-    // Navigate to login screen
-    NavigationService.navigate("Auth");
   };
 }
 

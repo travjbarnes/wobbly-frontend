@@ -39,7 +39,7 @@ module.exports = (baseConfig, env, config) => {
     ...(config.resolve && config.resolve.alias),
     expo: require.resolve("expo-web"),
     "@expo/vector-icons": require.resolve("expo-web"),
-    "react-native": require.resolve("react-native-web"),
+    "react-native": require.resolve("./stubs/react-native.tsx"),
     // referenced from expo-web's icon stub, but doesn't seem to exist
     "react-native-vector-icons/AntDesign": require.resolve("./stubs/empty-module.ts"),
     "react-native-svg": require.resolve("react-native-svg-web"),

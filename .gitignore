@@ -319,3 +319,4 @@ storybook-static
 .storybook/schema.json
 .loki/current
 .loki/difference
+app.json

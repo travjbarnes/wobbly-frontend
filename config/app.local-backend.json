@@ -25,10 +25,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "android": {
-      "package": "com.wobbly.frontend",
-      "googleServicesFile": "./google-services.json"
-    },
     "description": "Wobbly is a workplace organising platform. We’re creating a space for energetic, powerful, and democratic unions to win struggles and grow.",
     "githubUrl": "https://github.com/Wobbly-App/wobbly-frontend",
     "extra": {

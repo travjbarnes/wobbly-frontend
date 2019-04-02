@@ -78,7 +78,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-typography": "^1.4.0",
-    "react-navigation": "^3.5.1",
+    "react-navigation": "^3.6.0",
     "react-navigation-header-buttons": "^2.1.2",
     "subscriptions-transport-ws": "^0.9.16",
     "tslib": "^1.9.3",

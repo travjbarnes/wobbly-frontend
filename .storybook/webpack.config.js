@@ -1,6 +1,14 @@
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = (baseConfig, env, config) => {
+  // Set globals
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      __DEV__: false
+    })
+  );
+
   config.module.rules.push(
     // compile
     {

@@ -1452,10 +1452,10 @@
   resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-0.9.46.tgz#ea701ee34cbb6dfe6d100f1530319547c93c8d79"
   integrity sha512-LooLR6XHes9V+kNYRz1Qm8w3atw9QMn7XeZUmIpUelllF9BdryeUKd/u0Wh5ErcjpWfG39NrToU9MF7ngsTFVw==
 
-"@types/expo@^32.0.9":
-  version "32.0.9"
-  resolved "https://registry.yarnpkg.com/@types/expo/-/expo-32.0.9.tgz#f32ec58e22159232a5246048ae09a9441007b9e9"
-  integrity sha512-9NvR7AkpM9B4SJ+/WptMWQi0nKNJzMQx/rWDBk3EJWsQf6aYv4/jfbacCN8n68xkbLYtvZNiS2VUKUIX/YX3iQ==
+"@types/expo@^32.0.10":
+  version "32.0.10"
+  resolved "https://registry.yarnpkg.com/@types/expo/-/expo-32.0.10.tgz#ae15e428bb4dcfcb432d9bfead0de7a563c59e98"
+  integrity sha512-ITFGBsR3oy/IFku5KWxLV1MD7mT1/reSs3uK6KohHRupp55e/e0PUAaCcyGcKEH34DTW/b1mNiFsHTEw4bBSPQ==
   dependencies:
     "@types/fbemitter" "*"
     "@types/react" "*"

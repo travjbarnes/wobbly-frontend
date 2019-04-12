@@ -28,6 +28,12 @@ We use [loki](https://loki.js.org/) to run visual regression tests against our s
 * If the tests fail due to a visual change, check the contents of [./loki/difference](./loki/difference). If you are happy with all the changes, run `yarn loki approve` to update the reference screens.
 * If the test fail on CI and you think they should have passed, check the travis logs for a link to a url hosting diffs between the current and reference snapshots
 
+## 🚀 Deploying
+* `expo build:android --release-channel <your-channel>` builds an APK in the alpha release channel. Similarly for `expo build:ios --release-channel <your-channel>`.
+  * Valid channels are `alpha`, `beta`, or none (i.e. `default`, our production channel).
+* Expo apps can receive over-the-air updates so we unless we changed the SDK version, we don't need to submit changes to the App Store/Play Store. To publish changes run `expo publish --release-channel <your-channel>`.
+* See more in the [Expo docs on release channels](https://docs.expo.io/versions/latest/distribution/release-channels/).
+
 ## ⚙️ Frameworks
 * [Expo](https://expo.io)
 * [TypeScript](https://www.typescriptlang.org/) and [TSLint](https://palantir.github.io/tslint/)

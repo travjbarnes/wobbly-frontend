@@ -3,8 +3,6 @@ import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 
-import { colors } from "../../style/common";
-
 type ISplashScreenProps = Partial<NavigationInjectedProps>;
 
 /**
@@ -41,6 +39,6 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.red1
+    backgroundColor: "#ed2826"
   }
 });

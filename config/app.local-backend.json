@@ -10,20 +10,22 @@
     ],
     "version": "0.0.1-alpha.1",
     "orientation": "portrait",
+    "primaryColor": "#ed2826",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ed2826"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/*"
     ],
     "android": {
-      "package": "app.wobbly.frontend"
+      "package": "app.wobbly.frontend",
+      "versionCode": 2
     },
     "ios": {
       "supportsTablet": false

@@ -9,24 +9,31 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "0.0.1-alpha.1",
     "orientation": "portrait",
+    "primaryColor": "#ed2826",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ed2826"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/*"
     ],
+    "android": {
+      "package": "app.wobbly.frontend",
+      "versionCode": 2
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "description": "Wobbly is a workplace organising platform. We’re creating a space for energetic, powerful, and democratic unions to win struggles and grow.",
-    "githubUrl": "https://github.com/Wobbly-App/wobbly-frontend"
+    "githubUrl": "https://github.com/Wobbly-App/wobbly-frontend",
+    "extra": {
+    }
   }
 }

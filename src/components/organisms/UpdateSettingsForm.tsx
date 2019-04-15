@@ -2,7 +2,6 @@ import { Formik, FormikProps } from "formik";
 import { get, values } from "lodash";
 import * as React from "react";
 import { View } from "react-native";
-import { Sentry } from "react-native-sentry";
 import * as yup from "yup";
 
 import {
@@ -81,7 +80,6 @@ class SettingsScreen extends React.PureComponent<ISettingsProps> {
         let error = get(e, "graphQLErrors[0].message");
         if (!error) {
           error = "An error occurred";
-          Sentry.captureException(e);
         }
         this.settingsForm!.setErrors({ confirmationCode: error });
       });

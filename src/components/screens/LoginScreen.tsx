@@ -3,7 +3,6 @@ import hoistNonReactStatics from "hoist-non-react-statics";
 import { get, values } from "lodash";
 import * as React from "react";
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
-import { Sentry } from "react-native-sentry";
 
 import { LOGIN_MUTATION, LoginMutation, LoginMutationFn, LoginMutationResult } from "../../graphql/mutations";
 import { createNavigatorFunction, saveTokenAndRedirect } from "../../util";
@@ -92,7 +91,6 @@ class LoginScreen extends React.PureComponent<ILoginScreenProps> {
         let error = get(e, "graphQLErrors[0].message");
         if (!error) {
           error = "An error occurred";
-          Sentry.captureException(e);
         }
         this.loginForm!.setErrors({ email: error });
       });

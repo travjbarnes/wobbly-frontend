@@ -2,7 +2,6 @@ import { Formik, FormikProps } from "formik";
 import { get } from "lodash";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { Sentry } from "react-native-sentry";
 import * as yup from "yup";
 
 import {
@@ -125,7 +124,9 @@ class UpdatePersonForm extends React.Component<IUpdatePersonFormProps> {
         let error = get(e, "graphQLErrors[0].message");
         if (!error) {
           error = "An error occurred";
-          Sentry.captureException(e);
+          // TODO: currently manual exception capturing with Sentry doesn't work in Storybook
+          // Thus, it makes tests fail (even though it would presumably work in Expo)
+          // Sentry.captureException(e);
         }
         this.updatePersonForm!.setErrors({ name: error });
         this.toast.show(error);

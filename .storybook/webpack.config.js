@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 
-module.exports = (baseConfig, env, config) => {
+module.exports = async ({ config }) => {
   // Set globals
   config.plugins.push(
     new webpack.DefinePlugin({

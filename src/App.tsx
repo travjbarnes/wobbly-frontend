@@ -10,7 +10,7 @@ import { Font, SecureStore } from "expo";
 import * as React from "react";
 import { ApolloProvider } from "react-apollo";
 import { NavigationContainerComponent } from "react-navigation";
-import Sentry from "sentry-expo";
+import SentryExpo from "sentry-expo";
 import { parse } from "url";
 
 import AppNavigation from "./AppNavigation";
@@ -22,7 +22,7 @@ import { OWN_INFO_QUERY, OwnInfoQuery } from "./graphql/queries";
 import { NavigationService } from "./services";
 
 if (config.sentryDsn) {
-  Sentry.config(config.sentryDsn).install();
+  SentryExpo.config(config.sentryDsn).install();
 }
 
 interface IAppState {

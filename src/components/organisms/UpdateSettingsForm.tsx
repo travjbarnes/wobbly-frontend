@@ -2,8 +2,10 @@ import { Formik, FormikProps } from "formik";
 import { get, values } from "lodash";
 import * as React from "react";
 import { View } from "react-native";
+import SentryExpo from "sentry-expo";
 import * as yup from "yup";
 
+import { GENERIC_ERROR_TEXT } from "../../constants";
 import {
   CONFIRM_EMAIL_MUTATION,
   ConfirmEmailMutation,
@@ -79,7 +81,8 @@ class SettingsScreen extends React.PureComponent<ISettingsProps> {
       .catch(e => {
         let error = get(e, "graphQLErrors[0].message");
         if (!error) {
-          error = "An error occurred";
+          error = GENERIC_ERROR_TEXT;
+          SentryExpo.captureException(e);
         }
         this.settingsForm!.setErrors({ confirmationCode: error });
       });

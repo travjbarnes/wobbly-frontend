@@ -9,6 +9,10 @@ if [ -z ${EXPO_PASSWORD+x} ]; then
   echo "EXPO_PASSWORD is unset";
   exit 1
 fi
+if [ -z ${SENTRY_AUTH_TOKEN+x} ]; then
+  echo "SENTRY_AUTH_TOKEN is unset";
+  exit 1
+fi
 
 # fail if jq is not installed
 jq --help > /dev/null

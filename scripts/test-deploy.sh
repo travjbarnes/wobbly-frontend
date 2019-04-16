@@ -13,6 +13,9 @@ cp config/app.development.json app.template.json
 jq '.expo.slug = "wobbly"' < app.template.json > app.json
 rm app.template.json
 
+# login to expo
+expo login -u $(echo "$EXPO_LOGIN") -p $(echo "$EXPO_PASSWORD")
+
 # verify that expo works
 echo "Most recent Expo release:"
 expo publish:history --count 1

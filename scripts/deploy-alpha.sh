@@ -19,4 +19,4 @@ rm app.template.json
 rm app.template2.json
 
 # publish
-expo publish --release-channel alpha
+expo publish --non-interactive --release-channel alpha

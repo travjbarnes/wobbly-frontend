@@ -1,6 +1,15 @@
 #!/bin/sh
 set -e
 
+if [ -z ${EXPO_LOGIN+x} ]; then
+  echo "EXPO_LOGIN is unset";
+  exit 1
+fi
+if [ -z ${EXPO_PASSWORD+x} ]; then
+  echo "EXPO_PASSWORD is unset";
+  exit 1
+fi
+
 # fail if jq is not installed
 jq --help > /dev/null
 

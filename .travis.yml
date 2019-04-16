@@ -11,9 +11,9 @@ before_script:
   - yarn codegen
   - yarn danger ci
 script:
+  - bash scripts/test-deploy.sh
   - yarn lint
   - yarn test:snapshot --requireReference
-  - bash scripts/test-deploy.sh
 deploy:
   provider: script
   script: bash scripts/deploy-alpha.sh

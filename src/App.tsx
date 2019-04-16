@@ -21,10 +21,6 @@ import { fonts } from "./fonts";
 import { OWN_INFO_QUERY, OwnInfoQuery } from "./graphql/queries";
 import { NavigationService } from "./services";
 
-if (config.sentryDsn) {
-  SentryExpo.config(config.sentryDsn).install();
-}
-
 interface IAppState {
   clientHasLoaded: boolean;
   fontsHaveLoaded: boolean;
@@ -38,6 +34,9 @@ export default class App extends React.Component<{}, IAppState> {
   }
 
   public async componentDidMount() {
+    if (config.sentryDsn) {
+      SentryExpo.config(config.sentryDsn).install();
+    }
     await this.initClient();
     await this.initFonts();
   }

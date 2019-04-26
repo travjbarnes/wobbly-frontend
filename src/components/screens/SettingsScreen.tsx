@@ -14,12 +14,12 @@ class SettingsScreen extends React.Component {
   };
 
   public render() {
-    const version = Constants.manifest.version;
+    const version = __DEV__ ? "test version" : Constants.manifest.version;
     return (
       <ScrollView>
         <UpdateSettingsForm />
         <ListItem
-          title={<WobblyText>{(version && `Wobbly v${version}`) || "Unknown version"}</WobblyText>}
+          title={<WobblyText>{(version && `Wobbly ${version}`) || "Unknown version"}</WobblyText>}
           topDivider={true}
           bottomDivider={true}
         />

@@ -1,6 +1,15 @@
 const path = require("path");
 
-module.exports = ({ config }) => {
+const webpack = require("webpack");
+
+module.exports = async ({ config }) => {
+  // Set globals
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      __DEV__: true
+    })
+  );
+
   config.module.rules.push(
     // compile
     {
